@@ -1,11 +1,11 @@
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-12">
             <h2 class="text-center d-block">Modificar mis datos</h2>
             <div class="card">
                 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('userprofile.update') }}">
+                    <form method="POST" action="{{ route('user.update') }}" enctype="multipart/form-data">
                         @csrf
 
                         <div class="row mb-3">
@@ -56,10 +56,11 @@
                             <label for="image" class="col-md-4 col-form-label text-md-end">{{ __('Avatar') }}</label>
 
                             <div class="col-md-6">
-                                <input id="image" type="file" class="form-control @error('image') is-invalid @enderror" name="image" required>
+                                <input id="image" type="file" class="form-control @error('image') is-invalid @enderror" name="image">
 
                                 @if(\Auth::user()->image)
-                                    <p>si</p>
+                                <span>Avatar Actual:</span>
+                                    <img src="{{url('mi-perfil/get-image/'.Auth::user()->image)}}" alt="Acompañarte avatar"  class="rounded-circle" width="100"/>
                                 @endif
 
                                 @error('image')
@@ -69,8 +70,6 @@
                                 @enderror
                             </div>
                         </div>
-
-                        <input id="id" type="text" name="id" value="{{\Crypt::encryptString(\Auth::user()->id)}}" required hidden>
 
                         <div class="row mb-0">
                             <div class="col-md-6 offset-md-4">

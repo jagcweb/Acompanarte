@@ -35,7 +35,7 @@
             </fieldset>
         </form>
         @else
-            @if(!\Auth::user()->userprofile)
+            @if(!\Auth::user()->user)
             <p>Rellena la <a href="{{route('configuration_professor.index')}}">configuración</a> de tu cuenta para aparecer a clientes!</p>
             @else
             <p>Ya eres mostrado a clientes!</p>

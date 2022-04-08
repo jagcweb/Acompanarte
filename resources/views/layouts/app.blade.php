@@ -24,6 +24,7 @@
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
         integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+        <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <link href="{{url('assets')}}/css/all.css" rel="stylesheet" />
 
     @yield('css')
@@ -31,13 +32,13 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
-    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
     crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF"
         crossorigin="anonymous"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     @yield('scripts')
 
   </head>
@@ -45,11 +46,18 @@
     <header style="background: transparent;">
       <nav>
         <a href="{{route('home')}}"><h1>Acompañarte</h1></a>
-        @if(\Auth::user())
+        @if(Auth::user())
           <ul class="nav navbar-nav ms-auto">
+            @if(Auth::user()->getRoleNames()[0] == "profesor-premium")
+            <li class="nav-item" style="margin-top:-4px; color:#e8b210;">PREMIUM </li>
+            @endif
             <li class="nav-item dropdown dropdown-user">
               <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                <img src="{{url('assets')}}/images/user.png" alt="user-image" class="rounded-circle" width="40" />
+                @if(Auth::user()->image)
+                <img src="{{url('mi-perfil/get-image/'.Auth::user()->image)}}" alt="Acompañarte avatar"  class="rounded-circle" width="40"/>
+                @else
+                <img src="{{url('assets')}}/images/user.png" alt="Acompañarte avatar" class="rounded-circle" width="40" />
+                @endif
               </a>
               <div class="dropdown-menu dropdown-menu-end">
                   <small class="text-center d-block">¡Bienvenido <b>{{\Auth::user()->name}}</b>!</small>
@@ -66,7 +74,7 @@
                   <a href="{{route('configuration_professor.index')}}" class="dropdown-item">Cuenta de profesor</a>
                   <div class="dropdown-divider"></div>
                   @endif
-                  <a href="{{route('userprofile.index')}}" class="dropdown-item">Mi cuenta</a>
+                  <a href="{{route('user.index')}}" class="dropdown-item">Mi cuenta</a>
                   <a href="{{route('configuration.index')}}" class="dropdown-item">Configuración</a>
                   <div class="dropdown-divider"></div>
                   <a href="#" class="dropdown-item" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Cerrar sesión</a>

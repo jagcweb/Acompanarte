@@ -5,7 +5,7 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-12">
             <h2 class="text-center d-block mb-2">Profesores disponibles en:</h2>
             @for($i=0; $i<=5; $i++)
             <div class="card mb-2">

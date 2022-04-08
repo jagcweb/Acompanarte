@@ -1,20 +1,20 @@
 <div class="container mt-4">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-12">
             <h2 class="text-center d-block">Cambiar contraseña</h2>
             <div class="card">
                 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('register') }}">
+                    <form method="POST" action="{{ route('user.update_password') }}">
                         @csrf
 
                         <div class="row mb-3">
                             <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Actual contraseña') }}</label>
 
                             <div class="col-md-6">
-                                <input id="current-password" type="password" class="form-control @error('current-password') is-invalid @enderror" name="current-password" required>
+                                <input id="current_password" type="password" class="form-control @error('current_password') is-invalid @enderror" name="current_password" required>
 
-                                @error('current-password')
+                                @error('current_password')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
