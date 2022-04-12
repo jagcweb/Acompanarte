@@ -38,6 +38,7 @@ class ConfigurationProfessorController extends Controller
     {
         $validate = $this->validate($request, [
             'disponibilidad' => ['required', 'string', 'max:255'],
+            'especialidad' => ['required', 'array', 'max:255'],
         ]);
 
         switch($request->get('disponibilidad')){
@@ -69,6 +70,7 @@ class ConfigurationProfessorController extends Controller
         $config->community = $request->get('comunidad');
         $config->province = $request->get('provincia');
         $config->city = $request->get('poblacion');
+        $config->specialty = implode(" ",$request->get('especialidad'));
         $config->save();
 
         return back()->with('exito', 'Configuración guardada');

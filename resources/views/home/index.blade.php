@@ -33,6 +33,9 @@
                 <span>Test</span> --}}
             </div>
             </fieldset>
+            <div id="suggestions">
+                    
+            </div>
         </form>
         @else
             @if(!\Auth::user()->user)
@@ -44,12 +47,12 @@
     @endif
 </div>
 <script src="{{url('assets')}}/js/extention/choices.js"></script>
+<script src="{{url('assets')}}/js/home.js"></script>
 <script>
 var textPresetVal = new Choices('#choices-text-preset-values',
 {
     removeItemButton: true,
 });
-
 </script>
 @endsection
 

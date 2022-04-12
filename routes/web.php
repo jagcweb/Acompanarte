@@ -37,3 +37,4 @@ Route::get('/configuracion-premium/premium', [App\Http\Controllers\Configuration
 Route::get('/configuracion-premium/free', [App\Http\Controllers\ConfigurationPremiumController::class, 'free'])->name('configuration_premium.free');
 
 Route::post('/buscar-profesor', [App\Http\Controllers\SearchProfessorController::class, 'index'])->name('search_professor.index');
+Route::get('/buscar-profesor/autocomplete-location/{value}', [App\Http\Controllers\SearchProfessorController::class, 'getLocation'])->name('search_professor.get_location');
