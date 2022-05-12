@@ -92,6 +92,18 @@ nav a:hover{
     background: #000;
 }
 
+/* Oculta la los controles del input number */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
 /* Cambia los efectos del glow de focus input por default */
 .form-control:focus{   
   border-color: rgba(0, 0, 0, 0.8);
@@ -122,4 +134,43 @@ input[type="checkbox"]{
     width: 22px;
     height: 22px;
     margin-top: 8px;
+}
+
+footer{
+    height:40px;
+    display: flex!important;
+    justify-content:space-around;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+}
+
+.modal, .modal label{
+    font-size: 14px!important;
+}
+
+.modal input{
+    font-size: 15px!important;
+}
+
+.modal h4{
+    font-size: 17px!important;
+}
+
+.fa-times {
+    margin-top: 3px;
+    font-size: 20px;
+    color: #333;
+}
+
+.fa-times:hover{
+    color:red;
+}
+
+.specialty-label{
+    font-size: 14px;
+}
+
+.especialidad{
+    margin-top: 10px!important;
 }

@@ -9,7 +9,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>Acompañarte</title>
+    <title>@yield('title') | Acompañarte</title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -27,6 +27,7 @@
         <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <link href="{{url('assets')}}/css/all.css" rel="stylesheet" />
 
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.20.0/dist/bootstrap-table.min.css">
     @yield('css')
 
 
@@ -39,6 +40,10 @@
         integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF"
         crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="https://js.stripe.com/v3/"></script>
+
+    <script src="https://unpkg.com/bootstrap-table@1.20.0/dist/bootstrap-table.min.js"></script>
+    <script src="https://unpkg.com/bootstrap-table@1.20.0/dist/locale/bootstrap-table-es-ES.min.js"></script>
     @yield('scripts')
 
   </head>
@@ -74,6 +79,8 @@
                   <a href="{{route('configuration_professor.index')}}" class="dropdown-item">Cuenta de profesor</a>
                   <div class="dropdown-divider"></div>
                   @endif
+                  <a href="{{route('contact_request.index')}}" class="dropdown-item">Solicitudes de contacto</a>
+                  <div class="dropdown-divider"></div>
                   <a href="{{route('user.index')}}" class="dropdown-item">Mi cuenta</a>
                   <a href="{{route('configuration.index')}}" class="dropdown-item">Configuración</a>
                   <div class="dropdown-divider"></div>
@@ -106,5 +113,12 @@
           @yield('content')
         </div>
     </main>
+    <footer>
+      <span>Logo</span>
+      <span>Derechos de autor</span>
+      <span>Politicas de privacidad</span>
+      <span>Cookies</span>
+    </footer>
+    @yield('js')
   </body>
 </html>

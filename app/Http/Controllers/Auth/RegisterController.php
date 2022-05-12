@@ -58,11 +58,16 @@ class RegisterController extends Controller
 
     protected function validator(array $data)
     {
+        $role = explode("-", url()->previous())[1];
+
+        $phone_field = $role != 'cliente' ? 'required' : 'nullable';
+        
        return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'surname' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed']
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'phone' => [$phone_field, 'alpha_num', 'min:9', 'max:9']
        ]);
     }
 
@@ -81,11 +86,14 @@ class RegisterController extends Controller
         $created_user = User::create([
             'name' => $request['name'],
             'surname' => $request['surname'],
+            'phone' => isset($request['phone']) ? $request['phone'] : NULL,
             'email' => $request['email'],
             'password' => Hash::make($request['password']),
         ]);
 
         $created_user->assignRole($role);
+
+        $created_user->sendEmailVerificationNotification();
 
         return redirect()->route('home')->with('exito', 'Se ha registrado correctamente. Antes de hacer login debe confirmar el email.');
     }

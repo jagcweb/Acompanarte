@@ -8,4 +8,6 @@
 @if(\Auth::user()->getRoleNames()[0] == 'profesor-premium')
     @include('professor_premium.partials.-premium')
 @endif
+
+@include('professor_premium.partials.-table_history')
 @endsection

@@ -95,6 +95,10 @@ return [
         'address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),
         'name' => env('MAIL_FROM_NAME', 'Example'),
     ],
+    'encryption' => env('MAIL_ENCRYPTION', 'tls'),
+
+    'username' => env('MAIL_USERNAME'),
+    'password' => env('MAIL_PASSWORD'),
 
     /*
     |--------------------------------------------------------------------------

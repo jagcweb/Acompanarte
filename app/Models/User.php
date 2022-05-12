@@ -10,7 +10,7 @@ use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Support\Facades\Auth;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens, HasFactory, Notifiable, HasRoles;
 
@@ -22,6 +22,7 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'surname',
+        'phone',
         'email',
         'password',
     ];
@@ -44,8 +45,28 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-
+    
     public function config_professor(){
     	return $this->hasOne(ConfigurationProfessor::class);
+    }
+
+    public function suscription(){
+    	return $this->hasOne(ProfessorSuscription::class);
+    }
+
+    public function professor_specialties(){
+    	return $this->hasMany(ProfessorSpecialty::class);
+    }
+
+    public function professor_languages(){
+    	return $this->hasMany(ProfessorLanguage::class);
+    }
+
+    public function ratings(){
+    	return $this->hasMany(Rating::class);
+    }
+
+    public function getFullNameAttribute(){
+    	return $this->name.' '.$this->surname;
     }
 }

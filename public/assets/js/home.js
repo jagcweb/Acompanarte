@@ -7,9 +7,13 @@ $(".searcher-input").on("keyup", function(e) {
     }).done(function (res) {
         let values = JSON.parse(res);
         suggestions.empty();
-        console.log(values);
         values.forEach( function(valor, indice) {
-            suggestions.append(`<p> ${valor.poblacion} </p>`);
+            suggestions.append(`<p class="suggestion-p"> ${valor.poblacion} </p>`);
         });
+        $(".suggestion-p").on("click", function(e) {
+            const value = $(this).text();
+            $(".searcher-input").val(value);
+            suggestions.empty();
+        })
     });
 })

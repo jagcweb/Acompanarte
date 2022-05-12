@@ -6,15 +6,18 @@ use Illuminate\Database\Eloquent\Model;
 
 class ConfigurationProfessor extends Model
 {
-    protected $table = 'configuration_professor';
+    protected $table = 'configuration_professors';
     protected $fillable = [
         'availability',
         'community',
         'province',
-        'city'
+        'city',
+        'other_degrees',
+        'languages',
+        'experience'
     ];
 
     public function user(){
-    	return $this->hasOne(User::class);
+    	return $this->belongsTo(User::class);
     }
 }

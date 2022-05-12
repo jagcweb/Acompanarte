@@ -774,6 +774,19 @@ legend {
   outline: none;
 }
 
+input[type="checkbox"]{
+  width: 15px;
+  height: 15px;
+  margin-top: 8px;
+  border-radius: 999px;
+}
+
+.type{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
 .searcher{
   height: 75px;
   border-radius: 999px;
@@ -991,4 +1004,15 @@ body {
   border-radius: 16px;
   margin-right: 10px;
   margin-bottom: 10px;
+}
+
+.suggestion-p{
+  cursor: pointer;
+  transition: all 0.3 ease;
+  padding:10px;
+}
+
+.suggestion-p:hover{
+  background-color: #000;
+  color: #fff;
 }

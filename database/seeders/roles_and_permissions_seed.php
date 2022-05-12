@@ -15,7 +15,7 @@ class roles_and_permissions_seed extends Seeder
      */
     public function run()
     {
-        $admin = Role::create(['name' => 'admin']);
+        $admin = Role::create(['name' => 'administrador']);
         $client = Role::create(['name' => 'cliente']);
         $prof_free = Role::create(['name' => 'profesor']);
         $prof_premium = Role::create(['name' => 'profesor-premium']);
