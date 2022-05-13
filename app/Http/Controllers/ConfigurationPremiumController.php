@@ -26,7 +26,7 @@ class ConfigurationPremiumController extends Controller
      */
     public function __construct()
     {
-        $this->middleware(['auth', 'verified']);
+        $this->middleware(['auth', 'verified'])->except('getInvoice');
     }
 
 
@@ -199,7 +199,6 @@ class ConfigurationPremiumController extends Controller
 
         $invoice = Invoice::make('FACTURA')
         ->series('#'.$code)
-        ->taxRate(21)
         ->seller($customer)
         ->buyer($buyer)
         ->currencyCode('EUR')
@@ -212,10 +211,17 @@ class ConfigurationPremiumController extends Controller
         $suscription_history = new ProfessorSuscriptionHistory();
         $suscription_history->user_id = Auth::user()->id;
         $suscription_history->type = $type;
-        $suscription_history->code = $code;
-        $suscription_history->pdf = '#'.$code.'.pdf';
+        $suscription_history->code = '#'.$code;
+        $suscription_history->pdf = $code.'.pdf';
         $suscription_history->ended_at = $ended_at->format('Y-m-d');
         $suscription_history->save();
+
+        $user = Auth::user();
+        $data = [$user, $code.'.pdf'];
+        \Mail::send('mail.send_invoice', $data, function ($message) use($user) {
+            $message->from('encuentrapianista@gmail.com', 'EncuentraPianista');
+            $message->to($user->email)->subject('¡Gracias por su compra!');
+        });
 
         $user = Auth::user();
         $user->updated_at = Carbon::now();
