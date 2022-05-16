@@ -90,7 +90,7 @@ class ContactRequestController extends Controller
         $contact_request->unblocked = 0;
         $contact_request->save();
 
-        return route('home')->with('exito', 'Solicitud de contacto enviada!');
+        return redirect()->route('home')->with('exito', 'Solicitud de contacto enviada!');
         
     }
 

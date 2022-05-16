@@ -69,8 +69,8 @@
           <div class="dropdown-menu dropdown-menu-end">
             <small class="text-center d-block">¡Bienvenido <b>{{\Auth::user()->name}}</b>!</small>
             <div class="dropdown-divider"></div>
-            <a href="#" class="dropdown-item">Todos los usuarios</a>
-            <a href="#" class="dropdown-item">Historial de suscripciones</a>
+            <a href="{{route('dashboard.user')}}" class="dropdown-item">Todos los usuarios</a>
+            <a href="{{route('dashboard.history')}}" class="dropdown-item">Historial de suscripciones</a>
             <div class="dropdown-divider"></div>
             <a href="#" class="dropdown-item"
               onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Cerrar sesión</a>
