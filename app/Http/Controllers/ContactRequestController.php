@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\ContactRequest;
 use Illuminate\Support\Facades\Crypt;
+use App\Models\Price;
 use Carbon\Carbon;
 
 class ContactRequestController extends Controller
@@ -42,6 +43,7 @@ class ContactRequestController extends Controller
     public function detail($id)
     {
         $contact_request = ContactRequest::find($id);
+        $price = Price::where('type', 'contacto')->first();
 
         if($contact_request->user_id != Auth::user()->id && $contact_request->client_id != Auth::user()->id){
             return back();
@@ -52,14 +54,15 @@ class ContactRequestController extends Controller
         }
 
         return view('contact_request.detail', [
-            'contact_request' => $contact_request
+            'contact_request' => $contact_request,
+            'price' => $price,
         ]);
     }
 
     public function save(Request $request)
     {
         $validate = $this->validate($request, [
-            'profesor_id' => ['required', 'string', 'max:255'],
+            'pianista_id' => ['required', 'string', 'max:255'],
             'nombre' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'max:255'],
             'telefono' => ['required', 'alpha_num', 'max:9', 'min:9'],
@@ -76,8 +79,11 @@ class ContactRequestController extends Controller
             ]);
         }
 
+        var_dump($current_price);
+        die();
+
         $contact_request = new ContactRequest();
-        $contact_request->user_id = \Crypt::decryptString($request->get('profesor_id'));
+        $contact_request->user_id = \Crypt::decryptString($request->get('pianista_id'));
         $contact_request->client_id = Auth::user()->id;
         $contact_request->name = $request->get('nombre');
         $contact_request->email = $request->get('email');
@@ -86,7 +92,6 @@ class ContactRequestController extends Controller
         $contact_request->date_event = $request->get('fecha');
         $contact_request->rehearsals = $request->get('ensayo');
         $contact_request->num_rehearsals = $request->get('num_ensayo');
-        $contact_request->message = $request->get('mensaje');
         $contact_request->unblocked = 0;
         $contact_request->save();
 
@@ -100,12 +105,15 @@ class ContactRequestController extends Controller
             $cont_id = \Crypt::decryptString($cont_id);
             $contact_request = ContactRequest::find($cont_id);
 
+            $price = Price::where('type', 'contacto')->first();
+
             if($contact_request){
                 $contact_request->unblocked = 1;
+                $contact_request->price = !is_null($price->discount) ? $price->price - ($price->price * $price->discount / 100) : $price->price;
                 $contact_request->updated_at = Carbon::now();
                 $contact_request->update();
 
-                return redirect()->route('contact_request.index')->with('exito', 'Solicitud de contacto pagada');
+                return redirect()->route('contact_request.detail', ['id' => $contact_request->id])->with('exito', 'Solicitud de contacto pagada');
             }
 
             return route('home');

@@ -1,9 +1,5 @@
-<div class="row mb-3">
-    <label for="geografica" class="col-md-4 col-form-label text-md-end">{{ __('Especialidad') }}*</label>
-
-    <div class="col-md-12">
-        <select id="especialidad" class="especialidad form-control @error('especialidad') is-invalid @enderror" name="especialidad" required>
-            <option selected hidden disabled>Selecciona un tipo de especialidad...</option>
+<select id="especialidad" class="especialidad @error('especialidad') is-invalid @enderror" name="especialidad" required>
+            <option selected hidden disabled>Especialidad</option>
             <option value="Acordeón">Acordeón</option>
             <option value="Arpa">Arpa</option>
             <option value="Cante Flamenco">Cante Flamenco</option>
@@ -43,5 +39,3 @@
                 <strong>{{ $message }}</strong>
             </span>
         @enderror
-    </div>
-</div>

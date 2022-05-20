@@ -4,15 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ProfessorSuscriptionHistory extends Model
+class ProfessorAccompaniment extends Model
 {
-    protected $table = 'professor_suscriptions_history';
+    protected $table = 'professor_accompaniments';
     protected $fillable = [
         'user_id',
-        'type',
-        'ended_at',
-        'price',
-        'pdf',
+        'accompaniment'
     ];
 
     public function user(){

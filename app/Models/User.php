@@ -58,6 +58,10 @@ class User extends Authenticatable implements MustVerifyEmail
     	return $this->hasMany(ProfessorSpecialty::class);
     }
 
+    public function professor_accompaniments(){
+    	return $this->hasMany(ProfessorAccompaniment::class);
+    }
+
     public function professor_languages(){
     	return $this->hasMany(ProfessorLanguage::class);
     }

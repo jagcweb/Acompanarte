@@ -12,7 +12,7 @@ class SearchProfessorController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['auth', 'verified']);
+        $this->middleware(['auth', 'verified'])->except('index', 'getLocation');
     }
 
 
@@ -20,11 +20,13 @@ class SearchProfessorController extends Controller
     {
         $validate = $this->validate($request, [
             'location' => ['required', 'string', 'max:255'],
-            'especialidad' => ['required', 'string', 'max:255']
+            'especialidad' => ['required', 'string', 'max:255'],
+            'acompañamiento' => ['required', 'string', 'max:255']
         ]);
 
         $location = $request->get('location');
         $especialidad = $request->get('especialidad');
+        $acompañamiento = $request->get('acompañamiento');
 
         $location_data = PostalCode::where('poblacion', $location)->first();
 
@@ -40,8 +42,12 @@ class SearchProfessorController extends Controller
             $q->where('specialty', $especialidad);
         }
         )
+        ->whereHas('professor_accompaniments', function($q) use($acompañamiento) {
+            $q->where('accompaniment', $acompañamiento);
+        }
+        )
         ->whereHas('roles', function($q) {
-            $q->orderBy('id', 'desc');
+            $q->orderBy('name', 'desc');
         }
         )
         ->orderBy('id', 'desc')
@@ -50,7 +56,8 @@ class SearchProfessorController extends Controller
         return view('search_professor.index', [
             'professors' => $professors,
             'location' => $location,
-            'especialidad' => $especialidad
+            'especialidad' => $especialidad,
+            'acompañamiento' => $acompañamiento
         ]);
     }
 

@@ -132,6 +132,23 @@
 
                         @include('partials.specialty2')
 
+                        @include('partials.accompaniment2')
+
+                        <div class="row mb-3 mt-4 ">
+                            <label for="precio" class="col-md-4 col-form-label text-md-end">{{ __('Precio €/h')
+                                }}</label>
+
+                            <div class="col-md-12">
+                                <input id="precio" type="number" class="form-control precio" name="precio" step="0.1" min="1" @if(Auth::user()->config_professor->price) value="{{Auth::user()->config_professor->price}}" @endif />
+
+                                @error('precio')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
+                            </div>
+                        </div>
+
                         <p class=" mb-3 mt-4 w-100 text-center font-22">Otra formación y experiencia</p>
 
                         @foreach (json_decode(Auth::user()->config_professor->other_degrees ,true) as $i=>$other_degree)

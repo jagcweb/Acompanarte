@@ -27,27 +27,27 @@ Route::get('/mi-perfil/get-image/{image}', [App\Http\Controllers\UserController:
 
 Route::get('/configuracion', [App\Http\Controllers\ConfigurationController::class, 'index'])->name('configuration.index');
 
-Route::get('/configuracion-profesor', [App\Http\Controllers\ConfigurationProfessorController::class, 'index'])->name('configuration_professor.index');
-Route::post('/configuracion-profesor/guardar', [App\Http\Controllers\ConfigurationProfessorController::class, 'save'])->name('configuration_professor.save');
-Route::post('/configuracion-profesor/actualizar', [App\Http\Controllers\ConfigurationProfessorController::class, 'update'])->name('configuration_professor.update');
-Route::get('/configuracion-profesor/get-province/{community}', [App\Http\Controllers\ConfigurationProfessorController::class, 'getProvinces'])->name('configuration.get_province');
-Route::get('/configuracion-profesor/get-city/{province}', [App\Http\Controllers\ConfigurationProfessorController::class, 'getCity'])->name('configuration.get_city');
+Route::get('/configuracion-pianista', [App\Http\Controllers\ConfigurationProfessorController::class, 'index'])->name('configuration_professor.index');
+Route::post('/configuracion-pianista/guardar', [App\Http\Controllers\ConfigurationProfessorController::class, 'save'])->name('configuration_professor.save');
+Route::post('/configuracion-pianista/actualizar', [App\Http\Controllers\ConfigurationProfessorController::class, 'update'])->name('configuration_professor.update');
+Route::get('/configuracion-pianista/get-province/{community}', [App\Http\Controllers\ConfigurationProfessorController::class, 'getProvinces'])->name('configuration.get_province');
+Route::get('/configuracion-pianista/get-city/{province}', [App\Http\Controllers\ConfigurationProfessorController::class, 'getCity'])->name('configuration.get_city');
 
 Route::get('/configuracion-premium', [App\Http\Controllers\ConfigurationPremiumController::class, 'index'])->name('configuration_premium.index');
 Route::get('/configuracion-premium/cambiar-renovacion', [App\Http\Controllers\ConfigurationPremiumController::class, 'changeAutoRenew'])->name('configuration_premium.auto_renew');
 Route::get('/configuracion-premium/payment/{param}', [App\Http\Controllers\ConfigurationPremiumController::class, 'payment'])->name('configuration_premium.payment');
 Route::get('/configuracion-premium/payment2/{param}', [App\Http\Controllers\ConfigurationPremiumController::class, 'payment2'])->name('configuration_premium.payment2');
-Route::get('/configuracion-premium/premium/{param}/{auto_renew?}', [App\Http\Controllers\ConfigurationPremiumController::class, 'premium'])->name('configuration_premium.premium');
+Route::get('/configuracion-premium/premium/{type}/{auto_renew?}', [App\Http\Controllers\ConfigurationPremiumController::class, 'premium'])->name('configuration_premium.premium');
 Route::get('/configuracion-premium/free', [App\Http\Controllers\ConfigurationPremiumController::class, 'free'])->name('configuration_premium.free');
 Route::get('/configuracion-premium/get-invoice/{pdf}', [App\Http\Controllers\ConfigurationPremiumController::class, 'getInvoice'])->name('configuration_premium.get_invoice');
 
-Route::post('/buscar-profesor', [App\Http\Controllers\SearchProfessorController::class, 'index'])->name('search_professor.index');
-Route::get('/buscar-profesor/autocomplete-location/{value}', [App\Http\Controllers\SearchProfessorController::class, 'getLocation'])->name('search_professor.get_location');
+Route::post('/buscar-pianista', [App\Http\Controllers\SearchProfessorController::class, 'index'])->name('search_professor.index');
+Route::get('/buscar-pianista/autocomplete-location/{value}', [App\Http\Controllers\SearchProfessorController::class, 'getLocation'])->name('search_professor.get_location');
 
 Route::get('/ver-solicitudes', [App\Http\Controllers\ContactRequestController::class, 'index'])->name('contact_request.index');
 Route::get('/ver-solicitud/{id}', [App\Http\Controllers\ContactRequestController::class, 'detail'])->name('contact_request.detail');
 Route::post('/enviar-solicitud', [App\Http\Controllers\ContactRequestController::class, 'save'])->name('contact_request.save');
-Route::get('/actualizar-solicitud/{param}', [App\Http\Controllers\ContactRequestController::class, 'update'])->name('contact_request.update');
+Route::get('/actualizar-solicitud/{type}', [App\Http\Controllers\ContactRequestController::class, 'update'])->name('contact_request.update');
 
 
 //TEST
@@ -59,3 +59,14 @@ Route::get('/test', [App\Http\Controllers\TestController::class, 'index'])->name
 Route::get('/dashboard', [App\Http\Controllers\Admin\AdminController::class, 'index'])->name('dashboard');
 Route::get('/dashboard/usuarios', [App\Http\Controllers\Admin\AdminController::class, 'users'])->name('dashboard.user');
 Route::get('/dashboard/historial', [App\Http\Controllers\Admin\AdminController::class, 'history'])->name('dashboard.history');
+Route::get('/dashboard/precios', [App\Http\Controllers\Admin\AdminController::class, 'price'])->name('dashboard.price');
+
+
+Route::get('/change-rol-pianista/{id}', [App\Http\Controllers\Admin\UserController::class, 'change_rol_pianista'])->name('user.change_pianista');
+Route::get('/change-rol-premium/{id}', [App\Http\Controllers\Admin\UserController::class, 'change_rol_premium'])->name('user.change_premium');
+Route::get('/ban/{id}', [App\Http\Controllers\Admin\UserController::class, 'ban'])->name('user.ban');
+Route::get('/unban/{id}', [App\Http\Controllers\Admin\UserController::class, 'unban'])->name('user.unban');
+Route::get('/verify/{id}', [App\Http\Controllers\Admin\UserController::class, 'verify'])->name('user.verify');
+Route::get('/unverify/{id}', [App\Http\Controllers\Admin\UserController::class, 'unverify'])->name('user.unverify');
+
+Route::post('/update-prices', [App\Http\Controllers\Admin\PriceController::class, 'update'])->name('price.update');

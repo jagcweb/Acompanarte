@@ -53,7 +53,12 @@
         <a href="{{route('home')}}"><h1>Acompañarte</h1></a>
         @if(Auth::user())
           <ul class="nav navbar-nav ms-auto">
-            @if(Auth::user()->getRoleNames()[0] == "profesor-premium")
+            <li class="nav-item">
+              <a href="https://google.es" target="_blank" class="nav-link">
+                Blog <i class="fa-solid fa-arrow-up-right-from-square"></i>
+              </a>
+            </li>
+            @if(Auth::user()->getRoleNames()[0] == "pianista-premium")
             <li class="nav-item" style="margin-top:-4px; color:#e8b210;">PREMIUM </li>
             @endif
             <li class="nav-item dropdown dropdown-user">
@@ -67,16 +72,16 @@
               <div class="dropdown-menu dropdown-menu-end">
                   <small class="text-center d-block">¡Bienvenido <b>{{\Auth::user()->name}}</b>!</small>
                   <div class="dropdown-divider"></div>
-                  @if(\Auth::user()->getRoleNames()[0] == "profesor-premium")
+                  @if(\Auth::user()->getRoleNames()[0] == "pianista-premium")
                   <a href="{{route('configuration_premium.index')}}" class="dropdown-item">Datos de tu cuenta premium</a>
                   <div class="dropdown-divider"></div>
                   @endif
-                  @if(\Auth::user()->getRoleNames()[0] == "profesor")
+                  @if(\Auth::user()->getRoleNames()[0] == "pianista")
                   <a href="{{route('configuration_premium.index')}}" class="dropdown-item">Hazte Premium</a>
                   <div class="dropdown-divider"></div>
                   @endif
                   @if(\Auth::user()->getRoleNames()[0] != "cliente")
-                  <a href="{{route('configuration_professor.index')}}" class="dropdown-item">Cuenta de profesor</a>
+                  <a href="{{route('configuration_professor.index')}}" class="dropdown-item">Cuenta de pianista</a>
                   <div class="dropdown-divider"></div>
                   @endif
                   <a href="{{route('contact_request.index')}}" class="dropdown-item">Solicitudes de contacto</a>
@@ -90,17 +95,21 @@
                 </form>
               </div>
             </li>
+            @if(Auth::user()->verified == 1)
+            <li class="nav-item" title="Verificado" style="margin-top:-2px; font-size:18px; color:#1b82d6;"><i class="fa-solid fa-circle-check"></i></li>
+            @endif
           </ul>
         @else
         <ul>
-          <li class="nav-item dropdown">
-            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-              Registrarse como<i class="fa-solid fa-caret-down ml-2"></i>
+          <li class="nav-item">
+            <a href="https://google.es" class="nav-link">
+              Blog <i class="fa-solid fa-arrow-up-right-from-square"></i>
             </a>
-              <div class="dropdown-menu dropdown-menu-end">
-                <a href="{{route('register.index', ['rol' => 'cliente'])}}" class="dropdown-item">Cliente</a>
-                <a href="{{route('register.index', ['rol' => 'profesor'])}}" class="dropdown-item">Profesor</a>
-            </div>
+          </li>
+          <li class="nav-item">
+            <a href="{{route('register.index', ['rol' => 'pianista-premium'])}}" class="nav-link">
+              Soy pianista
+            </a>
           </li>
           <li><a href="{{route('login')}}">Iniciar sesión</a></li>
         </ul>

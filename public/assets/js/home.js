@@ -2,7 +2,7 @@ $(".searcher-input").on("keyup", function(e) {
     const searcher = $(this).val();
     const suggestions = $('#suggestions');
     $.ajax({
-        url: `buscar-profesor/autocomplete-location/${searcher}`,
+        url: `buscar-pianista/autocomplete-location/${searcher}`,
         method: 'GET'
     }).done(function (res) {
         let values = JSON.parse(res);

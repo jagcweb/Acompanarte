@@ -96,7 +96,7 @@
 
                             <div class="col-md-12">
                                 <select id="formacion" class="form-control @error('formacion') is-invalid @enderror"
-                                    name="formacion">
+                                    name="formacion"required>
                                     <option selected hidden disabled>Selecciona una formación...</option>
                                     <option value="Título Profesional">Título Profesional</option>
                                     <option value="Grado Superior">Grado Superior</option>
@@ -112,6 +112,23 @@
                         </div>
 
                         @include('partials.specialty')
+
+                        @include('partials.accompaniment')
+
+                        <div class="row mb-3 mt-4 ">
+                            <label for="precio" class="col-md-4 col-form-label text-md-end">{{ __('Precio €/h')
+                                }}</label>
+
+                            <div class="col-md-12">
+                                <input id="precio" type="number" class="form-control precio" name="precio" step="0.1" min="1" />
+
+                                @error('precio')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
+                            </div>
+                        </div>
 
                         <p class=" mb-3 mt-4 w-100 text-center font-22">Otra formación y experiencia</p>
                         <div class="row mb-3">

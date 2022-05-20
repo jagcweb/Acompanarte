@@ -7,6 +7,7 @@ use App\Models\PostalCode;
 use Illuminate\Support\Facades\Auth;
 use App\Models\ConfigurationProfessor;
 use App\Models\ProfessorSpecialty;
+use App\Models\ProfessorAccompaniment;
 use App\Models\ProfessorLanguage;
 
 class ConfigurationProfessorController extends Controller
@@ -42,8 +43,10 @@ class ConfigurationProfessorController extends Controller
             'disponibilidad' => ['required', 'string', 'max:255'],
             'especialidad' => ['required', 'array', 'max:255'],
             'formacion' => ['required', 'string', 'max:255'],
+            'precio' => ['nullable', 'numeric', 'regex:/^\d+(\.\d{1,1})?$/'],
             'otros' => ['nullable', 'array', 'max:255'],
             'idiomas' => ['nullable', 'array', 'max:255'],
+            'acompañamiento' => ['required', 'array', 'max:255'],
             'nivel' => ['nullable', 'array', 'max:255'],
             'exp' => ['nullable', 'string', 'max:255'],
         ]);
@@ -85,6 +88,7 @@ class ConfigurationProfessorController extends Controller
         $config->education = $request->get('formacion');
         $config->other_degrees =  json_encode($request->get('otros'), JSON_FORCE_OBJECT);
         $config->experience = $request->get('exp');
+        $config->price = $request->get('precio');
         $config->save();
 
         foreach ($request->get('especialidad') as $especialidad){
@@ -92,6 +96,13 @@ class ConfigurationProfessorController extends Controller
             $specialty->user_id = Auth::user()->id;
             $specialty->specialty = $especialidad;
             $specialty->save();
+        }
+
+        foreach ($request->get('acompañamiento') as $acompañamiento){
+            $accompaniment = new ProfessorAccompaniment();
+            $accompaniment->user_id = Auth::user()->id;
+            $accompaniment->accompaniment = $acompañamiento;
+            $accompaniment->save();
         }
 
         for($i=0; $i < sizeof($request->get('idiomas')); $i++){
@@ -113,6 +124,8 @@ class ConfigurationProfessorController extends Controller
             'disponibilidad' => ['required', 'string', 'max:255'],
             'especialidad' => ['required', 'array', 'max:255'],
             'formacion' => ['required', 'string', 'max:255'],
+            'precio' => ['nullable', 'numeric', 'regex:/^\d+(\.\d{1,1})?$/'],
+            'acompañamiento' => ['required', 'array', 'max:255'],
             'otros' => ['nullable', 'array', 'max:255'],
             'idiomas' => ['nullable', 'array', 'max:255'],
             'nivel' => ['nullable', 'array', 'max:255'],
@@ -156,6 +169,7 @@ class ConfigurationProfessorController extends Controller
         $config->education = $request->get('formacion');
         $config->other_degrees =  json_encode($request->get('otros'), JSON_FORCE_OBJECT);
         $config->experience = $request->get('exp');
+        $config->price = $request->get('precio');
         $config->update();
 
         $especialties = ProfessorSpecialty::where('user_id', Auth::user()->id)->delete();
@@ -165,6 +179,15 @@ class ConfigurationProfessorController extends Controller
             $specialty->user_id = Auth::user()->id;
             $specialty->specialty = $especialidad;
             $specialty->save();
+        }
+
+        $accompaniments = ProfessorAccompaniment::where('user_id', Auth::user()->id)->delete();
+        foreach ($request->get('acompañamiento') as $acompañamiento){
+
+            $accompaniment = new ProfessorAccompaniment();
+            $accompaniment->user_id = Auth::user()->id;
+            $accompaniment->accompaniment = $acompañamiento;
+            $accompaniment->save();
         }
 
         $languages = ProfessorLanguage::where('user_id', Auth::user()->id)->delete();

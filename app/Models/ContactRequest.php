@@ -16,7 +16,7 @@ class ContactRequest extends Model
         'date_event',
         'rehearsals',
         'num_rehearsals',
-        'message',
+        'price',
         'unblocked',
     ];
 

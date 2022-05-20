@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title') Convertirme a Profesor Premium @endsection
+@section('title') Convertirme a pianista Premium @endsection
 
 @section('content')
 
@@ -8,11 +8,11 @@
         <section class="payment-form dark">
             <div class="container">
                 <div class="block-heading">
-                    @if(!is_object($param))
-                    <p>Pago de suscripción profesor premium @if($cantidad = 19.90) trimestral @else anual @endif por {{$cantidad}}€</p>
+                    @if(str_contains(url()->current(), '/payment2'))
+                    <p>Pago de suscripción pianista premium {{$type}} por {{$cantidad}}€</p>
                     <p>Acompañarte usa Stripe como plataforma de pago y no almacena ningún tipo de información.</p>
                     @else
-                    <p>Pago de {{$cantidad}} de solicitud de contacto</p>
+                    <p>Pago de {{$cantidad}}€ de solicitud de contacto</p>
                     <p>Acompañarte usa Stripe como plataforma de pago y no almacena ningún tipo de información.</p>
                     @endif
                 </div>
@@ -35,13 +35,13 @@
                         <!-- We'll put the error messages in this element -->
                     </div>
                     <div class="form-group pt-2">
-                        @if(!is_object($param))
+                        @if(str_contains(url()->current(), '/payment2'))
                         <button id="submit" class="btn btn-block btn-success paynow">Suscribirme</button>
                         @else
                         <button id="submit" class="btn btn-block btn-success paynow">Pagar solicitud de contacto</button>
                         @endif
                     </div>
-                    @if(!is_object($param))
+                    @if(str_contains(url()->current(), '/payment2'))
                     <div class="col-md-12 d-flex align-items-center flex-direction-row">
                         <input
                             style="margin-top: 0px;"
@@ -141,14 +141,14 @@
                         setTimeout(function(){
                             if(!document.referrer.includes('ver-solicitud')){
                                 if (auto_renew == 1) {
-                                    window.location.href = "{{ route('configuration_premium.premium', ['param' => \Crypt::encryptString($param), 'auto_renew' => 1]) }}";
+                                    window.location.href = "{{ route('configuration_premium.premium', ['type' => \Crypt::encryptString($type), 'auto_renew' => 1]) }}";
                                 }else{
-                                    window.location.href = "{{ route('configuration_premium.premium', ['param' => \Crypt::encryptString($param), 'auto_renew' => NULL]) }}";
+                                    window.location.href = "{{ route('configuration_premium.premium', ['type' => \Crypt::encryptString($type), 'auto_renew' => NULL]) }}";
                                 }
 
                                 
                             }else{
-                                window.location.href = `{{ route('contact_request.update', ['param' => \Crypt::encryptString($param)]) }}`;
+                                window.location.href = `{{ route('contact_request.update', ['type' => \Crypt::encryptString($type)]) }}`;
                             }
                         }, 2000);
                     }

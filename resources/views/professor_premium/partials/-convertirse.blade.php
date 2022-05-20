@@ -37,7 +37,11 @@
                     Suscripción trimestral
                 </div>
                 <div class="card-body">
-                    <p>19.90€</p>
+                    @if(!is_null($quarterly->discount))
+                    <p><del>{{number_format($quarterly->price, 2)}}€</del> - {{number_format($quarterly->price - ($quarterly->price * $quarterly->discount / 100), 2)}}€</p>
+                    @else
+                    <p>{{number_format($quarterly->price, 2)}}€</p>
+                    @endif
                     <a href="{{ route('configuration_premium.payment2', ['param' => 'trimestral']) }}" class="w-100 btn btn-dark text-center mt-3" style="color:#fff;">Elegir suscripción trismestral</a>
                 </div>
             </div>
@@ -49,7 +53,11 @@
                     Suscripción anual
                 </div>
                 <div class="card-body">
-                    <p>49.90€</p>
+                    @if(!is_null($annual->discount))
+                    <p><del>{{number_format($annual->price, 2)}}€</del> - {{number_format($annual->price - ($annual->price * $annual->discount / 100), 2)}}€</p>
+                    @else
+                    <p>{{number_format($annual->price, 2)}}€</p>
+                    @endif
                     <a href="{{ route('configuration_premium.payment2', ['param' => 'anual']) }}" class="w-100 btn btn-dark text-center mt-3" style="color:#fff;">Elegir suscripción anual</a>
 
                 </div>

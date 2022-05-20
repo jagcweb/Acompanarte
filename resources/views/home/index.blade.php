@@ -6,22 +6,15 @@
 
 @section('content')
 <div class="s004">
-    @if(!Auth::user() || Auth::user()->getRoleNames()[0] == 'cliente')
     <form method="POST" action="{{route('search_professor.index')}}">
         @csrf
         <fieldset>
         <legend>Encuentra a tu pianista</legend>
-        @include('partials.specialty-select')
-        <div class="inner-form mt-3">
-            <div class="input-field searcher">
-            {{-- <input class="form-control" id="choices-text-preset-values" type="text" placeholder="Escribe una localidad..." /> --}}
-            <input class="form-control searcher-input" type="text" name="location" placeholder="Escribe una localidad..." />
-            <button class="btn-search" type="submit">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 26 26">
-                <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path>
-                </svg>
-            </button>
-            </div>
+        <div class="searcher-div">
+            @include('partials.specialty-select')
+            @include('partials.accompaniment-select')
+            <input class="searcher-input" type="text" name="location" placeholder="Localidad" />
+            <button class="btn-search" type="submit">Buscar</button>
         </div>
         <div class="suggestion-wrap">
             {{-- <span>Test</span>
@@ -35,14 +28,12 @@
                 
         </div>
     </form>
-    @else
-        @if(!Auth::user()->config_professor)
-        <p>Rellena la <a href="{{route('configuration_professor.index')}}">configuración</a> de tu cuenta para aparecer a clientes!</p>
-        @else
-        <p>Ya eres mostrado a clientes!</p>
-        @endif
-    @endif
 </div>
+@if(Auth::user() && !Auth::user()->config_professor)
+<p class="w-100 text-center">Rellena la <a href="{{route('configuration_professor.index')}}">configuración</a> de tu cuenta para aparecer a clientes!</p>
+@else
+<p class="w-100 text-center">Ya eres mostrado a clientes!</p>
+@endif
 <script src="{{url('assets')}}/js/extention/choices.js"></script>
 <script src="{{url('assets')}}/js/home.js"></script>
 <script src="{{url('assets')}}/js/specialty.js"></script>

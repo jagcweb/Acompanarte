@@ -9,6 +9,7 @@ use Stripe\Stripe;
 use App\Models\ContactRequest;
 use App\Models\ProfessorSuscription;
 use App\Models\ProfessorSuscriptionHistory;
+use App\Models\Price;
 use Illuminate\Support\Facades\Storage;
 use LaravelDaily\Invoices\Invoice;
 use Illuminate\Http\Response;
@@ -39,8 +40,14 @@ class ConfigurationPremiumController extends Controller
     {
         $history = ProfessorSuscriptionHistory::where('user_id', Auth::user()->id)->get();
 
+        $quarterly = Price::where('type', 'trimestral')->first();
+
+        $annual = Price::where('type', 'anual')->first();
+
         return view('professor_premium.index', [
-            'history' => $history
+            'history' => $history,
+            'quarterly' => $quarterly,
+            'annual' => $annual,
         ]);
     }
 
@@ -74,7 +81,10 @@ class ConfigurationPremiumController extends Controller
             return back();
         }
 
-        $cantidad = $param;
+        $price = Price::where('type', 'contacto')->first();
+
+        $cantidad = !is_null($price->discount) ? $price->price - ($price->price * $price->discount / 100) : $price->price;
+        $type = $param;
 
         Stripe::setApiKey("sk_test_51Kksx2HXud5qSDIw33mrhiEBZOvYYGJQobttbxKWfrkWeSSFb5D11A6BgNVRE8FFHEQtzQYZQZgVvoipSgYFg06A0042HetzO7");
 
@@ -86,7 +96,7 @@ class ConfigurationPremiumController extends Controller
 
 
         return view('professor_premium.payment', [
-            'param' => $param,
+            'type' => $type,
             'client_secret'=> $intent->client_secret,
             'cantidad'=> $cantidad,
         ]);
@@ -100,11 +110,13 @@ class ConfigurationPremiumController extends Controller
 
                 switch ($param){
                     case 'trimestral':
-                        $param = 19.90;
+                        $price = Price::where('type', 'trimestral')->first();
+                        $param = !is_null($price->discount) ? $price->price - ($price->price * $price->discount / 100) : $price->price;
                         break;
                         
                     case 'anual':
-                        $param = 49.90;
+                        $price = Price::where('type', 'anual')->first();
+                        $param = !is_null($price->discount) ? $price->price - ($price->price * $price->discount / 100) : $price->price;
                         break;
 
                     default:
@@ -116,6 +128,7 @@ class ConfigurationPremiumController extends Controller
         }
 
         $cantidad = $param;
+        $type = $price->type;
 
         Stripe::setApiKey("sk_test_51Kksx2HXud5qSDIw33mrhiEBZOvYYGJQobttbxKWfrkWeSSFb5D11A6BgNVRE8FFHEQtzQYZQZgVvoipSgYFg06A0042HetzO7");
 
@@ -127,24 +140,27 @@ class ConfigurationPremiumController extends Controller
 
 
         return view('professor_premium.payment', [
-            'param' => $param,
             'client_secret'=> $intent->client_secret,
             'cantidad'=> $cantidad,
+            'type' => $type,
+
         ]);
     }
 
-    public function premium($param, $auto_renew = null)
+    public function premium($type, $auto_renew = null)
     {
-        $param = \Crypt::decryptString($param);
+        $type = \Crypt::decryptString($type);
 
-        switch ($param) {
-            case 19.90:
-                $type = 'trimestral';
+        $price = Price::where('type', $type)->first();
+
+        $current_price = !is_null($price->discount) ? $price->price - ($price->price * $price->discount / 100) : $price->price;
+
+        switch ($type) {
+            case 'trimestral':
                 $ended_at = Carbon::now()->addMonth(3);
                 break;
 
-            case 49.90:
-                $type = 'anual';
+            case 'anual':
                 $ended_at = Carbon::now()->addYear(1);
                 break;
                 
@@ -154,13 +170,12 @@ class ConfigurationPremiumController extends Controller
         $suscription = new ProfessorSuscription();
         $suscription->user_id = Auth::user()->id;
         $suscription->type = $type;
+        $suscription->price = $current_price;
         $suscription->auto_renew = $auto_renew;
         $suscription->ended_at = $ended_at->format('Y-m-d');
         $suscription->save();
 
         $last_invoice = ProfessorSuscriptionHistory::orderBy('id', 'desc')->first();
-
-        var_dump($last_invoice);
 
         $code = is_object($last_invoice) ? "AcompañARTE.".explode(".", $last_invoice->code)[1]+1 : "AcompañARTE.1";
 
@@ -186,13 +201,13 @@ class ConfigurationPremiumController extends Controller
             (new InvoiceItem())
                 ->title('Pago por suscripción')
                 ->description($description)
-                ->pricePerUnit($param)
-                ->quantity(1),
-                //->discount(10),
+                ->pricePerUnit($price->price)
+                ->quantity(1)
+                ->discount($price->discount),
         ];
 
         $notes = [
-            "Compra de su suscripción ". ucfirst($type). ' por valor de '.$param. '€',
+            "Compra de su suscripción ". ucfirst($type). ' por valor de '.$current_price. '€',
         ];
 
         $notes = implode($notes);
@@ -205,29 +220,30 @@ class ConfigurationPremiumController extends Controller
         ->addItems($items)
         ->notes($notes)
         ->filename($code)
-        ->totalAmount($param)
+        ->totalAmount($current_price)
         ->save('invoices');
 
         $suscription_history = new ProfessorSuscriptionHistory();
         $suscription_history->user_id = Auth::user()->id;
         $suscription_history->type = $type;
         $suscription_history->code = '#'.$code;
+        $suscription_history->price = $current_price;
         $suscription_history->pdf = $code.'.pdf';
         $suscription_history->ended_at = $ended_at->format('Y-m-d');
         $suscription_history->save();
 
         $user = Auth::user();
-        $data = [$user, $code.'.pdf'];
+        $data = ['user' => $user, 'code' => $code.'.pdf'];
+
         \Mail::send('mail.send_invoice', $data, function ($message) use($user) {
             $message->from('encuentrapianista@gmail.com', 'EncuentraPianista');
             $message->to($user->email)->subject('¡Gracias por su compra!');
         });
 
-        $user = Auth::user();
         $user->updated_at = Carbon::now();
         $user->update();
         $user->removeRole($user->getRoleNames()[0]);
-        $user->assignRole('profesor-premium');
+        $user->assignRole('pianista-premium');
 
         return redirect()->route('configuration_premium.index')->with('exito', 'Enhorabuena! Ahora eres un usuario premium');
     }
@@ -238,7 +254,7 @@ class ConfigurationPremiumController extends Controller
         $user->updated_at = Carbon::now();
         $user->update();
         $user->removeRole($user->getRoleNames()[0]);
-        $user->assignRole('profesor');
+        $user->assignRole('pianista');
 
         return back()->with('exito', 'Ahora eres un usuario free');
     }

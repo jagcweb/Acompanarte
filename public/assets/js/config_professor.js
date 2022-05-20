@@ -24,7 +24,7 @@ $("#disponibilidad").change(function() {
             $("#comunidad").change(function() {
                 let comunidad = $(this).val();
                 $.ajax({
-                    url: `configuracion-profesor/get-province/${comunidad}`,
+                    url: `configuracion-pianista/get-province/${comunidad}`,
                     method: 'GET'
                 }).done(function(res) {
                     const provincias = JSON.parse(res);
@@ -48,7 +48,7 @@ $("#disponibilidad").change(function() {
             $("#comunidad").change(function() {
                 let comunidad = $(this).val();
                 $.ajax({
-                    url: `configuracion-profesor/get-province/${comunidad}`,
+                    url: `configuracion-pianista/get-province/${comunidad}`,
                     method: 'GET'
                 }).done(function(res) {
                     const provincias = JSON.parse(res);
@@ -63,7 +63,7 @@ $("#disponibilidad").change(function() {
             $("#provincia").change(function() {
                 if (provincia.val()) {
                     $.ajax({
-                        url: `configuracion-profesor/get-city/${provincia.val()}`,
+                        url: `configuracion-pianista/get-city/${provincia.val()}`,
                         method: 'GET'
                     }).done(function(res) {
                         const poblaciones = JSON.parse(res);

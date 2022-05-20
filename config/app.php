@@ -176,6 +176,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         Spatie\Permission\PermissionServiceProvider::class,
         App\Providers\GetSpecialtiesServiceProvider::class,
+        App\Providers\GetAccompanimentsServiceProvider::class,
 
     ],
 
@@ -232,6 +233,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'GetSpecialties' => App\Helpers\GetSpecialties::class,
+        'GetAccompaniments' => App\Helpers\GetAccompaniments::class,
 
     ],
 

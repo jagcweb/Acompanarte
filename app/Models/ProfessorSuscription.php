@@ -11,7 +11,8 @@ class ProfessorSuscription extends Model
         'user_id',
         'type',
         'auto_renew',
-        'ended_at'
+        'ended_at',
+        'price'
     ];
 
     public function user(){

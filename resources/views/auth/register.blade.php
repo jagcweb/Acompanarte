@@ -5,6 +5,10 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             <h2 class="text-center d-block">Regístrate como {{ucfirst($rol)}}</h2>
+            @if($rol == 'pianista-premium')
+                <span class="d-block mt-3 w-100 text-center">El registro como pianista <i>free</i> se hará como <i>premium</i> (gratuito todo 2022)</span>
+                <small class="d-block w-100 text-center">El 1 de Enero de 2023 automáticamente volverás al plan gratuito.</small>
+            @endif
             <div class="card">
                 
                 <div class="card-body">

@@ -65,6 +65,23 @@
                             </div>
                         </div>
                     </form>
+
+                    <p class="w-100 text-center mt-3" style="font-size: 20px;">Iniciar sesión con Google</p>
+
+                    <p class="w-100 text-center" style="font-size: 20px;">Iniciar sesión con Facebook</p>
+
+                    <div class="mt-4" style="display: flex; width: 100%; justify-content: center; align-items: center; flex-direction: row;">
+                        <span>¿No tienes cuenta?</span>
+                        <li class="nav-item dropdown ml-2" style="list-style: none;">
+                            <a style="color:#000; border:1px solid #ccc;" href="{{route('register.index', ['rol' => 'cliente'])}}" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                                ¡Regístrate!
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-end">
+                                <a href="{{route('register.index', ['rol' => 'cliente'])}}" class="dropdown-item">Cliente</a>
+                                <a href="{{route('register.index', ['rol' => 'pianista'])}}" class="dropdown-item">pianista</a>
+                            </div>
+                        </li>
+                    </div>
                 </div>
             </div>
         </div>

@@ -2,7 +2,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header bg-light">
-                <h4 class="modal-title text-center" id="myCenterModalLabel">Enviar solicitud de contacto a <b>{{$prof->fullname}}</b></h4>
+                <h4 class="modal-title text-center" id="myCenterModalLabel">Enviar solicitud de contacto a <b>{{$prof->name}}</b></h4>
                 <button type="button" data-dismiss="modal" aria-hidden="true"><i class="fas fa-times"></i></button>
             </div>
             <div class="modal-body p-4">
@@ -44,27 +44,6 @@
                         <input type="text" id="telefono" class="form-control @error('telefono') is-invalid @enderror" name="telefono" maxlength="9" minlength="9" required/>
 
                         @error('telefono')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
-                </div>
-
-                <div class="row mb-3">
-                    <label for="acompañamiento" class="col-md-4 col-form-label text-md-end">{{ __('Acompañamiento *') }}</label>
-
-                    <div class="col-md-12">
-                        <select id="acompañamiento" class="form-control @error('acompañamiento') is-invalid @enderror" name="acompañamiento">
-                            <option selected hidden disabled></option>
-                            <option value="Pruebas de acceso a Conservatorio Profesional">Pruebas de acceso a Conservatorio Profesional</option>
-                            <option value="Pruebas de acceso a Conservatorio Superior">Pruebas de acceso a Conservatorio Superior</option>
-                            <option value="Oposiciones">Oposiciones</option>
-                            <option value="Conciertos">Conciertos</option>
-                            <option value="Otros">Otros</option>
-                        </select>
-
-                        @error('acompañamiento')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
@@ -118,21 +97,7 @@
                     </div>
                 </div>
 
-                <div class="row mb-3">
-                    <label for="mensaje" class="col-md-4 col-form-label text-md-end">{{ __('Mensaje (opcional)') }}</label>
-
-                    <div class="col-md-12">
-                        <textarea id="mensaje" class="form-control @error('mensaje') is-invalid @enderror" name="mensaje"></textarea>
-
-                        @error('mensaje')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
-                </div>
-
-                <input type="text" class="form-control" name="profesor_id" value="{{\Crypt::encryptString($prof->id)}}" required hidden/>
+                <input type="text" class="form-control" name="pianista_id" value="{{\Crypt::encryptString($prof->id)}}" required hidden/>
 
                 <input type="submit" class='btn btn-dark waves-effect waves-dark w-100' value="Enviar solicitud">
             </form>

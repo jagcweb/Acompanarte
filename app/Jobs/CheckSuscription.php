@@ -67,8 +67,8 @@ class CheckSuscription implements ShouldQueue
                     $suscription_history->ended_at = $ended_at;
                     $suscription_history->save();
                 }else{
-                    $sus->user->removeRole('profesor-premium');
-                    $sus->user->assignRole('profesor');
+                    $sus->user->removeRole('pianista-premium');
+                    $sus->user->assignRole('pianista');
                     $sus->delete();
                 }
             }
