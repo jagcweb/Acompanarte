@@ -4,21 +4,17 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Rating extends Model
+class SearchHistory extends Model
 {
-    protected $table = 'ratings';
+    protected $table = 'search_history';
     protected $fillable = [
         'user_id',
-        'client_id',
-        'rate',
-        'comment',
+        'location',
+        'specialty',
+        'accompaniment',
     ];
 
     public function user(){
-    	return $this->belongsTo(User::class);
-    }
-
-    public function client(){
     	return $this->belongsTo(User::class);
     }
 }

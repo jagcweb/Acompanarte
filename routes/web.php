@@ -21,9 +21,10 @@ Route::get('/registrar-{rol}', [App\Http\Controllers\Auth\RegisterController::cl
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::get('/mi-perfil', [App\Http\Controllers\UserController::class, 'index'])->name('user.index');
+Route::get('/perfil/{username}', [App\Http\Controllers\UserController::class, 'profile'])->name('user.profile');
 Route::post('/mi-perfil/actualizar', [App\Http\Controllers\UserController::class, 'update'])->name('user.update');
 Route::post('/mi-perfil/actualizar-contraseña', [App\Http\Controllers\UserController::class, 'updatePassword'])->name('user.update_password');
-Route::get('/mi-perfil/get-image/{image}', [App\Http\Controllers\UserController::class, 'getImage'])->name('user.get_image');
+Route::get('mi-perfil/get-image/{filename}', [App\Http\Controllers\UserController::class, 'getImage'])->name('user.get_image');
 
 Route::get('/configuracion', [App\Http\Controllers\ConfigurationController::class, 'index'])->name('configuration.index');
 
@@ -48,6 +49,7 @@ Route::get('/ver-solicitudes', [App\Http\Controllers\ContactRequestController::c
 Route::get('/ver-solicitud/{id}', [App\Http\Controllers\ContactRequestController::class, 'detail'])->name('contact_request.detail');
 Route::post('/enviar-solicitud', [App\Http\Controllers\ContactRequestController::class, 'save'])->name('contact_request.save');
 Route::get('/actualizar-solicitud/{type}', [App\Http\Controllers\ContactRequestController::class, 'update'])->name('contact_request.update');
+Route::get('/solicitudes/get-pdf/{pdf}', [App\Http\Controllers\ContactRequestController::class, 'getPdf'])->name('contact_request.get_pdf');
 
 
 //TEST
@@ -58,7 +60,8 @@ Route::get('/test', [App\Http\Controllers\TestController::class, 'index'])->name
 //ADMIN
 Route::get('/dashboard', [App\Http\Controllers\Admin\AdminController::class, 'index'])->name('dashboard');
 Route::get('/dashboard/usuarios', [App\Http\Controllers\Admin\AdminController::class, 'users'])->name('dashboard.user');
-Route::get('/dashboard/historial', [App\Http\Controllers\Admin\AdminController::class, 'history'])->name('dashboard.history');
+Route::get('/dashboard/historial-suscripciones', [App\Http\Controllers\Admin\AdminController::class, 'history'])->name('dashboard.history');
+Route::get('/dashboard/historial-busquedas', [App\Http\Controllers\Admin\AdminController::class, 'search_history'])->name('dashboard.search_history');
 Route::get('/dashboard/precios', [App\Http\Controllers\Admin\AdminController::class, 'price'])->name('dashboard.price');
 
 

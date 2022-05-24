@@ -64,7 +64,8 @@
             <li class="nav-item dropdown dropdown-user">
               <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                 @if(Auth::user()->image)
-                <img src="{{url('mi-perfil/get-image/'.Auth::user()->image)}}" alt="Acompañarte avatar"  class="rounded-circle" width="40"/>
+                
+                <img src="{{url('mi-perfil/get-image/'.Auth::user()->image)}}"  class="rounded-circle" width="40" />
                 @else
                 <img src="{{url('assets')}}/images/user.png" alt="Acompañarte avatar" class="rounded-circle" width="40" />
                 @endif

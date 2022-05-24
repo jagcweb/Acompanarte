@@ -11,6 +11,9 @@ class ContactRequest extends Model
         'user_id',
         'client_id',
         'name',
+        'location',
+        'specialty',
+        'accompaniment',
         'phone',
         'accompaniment',
         'date_event',
@@ -18,6 +21,7 @@ class ContactRequest extends Model
         'num_rehearsals',
         'price',
         'unblocked',
+        'pdf',
     ];
 
     public function unblock(){

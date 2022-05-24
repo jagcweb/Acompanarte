@@ -64,11 +64,11 @@ nav ul {
     justify-content: space-around;
     flex-direction: row;
     align-items: center;
+    margin-bottom: 0;
 }
 
 nav ul li {
     padding-left: 15px;
-    margin-top: 15px;
 }
 
 nav a {

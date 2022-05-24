@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Models\PostalCode;
 use App\Models\ConfigurationProfessor;
 use App\Models\User;
+use App\Models\SearchHistory;
 use Spatie\Permission\Models\Role;
 
 class SearchProfessorController extends Controller
@@ -30,6 +32,10 @@ class SearchProfessorController extends Controller
 
         $location_data = PostalCode::where('poblacion', $location)->first();
 
+        if(!is_object($location_data)){
+            return back()->with('error', 'La ciudad introducida no existe en nuestro registros.');
+        }
+
         $professors = User::
         whereHas('config_professor', function($q) use($location, $location_data) {
             $q->where('availability', 'nacional');
@@ -52,6 +58,13 @@ class SearchProfessorController extends Controller
         )
         ->orderBy('id', 'desc')
         ->get();
+
+        $search_history = new SearchHistory();
+        $search_history->user_id = Auth::check() ? Auth::user()->id : null;
+        $search_history->location = $location;
+        $search_history->specialty = $especialidad;
+        $search_history->accompaniment = $acompañamiento;
+        $search_history->save();
 
         return view('search_professor.index', [
             'professors' => $professors,

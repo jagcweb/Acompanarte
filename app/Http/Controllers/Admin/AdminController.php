@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\ContactRequest;
 use App\Models\ProfessorSuscriptionHistory;
 use App\Models\Price;
+use App\Models\SearchHistory;
 
 class AdminController extends Controller
 {
@@ -75,6 +76,15 @@ class AdminController extends Controller
         
         return view('admin.history.index', [
             'histories' => $histories
+        ]);
+    }
+
+    public function search_history(){
+
+        $search_history = SearchHistory::orderBy('id', 'asc')->get();
+        
+        return view('admin.search_history.index', [
+            'search_history' => $search_history
         ]);
     }
 

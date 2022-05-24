@@ -6,8 +6,64 @@
                 <button type="button" data-dismiss="modal" aria-hidden="true"><i class="fas fa-times"></i></button>
             </div>
             <div class="modal-body p-4">
-            <form method="POST" action="{{route('contact_request.save')}}">
+            <form method="POST" action="{{route('contact_request.save')}}" enctype='multipart/form-data'>
             @csrf
+
+                <div class="row mb-3">
+                    <label for="ciudad" class="col-md-4 col-form-label text-md-end">{{ __('Ciudad') }}</label>
+
+                    <div class="col-md-12">
+                        <input type="text" value="{{$location}}" id="ciudad" class="form-control @error('ciudad') is-invalid @enderror" name="ciudad" required readonly/>
+
+                        @error('ciudad')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label for="especialidad" class="col-md-4 col-form-label text-md-end">{{ __('Especialidad') }}</label>
+
+                    <div class="col-md-12">
+                        <input type="text" value="{{$especialidad}}" id="especialidad" class="form-control @error('especialidad') is-invalid @enderror" name="especialidad" required readonly/>
+
+                        @error('especialidad')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label for="acompañamiento" class="col-md-4 col-form-label text-md-end">{{ __('Evento a acompañar') }}</label>
+
+                    <div class="col-md-12">
+                        <input type="text" value="{{$especialidad}}" id="acompañamiento" class="form-control @error('acompañamiento') is-invalid @enderror" name="acompañamiento" required readonly/>
+
+                        @error('acompañamiento')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label for="ciudad" class="col-md-4 col-form-label text-md-end">{{ __('Ciudad') }}</label>
+
+                    <div class="col-md-12">
+                        <input type="text" value="{{$location}}" id="ciudad" class="form-control @error('ciudad') is-invalid @enderror" name="ciudad" required readonly/>
+
+                        @error('ciudad')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+                </div>
 
                 <div class="row mb-3">
                     <label for="nombre" class="col-md-4 col-form-label text-md-end">{{ __('Nombre *') }}</label>
@@ -90,6 +146,20 @@
                         <input type="number" id="num_ensayo" class="form-control @error('num_ensayo') is-invalid @enderror" name="num_ensayo" min="1" />
 
                         @error('num_ensayo')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label for="pdf" class="col-md-4 col-form-label text-md-end">{{ __('PDF Partituras (Opcional)') }}</label>
+
+                    <div class="col-md-12">
+                        <input type="file" id="pdf" class="form-control @error('pdf') is-invalid @enderror" name="pdf"/>
+
+                        @error('pdf')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>

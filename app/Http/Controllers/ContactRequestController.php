@@ -42,12 +42,10 @@ class ContactRequestController extends Controller
 
     public function detail($id)
     {
+        $id = \Crypt::decryptString($id);
+
         $contact_request = ContactRequest::find($id);
         $price = Price::where('type', 'contacto')->first();
-
-        if($contact_request->user_id != Auth::user()->id && $contact_request->client_id != Auth::user()->id){
-            return back();
-        }
 
         if(!is_object($contact_request)){
             return back();
@@ -64,12 +62,15 @@ class ContactRequestController extends Controller
         $validate = $this->validate($request, [
             'pianista_id' => ['required', 'string', 'max:255'],
             'nombre' => ['required', 'string', 'max:255'],
+            'ciudad' => ['required', 'string', 'max:255'],
+            'especialidad' => ['required', 'string', 'max:255'],
+            'acompañamiento' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'max:255'],
             'telefono' => ['required', 'alpha_num', 'max:9', 'min:9'],
             'fecha' => ['nullable', 'date'],
             'ensayo' => ['required', 'boolean'],
-            'mensaje' => ['nullable', 'string'],
             'acompañamiento' => ['required', 'string', 'max:255'],
+            'pdf' => ['nullable', 'mimes:pdf'],
             
         ]);
 
@@ -86,6 +87,9 @@ class ContactRequestController extends Controller
         $contact_request->user_id = \Crypt::decryptString($request->get('pianista_id'));
         $contact_request->client_id = Auth::user()->id;
         $contact_request->name = $request->get('nombre');
+        $contact_request->location = $request->get('ciudad');
+        $contact_request->specialty = $request->get('especialidad');
+        $contact_request->accompaniment = $request->get('acompañamiento');
         $contact_request->email = $request->get('email');
         $contact_request->phone = $request->get('telefono');
         $contact_request->accompaniment = $request->get('acompañamiento');
@@ -93,6 +97,17 @@ class ContactRequestController extends Controller
         $contact_request->rehearsals = $request->get('ensayo');
         $contact_request->num_rehearsals = $request->get('num_ensayo');
         $contact_request->unblocked = 0;
+
+        $pdf = $request->file('pdf');
+
+        if($pdf){
+            $pdf_name = time() .'_'. $pdf->getClientOriginalName().'.pdf';
+
+            Storage::disk('pdfs')->put($image_name, \File::get($pdf));
+
+            $contact_request->pdf = $pdf_name;
+        }
+
         $contact_request->save();
 
         return redirect()->route('home')->with('exito', 'Solicitud de contacto enviada!');
@@ -113,7 +128,7 @@ class ContactRequestController extends Controller
                 $contact_request->updated_at = Carbon::now();
                 $contact_request->update();
 
-                return redirect()->route('contact_request.detail', ['id' => $contact_request->id])->with('exito', 'Solicitud de contacto pagada');
+                return redirect()->route('contact_request.detail', ['id' => Crypt::encryptString($contact_request->id)])->with('exito', 'Solicitud de contacto pagada');
             }
 
             return route('home');
@@ -121,6 +136,12 @@ class ContactRequestController extends Controller
 
         return route('home');
         
+    }
+
+    public function getPdf($filename) {
+        $file = Storage::disk('pdfs')->get($filename);
+
+        return new Response($file, 200);
     }
 
 }

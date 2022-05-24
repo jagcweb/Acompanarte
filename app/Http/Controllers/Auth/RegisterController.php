@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 
 class RegisterController extends Controller
@@ -83,12 +84,19 @@ class RegisterController extends Controller
         //Explodeamos por "-" y sacamos el rol de la posicion 1 (cliente)
         $role = explode("-", url()->previous())[1];
 
+        do {
+            $codigo = \Str::random(12);
+        } while (User::where('username', $codigo)->exists());
+
+        $username = $role != 'cliente' ? $codigo : null;
+
         $created_user = User::create([
             'name' => $request['name'],
             'surname' => $request['surname'],
             'phone' => isset($request['phone']) ? $request['phone'] : NULL,
             'email' => $request['email'],
             'password' => Hash::make($request['password']),
+            'username' => $username
         ]);
 
         $created_user->assignRole($role);

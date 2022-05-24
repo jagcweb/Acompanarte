@@ -3,9 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\ProfessorSuscription;
-use App\Models\ProfessorSuscriptionHistory;
-use Carbon\Carbon;
 use App\Jobs\CheckSuscription;
 
 class TestController extends Controller
@@ -17,7 +14,7 @@ class TestController extends Controller
      */
     public function __construct()
     {
-        $this->middleware(['auth', 'verified']);
+        // $this->middleware(['auth', 'verified']);
     }
 
 
@@ -28,6 +25,6 @@ class TestController extends Controller
      */
     public function index()
     {
-        CheckSuscription::dispatch()->onQueue('processing');
+        CheckSuscription::dispatch();
     }
 }

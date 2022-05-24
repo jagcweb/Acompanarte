@@ -73,6 +73,7 @@
             <div class="dropdown-divider"></div>
             <a href="{{route('dashboard.user')}}" class="dropdown-item">Todos los usuarios</a>
             <a href="{{route('dashboard.history')}}" class="dropdown-item">Historial de suscripciones</a>
+            <a href="{{route('dashboard.search_history')}}" class="dropdown-item">Historial de búsqueda de pianista</a>
             <div class="dropdown-divider"></div>
             <a href="{{route('dashboard.price')}}" class="dropdown-item">Ajustar precios</a>
             <div class="dropdown-divider"></div>

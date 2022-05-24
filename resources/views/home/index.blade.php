@@ -5,6 +5,7 @@
 @endsection
 
 @section('content')
+<img src="{{url('mi-perfil/get-image/'.Auth::user()->image)}}" />
 <div class="s004">
     <form method="POST" action="{{route('search_professor.index')}}">
         @csrf

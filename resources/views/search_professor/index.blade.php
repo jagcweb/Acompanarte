@@ -23,7 +23,7 @@
                 <div style="width:100%; display:flex; flex-direction:column; justify-content: center; align-items: center;">
                   <h3>{{$prof->name}} 
 
-                    @if(Auth::user()->verified == 1)
+                    @if($prof->verified == 1)
                     <span title="Verificado" style="margin-top:-2px; font-size:18px; color:#1b82d6;"><i class="fa-solid fa-circle-check"></i></span>
                     @endif
 

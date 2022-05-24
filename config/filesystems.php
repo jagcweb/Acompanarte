@@ -35,6 +35,13 @@ return [
             'root' => storage_path('app'),
         ],
 
+        'pdfs' => [
+            'driver' => 'local',
+            'root' => storage_path('app/pdfs'),
+            'url' => env('APP_URL').'/storage',
+            'visibility' => 'public',
+        ],
+
         'profile_images' => [
             'driver' => 'local',
             'root' => storage_path('app/profile_images'),

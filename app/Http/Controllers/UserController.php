@@ -6,9 +6,9 @@ use Illuminate\Http\Request;
 use App\Helpers\Validate;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use App\User;
+use App\Models\User;
 use Carbon\Carbon;
-use \Crypt;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Storage;
 
@@ -21,7 +21,7 @@ class UserController extends Controller
      */
     public function __construct()
     {
-        $this->middleware(['auth', 'verified']);
+        $this->middleware(['auth', 'verified'])->except(['profile', 'getImage']);
     }
 
 
@@ -35,6 +35,19 @@ class UserController extends Controller
         return view('user.index');
     }
 
+    public function profile($username)
+    {
+        $user = User::where('username', $username)->first();
+
+        if(!$user){
+            return redirect()->route('home')->with('error', 'El usuario no existe');
+        }
+
+        return view('user.profile', [
+            'user' => $user
+        ]);
+    }
+
     public function update(Request $request){
         $user = Auth::user();
 
@@ -42,7 +55,7 @@ class UserController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'surname' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'max:255', 'unique:users,email,'.$user->id],
-            'image' => ['nullable', 'image']
+            //'image' => ['nullable', 'image']
         ]);
 
         $image = $request->file('image');
@@ -51,10 +64,10 @@ class UserController extends Controller
             $image_name = time() .'_'. $image->getClientOriginalName();
 
             if (!is_null($user->image)) {
-                Storage::disk('profile_images')->delete($user->image);
+                \Storage::disk('profile_images')->delete($user->image);
             }
 
-            Storage::disk('profile_images')->put($image_name, \File::get($image));
+            \Storage::disk('profile_images')->put($image_name, \File::get($image));
 
             $user->image = $image_name;
         }
