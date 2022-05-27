@@ -103,7 +103,7 @@ class ContactRequestController extends Controller
         if($pdf){
             $pdf_name = time() .'_'. $pdf->getClientOriginalName().'.pdf';
 
-            Storage::disk('pdfs')->put($image_name, \File::get($pdf));
+            \Storage::disk('pdfs')->put($image_name, \File::get($pdf));
 
             $contact_request->pdf = $pdf_name;
         }
@@ -148,7 +148,7 @@ class ContactRequestController extends Controller
     }
 
     public function getPdf($filename) {
-        $file = Storage::disk('pdfs')->get($filename);
+        $file = \Storage::disk('pdfs')->get($filename);
 
         return new Response($file, 200);
     }
