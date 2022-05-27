@@ -4,11 +4,11 @@
 <div class="container mt-4">
     <div class="row justify-content-center">
         <div class="col-md-12">
-            <h2 class="text-center d-block">Cambiar contraseña</h2>
+            <h2 class="text-center d-block">-</h2>
             <div class="card">
                 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('register') }}">
+                    <form method="POST" action="">
                         @csrf
 
                         <div class="row mb-3">
