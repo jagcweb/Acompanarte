@@ -12,9 +12,10 @@ class ConfigurationProfessor extends Model
         'community',
         'province',
         'city',
-        'other_degrees',
+        'biography',
         'languages',
-        'experience'
+        'essay_place',
+        'essay_place_with_piano',
     ];
 
     public function user(){

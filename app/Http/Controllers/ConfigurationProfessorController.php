@@ -44,11 +44,12 @@ class ConfigurationProfessorController extends Controller
             'especialidad' => ['required', 'array', 'max:255'],
             'formacion' => ['required', 'string', 'max:255'],
             'precio' => ['nullable', 'numeric', 'regex:/^\d+(\.\d{1,1})?$/'],
-            'otros' => ['nullable', 'array', 'max:255'],
+            'biography' => ['nullable', 'string', 'max:255'],
             'idiomas' => ['nullable', 'array', 'max:255'],
             'acompañamiento' => ['required', 'array', 'max:255'],
             'nivel' => ['nullable', 'array', 'max:255'],
-            'exp' => ['nullable', 'string', 'max:255'],
+            'lugar' => ['nullable', 'alpha_num', 'max:1'],
+            'lugar_piano' => ['nullable', 'alpha_num', 'max:1'],
         ]);
 
         if(count($request->get('idiomas')) != count($request->get('nivel'))){
@@ -86,9 +87,10 @@ class ConfigurationProfessorController extends Controller
         $config->province = $request->get('provincia');
         $config->city = $request->get('poblacion');
         $config->education = $request->get('formacion');
-        $config->other_degrees =  json_encode($request->get('otros'), JSON_FORCE_OBJECT);
-        $config->experience = $request->get('exp');
+        $config->biography = $request->get('biography');
         $config->price = $request->get('precio');
+        $config->essay_place = $request->get('lugar');
+        $config->essay_place_with_piano = $request->get('lugar_piano');
         $config->save();
 
         foreach ($request->get('especialidad') as $especialidad){
@@ -126,10 +128,11 @@ class ConfigurationProfessorController extends Controller
             'formacion' => ['required', 'string', 'max:255'],
             'precio' => ['nullable', 'numeric', 'regex:/^\d+(\.\d{1,1})?$/'],
             'acompañamiento' => ['required', 'array', 'max:255'],
-            'otros' => ['nullable', 'array', 'max:255'],
+            'biography' => ['nullable', 'string', 'max:255'],
             'idiomas' => ['nullable', 'array', 'max:255'],
             'nivel' => ['nullable', 'array', 'max:255'],
-            'exp' => ['nullable', 'string', 'max:255'],
+            'lugar' => ['nullable', 'alpha_num', 'max:1'],
+            'lugar_piano' => ['nullable', 'alpha_num', 'max:1'],
         ]);
 
         if(count($request->get('idiomas')) != count($request->get('nivel'))){
@@ -167,9 +170,10 @@ class ConfigurationProfessorController extends Controller
         $config->province = $request->get('provincia');
         $config->city = $request->get('poblacion');
         $config->education = $request->get('formacion');
-        $config->other_degrees =  json_encode($request->get('otros'), JSON_FORCE_OBJECT);
-        $config->experience = $request->get('exp');
+        $config->biography = $request->get('biography');
         $config->price = $request->get('precio');
+        $config->essay_place = $request->get('lugar');
+        $config->essay_place_with_piano = $request->get('lugar_piano');
         $config->update();
 
         $especialties = ProfessorSpecialty::where('user_id', Auth::user()->id)->delete();

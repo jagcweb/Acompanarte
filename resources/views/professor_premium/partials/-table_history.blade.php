@@ -27,5 +27,5 @@
     </tbody>
 </table>
 @else
-<p class="w-100 text-center">Aún no hay ningún registro.</p>
+<p class="w-100 text-center">Aún no hay ningún registro en el historial de suscripciones.</p>
 @endif

@@ -14,14 +14,15 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
-Auth::routes(['verify' => true]);
+Auth::routes(['verify' => true, 'register' => false]);
 
 Route::get('/registrar-{rol}', [App\Http\Controllers\Auth\RegisterController::class, 'index'])->name('register.index');
+Route::post('/registrar', [App\Http\Controllers\Auth\RegisterController::class, 'create'])->name('register.create');
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::get('/mi-perfil', [App\Http\Controllers\UserController::class, 'index'])->name('user.index');
-Route::get('/perfil/{username}', [App\Http\Controllers\UserController::class, 'profile'])->name('user.profile');
+Route::get('/usuario/{username}', [App\Http\Controllers\UserController::class, 'profile'])->name('user.profile');
 Route::post('/mi-perfil/actualizar', [App\Http\Controllers\UserController::class, 'update'])->name('user.update');
 Route::post('/mi-perfil/actualizar-contraseña', [App\Http\Controllers\UserController::class, 'updatePassword'])->name('user.update_password');
 Route::get('mi-perfil/get-image/{filename}', [App\Http\Controllers\UserController::class, 'getImage'])->name('user.get_image');
@@ -52,6 +53,12 @@ Route::get('/actualizar-solicitud/{type}', [App\Http\Controllers\ContactRequestC
 Route::get('/solicitudes/get-pdf/{pdf}', [App\Http\Controllers\ContactRequestController::class, 'getPdf'])->name('contact_request.get_pdf');
 
 
+Route::get('/borrar-notificacion/{id}', [App\Http\Controllers\NotificationController::class, 'delete'])->name('notification.delete');
+Route::get('/borrar-notificaciones', [App\Http\Controllers\NotificationController::class, 'deleteAll'])->name('notification.deleteAll');
+Route::get('/ver-notificacion/{id}', [App\Http\Controllers\NotificationController::class, 'markAsRead'])->name('notification.markAsRead');
+
+
+
 //TEST
 Route::get('/test', [App\Http\Controllers\TestController::class, 'index'])->name('test.index');
 
@@ -65,6 +72,7 @@ Route::get('/dashboard/historial-busquedas', [App\Http\Controllers\Admin\AdminCo
 Route::get('/dashboard/precios', [App\Http\Controllers\Admin\AdminController::class, 'price'])->name('dashboard.price');
 
 
+Route::get('/delete/{id}', [App\Http\Controllers\Admin\UserController::class, 'delete'])->name('user.delete');
 Route::get('/change-rol-pianista/{id}', [App\Http\Controllers\Admin\UserController::class, 'change_rol_pianista'])->name('user.change_pianista');
 Route::get('/change-rol-premium/{id}', [App\Http\Controllers\Admin\UserController::class, 'change_rol_premium'])->name('user.change_premium');
 Route::get('/ban/{id}', [App\Http\Controllers\Admin\UserController::class, 'ban'])->name('user.ban');

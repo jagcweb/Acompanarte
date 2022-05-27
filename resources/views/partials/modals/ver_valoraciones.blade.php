@@ -10,12 +10,17 @@
                     <div class="card mt-4" style="border:none; box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;">
                         <div class="card-body">
                             <div style="display: flex; flex-direction: row;">
-                                @if($rate->client->image)
-                                <img src="{{url('mi-perfil/get-image/'.$rate->client->image)}}" alt="Acompañarte avatar"  class="rounded-circle" style="width:50px; height:50px!important;"/>
+                                @if(isset($rate->client))
+                                    @if($rate->client->image)
+                                    <img src="{{url('mi-perfil/get-image/'.$rate->client->image)}}" alt="Acompañarte avatar"  class="rounded-circle" style="width:50px; height:50px!important;"/>
+                                    @else
+                                    <img src="{{url('assets')}}/images/user.png" alt="Acompañarte avatar" class="rounded-circle" style="width:50px; height:50px!important;" />
+                                    @endif
+                                    <p style="margin-left: -40px;" class="mt-3 w-100 mr-2 text-center">{{ucfirst(mb_substr($rate->client->name, 0, 1))}}***** - Valoración: {{$rate->rate}}</p>
                                 @else
                                 <img src="{{url('assets')}}/images/user.png" alt="Acompañarte avatar" class="rounded-circle" style="width:50px; height:50px!important;" />
+                                <p style="margin-left: -40px;" class="mt-3 w-100 mr-2 text-center">El usuario ya no existe. - Valoración: {{$rate->rate}}</p>
                                 @endif
-                                <p style="margin-left: -40px;" class="mt-3 w-100 mr-2 text-center">{{ucfirst(mb_substr($rate->client->name, 0, 1))}}***** - Valoración: {{$rate->rate}}</p>
                             </div>
                             @if(!is_null($rate->comment))
                                 <blockquote class="mt-3 w-100">

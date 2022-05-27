@@ -11,7 +11,7 @@
             <p class="text-center text-dark w-100">Especialidad: <b>{{$especialidad}}</b></p>
             <p class="text-center text-dark w-100">Evento a acompañar: <b>{{$acompañamiento}}</b></p>
             @foreach ($professors as  $prof)
-            <div class="card mb-2" @if($prof->getRoleNames()[0] == 'pianista-premium') style="background:#6f87b0" @endif>
+            <div class="card mb-4" @if($prof->getRoleNames()[0] == 'pianista-premium') style="background:#6f87b0" @endif>
               <div class="card-body" style="display:flex; justify-content:space-between; border:none;">
                 <div style="display:flex; justify-content: center; align-items: center;">
                   @if($prof->image)
@@ -37,11 +37,9 @@
                   <span>Precio (€/h): <b>{{$prof->config_professor->price}}€</b></span>
                 @endif
                   
-                  @if(!is_null($prof->config_professor->other_degrees))
-                    <span>Otras titulaciones:</span>
-                      @foreach (json_decode($prof->config_professor->other_degrees, true) as $other_degrees)
-                        <span>{{$other_degrees}}</span>
-                      @endforeach
+                  @if(!is_null($prof->config_professor->biography))
+                    <span>Biografía:</span>
+                        <span>{{$prof->config_professor->price}}</span>
                   @endif
 
                   @if(!is_null($prof->config_professor->languages))
@@ -55,21 +53,27 @@
                     </div>
                   @endif
 
-                  @if(!is_null($prof->config_professor->exp))
-                    <span>Otras titulaciones: {{$prof->config_professor->exp}}</span>
+                  @if(!is_null($prof->config_professor->essay_place))
+                    <p>Dispone de lugar de ensayo</p>
                   @endif
-                  <span>Valoraciones: {{$prof->ratings->sum()}}</span>
 
-                  @if(Auth::check())
-                     @if(Auth::user()->getRoleNames()[0] == 'cliente')
-                      <button class="w-100 btn btn-dark" data-toggle="modal" data-target="#enviar-solicitud-{{$prof->id}}">Enviar solicitud de contacto</button>
-                      @include('partials.modals.enviar_solicitud_contacto')
+                  @if(!is_null($prof->config_professor->essay_place_with_piano))
+                  <p>Dispone de lugar de ensayo con piano</p>
+                @endif
+
+                  <span>Valoraciones: {{$prof->ratings->count()}}</span>
+
+                  <div style="display: flex; flex-direction: row; justify-content: space-between; align-items: center; width: 100%;">
+                    @if(Auth::check())
+                      @if(Auth::user()->getRoleNames()[0] == 'cliente')
+                        <button class="btn btn-dark" data-toggle="modal" data-target="#enviar-solicitud-{{$prof->id}}">Enviar solicitud de contacto</button>
+                        @include('partials.modals.enviar_solicitud_contacto')
+                      @endif
+                    @else
+                    <p class="text-center text-dark">Para enviar una solicitud de contacto <a style="color:#000; text-decoration: underline;" href="{{route('register.index', ['rol' => 'cliente'])}}" target="_blank">regístrate</a> o <a style="color:#000; text-decoration: underline;" href="{{route('login')}}" target="_blank">inicia sesión</a></p>
                     @endif
-                  @else
-                  <p class="text-center w-100 text-dark">Para enviar una solicitud de contacto <a style="color:#000; text-decoration: underline;" href="{{route('register.index', ['rol' => 'cliente'])}}" target="_blank">regístrate</a> o <a style="color:#000; text-decoration: underline;" href="{{route('login')}}" target="_blank">inicia sesión</a></p>
-                  @endif
-                  <button class="w-100 btn btn-dark" data-toggle="modal" data-target="#ver-perfil-{{$prof->id}}">Ver perfil</button>
-                  @include('partials.modals.ver_perfil')
+                    <a href="{{route('user.profile', ['username' => $prof->username])}}" target="_blank" style="color:#fff;" class="btn btn-dark ml-4">Ver perfil</a>
+                  </div>
                 </div>
               </div>
             </div>

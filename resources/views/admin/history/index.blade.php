@@ -23,8 +23,13 @@
         @foreach ($histories as $hist)
         
             <tr>
+                @if(isset($hist->user))
                 <td>{{$hist->user->fullname}}</td>
                 <td>{{$hist->user->email}}</td>
+                @else
+                <td>Este usuario ya no existe</td>
+                <td>-</td>
+                @endif
                 <td>{{ucfirst($hist->type)}}</td>
                 <td>{{\Carbon\Carbon::parse($hist->created_at)->format('d/m/Y')}}</td>
                 <td>{{\Carbon\Carbon::parse($hist->ended_at)->format('d/m/Y')}}</td>

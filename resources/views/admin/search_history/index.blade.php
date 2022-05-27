@@ -23,7 +23,7 @@
                 @if(isset($hist->user))
                     <td>{{$hist->user->email}}</td>
                 @else
-                    <td>Usuario no registrado.</td>
+                    <td>Usuario no registrado o no existe.</td>
                 @endif
                 <td>{{$hist->location}}</td>
                 <td>{{$hist->specialty}}</td>

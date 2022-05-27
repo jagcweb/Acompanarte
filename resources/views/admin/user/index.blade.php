@@ -63,6 +63,7 @@
                             @else
                                 <a href="{{route('user.unban', ['id' => $user->id])}}" class="dropdown-item"><i style="font-size: 18px;" class="fa-solid fa-user mr-2"></i>Desbloquear Usuario</a>
                             @endif
+                            <a href="{{route('user.delete', ['id' => $user->id])}}" class="dropdown-item"><i style="font-size: 18px;" class="fa-solid fa-user-xmark mr-2"></i>Borrar Usuario</a>
                             <!-- <a href="#" class="dropdown-item"><i style="font-size: 18px;" class="fa-solid fa-user-xmark mr-2"></i>Borrar Usuario</a> -->
                         </div>
                     </li>

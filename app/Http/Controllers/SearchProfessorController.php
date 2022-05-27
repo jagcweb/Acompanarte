@@ -56,7 +56,6 @@ class SearchProfessorController extends Controller
             $q->orderBy('name', 'desc');
         }
         )
-        ->orderBy('id', 'desc')
         ->get();
 
         $search_history = new SearchHistory();

@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+<script src="https://www.google.com/recaptcha/api.js"></script>
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-12">
@@ -12,7 +13,7 @@
             <div class="card">
                 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('register') }}">
+                    <form method="POST" action="{{ route('register.create') }}">
                         @csrf
 
                         <div class="row mb-3">
@@ -96,6 +97,11 @@
                                 <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
                             </div>
                         </div>
+
+                        <div class="form-group" style="display:flex; justify-content:center;">
+                            {!! NoCaptcha::renderJs('es', true, 'recaptchaCallback') !!}
+                           {!! NoCaptcha::display() !!}
+                           </div>
 
                         <div class="row mb-0">
                             <div class="col-md-12">

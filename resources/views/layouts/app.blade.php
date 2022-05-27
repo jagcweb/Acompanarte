@@ -44,6 +44,17 @@
 
     <script src="https://unpkg.com/bootstrap-table@1.20.0/dist/bootstrap-table.min.js"></script>
     <script src="https://unpkg.com/bootstrap-table@1.20.0/dist/locale/bootstrap-table-es-ES.min.js"></script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-1CXB93E84K"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-1CXB93E84K');
+    </script>
+
     @yield('scripts')
 
   </head>
@@ -54,9 +65,45 @@
         @if(Auth::user())
           <ul class="nav navbar-nav ms-auto">
             <li class="nav-item">
-              <a href="https://google.es" target="_blank" class="nav-link">
+              <a href="https://blog.encuentrapianista.com/" target="_blank" class="nav-link">
                 Blog <i class="fa-solid fa-arrow-up-right-from-square"></i>
               </a>
+            </li>
+            <li class="dropdown nav-item" style="list-style: none; margin-top:-2px; position:relative; cursor: pointer;">
+              <i style="font-size:18px; color: #fff;" class="fa-solid fa-bell dropdown-toggle" data-bs-toggle="dropdown"></i>
+              @php $pending = \App\Models\Notification::where('user_id', Auth::user()->id)->where('read', 0)->count(); @endphp
+              @if($pending > 0)
+                <span style="position: absolute; top: 10%; right: 0; width:7px; height:7px; background:red; border-radius:9999px;"></span>
+              @endif
+              <style>
+                .dropdown-menu {
+                  min-width:250px;
+                }
+              </style>
+              <div class="dropdown-menu" style="font-size:13px;">
+                <span>Notificaciones</span>
+
+                @if(count(Auth::user()->notifications)>0)
+                  <small class="float-right"><a style="color:#000;" href="{{route('notification.deleteAll')}}">Borrar todas</a></small>
+                <br>
+                <br>
+                  @foreach (\Auth::user()->notifications as $notif)
+                    @if($notif->read != 1)
+                      <div class="text-center w-100 mb-3" style="position: relative; box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;">
+                    @else
+                      <div class="text-center w-100 mb-3" style="position: relative; background:#ccc;">
+                    @endif
+                      <a href="{{route('notification.markAsRead', ['id' => \Crypt::encryptString($notif->id)])}}" style="color:#000; cursor: pointer; line-height:50px;">{{$notif->text}}</a>
+                      <a  href="{{route('notification.delete', ['id' => \Crypt::encryptString($notif->id)])}}" style="color:red; position: absolute; top:5%; right: 5%; font-size:18px;"><i class="fa-solid fa-xmark"></i></a>
+                      @if($notif->read == 1)
+                      <small  style="position: absolute; top:5%; left: 5%;">Leído</small>
+                      @endif
+                    </div>
+                  @endforeach
+                @else
+                <p class="w-100 text-center mt-4">Aún no tienes notificaciones :)</p>
+                @endif
+              </div>
             </li>
             @if(Auth::user()->getRoleNames()[0] == "pianista-premium")
             <li class="nav-item" style="margin-top:-4px; color:#e8b210;">PREMIUM </li>
@@ -65,7 +112,7 @@
               <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                 @if(Auth::user()->image)
                 
-                <img src="{{url('mi-perfil/get-image/'.Auth::user()->image)}}"  class="rounded-circle" width="40" />
+                <img src="{{url('/mi-perfil/get-image/'.Auth::user()->image)}}"  class="rounded-circle" width="40" />
                 @else
                 <img src="{{url('assets')}}/images/user.png" alt="Acompañarte avatar" class="rounded-circle" width="40" />
                 @endif
@@ -87,6 +134,9 @@
                   @endif
                   <a href="{{route('contact_request.index')}}" class="dropdown-item">Solicitudes de contacto</a>
                   <div class="dropdown-divider"></div>
+                  @if(\Auth::user()->getRoleNames()[0] != "cliente")
+                  <a href="{{route('user.profile', ['username' => Auth::user()->username])}}" class="dropdown-item">Ver mi perfil</a>
+                  @endif
                   <a href="{{route('user.index')}}" class="dropdown-item">Mi cuenta</a>
                   <a href="{{route('configuration.index')}}" class="dropdown-item">Configuración</a>
                   <div class="dropdown-divider"></div>
@@ -123,11 +173,13 @@
           @yield('content')
         </div>
     </main>
-    <footer>
-      <span>Logo</span>
-      <span>Derechos de autor</span>
-      <span>Politicas de privacidad</span>
-      <span>Cookies</span>
+    <footer style="background: #f5f6f9;">
+      <a style="color:#000;" href="https://blog.encuentrapianista.com/politica-de-cookies/" target="_blank">Política de Cookies</a>
+      <a style="color:#000;" href="https://blog.encuentrapianista.com/politica-privacidad/" target="_blank">Política de Privacidad</a>
+      <a style="color:#000;" href="https://blog.encuentrapianista.com/condiciones-generales-de-uso/" target="_blank">Condiciones generales de uso</a>
+      <a style="color:#000;" href="https://blog.encuentrapianista.com/faqs/" target="_blank">FAQs</a>
+      <a style="color:#000;" href="https://blog.encuentrapianista.com/verifica-tu-perfil/" target="_blank">Proceso de Verificación</a>
+      <a style="color:#000;" href="https://blog.encuentrapianista.com/contacta/" target="_blank">Atención al Cliente</a>
     </footer>
     @yield('js')
   </body>

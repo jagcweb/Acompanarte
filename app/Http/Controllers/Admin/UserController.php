@@ -9,6 +9,24 @@ use App\Models\ProfessorSuscriptionHistory;
 
 class UserController extends Controller
 {
+    public function delete($id){
+        $user = User::find($id);
+
+        if($user){
+            \App\Models\ConfigurationProfessor::where('user_id', $user->id)->delete();
+            \App\Models\ProfessorAccompaniment::where('user_id', $user->id)->delete();
+            \App\Models\ProfessorLanguage::where('user_id', $user->id)->delete();
+            \App\Models\ProfessorSpecialty::where('user_id', $user->id)->delete();
+            \App\Models\ProfessorSuscription::where('user_id', $user->id)->delete();
+            $user->delete();
+        }else{
+            return back();
+        }
+
+
+        return back()->with('exito', 'El usuario ha sido eliminado');
+    }
+
     public function change_rol_pianista($id){
         $user = User::find($id);
 

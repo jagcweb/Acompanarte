@@ -9,6 +9,7 @@ use App\Models\ContactRequest;
 use App\Models\ProfessorSuscriptionHistory;
 use App\Models\Price;
 use App\Models\SearchHistory;
+use App\Models\PostalCode;
 
 class AdminController extends Controller
 {
@@ -48,12 +49,15 @@ class AdminController extends Controller
 
         $contact_requests = ContactRequest::count();
 
+        $comunidades =  PostalCode::select('comunidad_autonoma')->groupBy('comunidad_autonoma')->orderBy('comunidad_autonoma', 'asc')->get();
+
         return view('admin.index', [
             'clientes' => $clientes,
             'premiums' => $premiums,
             'premiums_verified' => $premiums_verified,
             'pianistas' => $pianistas,
             'contact_requests' => $contact_requests,
+            'comunidades' => $comunidades,
         ]);
     }
 

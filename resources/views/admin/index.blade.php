@@ -12,4 +12,12 @@
     <br>
     <br>
     <p>Total solicitudes de contacto: {{$contact_requests}}</p>
+
+    <br>
+    <br>
+    <p>Pianistas por comunidad autónoma:</p>
+    @foreach ($comunidades as $com)
+        @php $pianistas = \App\Models\ConfigurationProfessor::where('availability', 'Nacional')->orWhere('community', $com->comunidad_autonoma)->count(); @endphp
+        <p>{{$com->comunidad_autonoma}}: {{$pianistas}}</p>
+    @endforeach
 @endsection

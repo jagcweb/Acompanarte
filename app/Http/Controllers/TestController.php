@@ -25,6 +25,6 @@ class TestController extends Controller
      */
     public function index()
     {
-        CheckSuscription::dispatch();
+        //CheckSuscription::dispatch();
     }
 }

@@ -7,7 +7,12 @@
 @section('content')
 <div class="container emp-profile">
     <form method="post">
-        <div class="row">
+        <div class="row" style="position: relative;">
+            @if(Auth::check() && Auth::user()->username == $user->username)
+            <div style="position: absolute; top: 0; right: 0;">
+                <p>Visitas al perfil: {{$user->visits}}</p>
+            </div>
+            @endif
             <div class="col-md-4">
                 <div class="profile-img">
                     @if($user->image)
@@ -149,7 +154,11 @@
                                 <label>Formación</label>
                             </div>
                             <div class="col-md-6">
-                                <p>{{$user->config_professor->education}}</p>
+                                @if(isset($user->config_professor->education))
+                                    <p>{{$user->config_professor->education}}</p>
+                                @else
+                                    <p>Sin configurar</p>
+                                @endif
                             </div>
                         </div>
                         <div class="row">
@@ -157,30 +166,25 @@
                                 <label>Experiencia</label>
                             </div>
                             <div class="col-md-6">
-                                <p>{{$user->config_professor->experience}}</p>
+                                @if(isset($user->config_professor->experience))
+                                    <p>{{$user->config_professor->experience}}</p>
+                                @else
+                                    <p>Sin configurar</p>
+                                @endif
                             </div>
                         </div>
                     </div>
                     <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                         <div class="row">
                             <div class="col-md-6">
-                                <label>Otros títulos</label>
-                            </div>
-                            <div class="col-md-6">
-                                @php $otros_titulos = json_decode($user->config_professor->other_degrees, true); @endphp
-                                <p>
-                                    @foreach ($otros_titulos as $otro)
-                                        {{$otro}}
-                                    @endforeach
-                                </p>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
                                 <label>Precio (€/h)</label>
                             </div>
                             <div class="col-md-6">
-                                <p>{{$user->config_professor->price}}€/h</p>
+                                @if(isset($user->config_professor->price))
+                                    <p>{{$user->config_professor->price}}€/h</p>
+                                @else
+                                    <p>Sin configurar</p>
+                                @endif
                             </div>
                         </div>
                         <div class="row">
@@ -214,11 +218,21 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-12">
-                                <label>Your Bio</label><br/>
-                                <p>YouYour detail descripweeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeetionYour detail descripweeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeetion    r detail descripweeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeetion</p>
+                            <div class="col-md-6">
+                                <label>Visitas al perfil</label>
+                            </div>
+                            <div class="col-md-6">
+                                <p>{{$user->visits}}</p>
                             </div>
                         </div>
+                        @if(!is_null($user->config_professor->biography))
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label>Biografía</label><br/>
+                                <p>{{$user->config_professor->biography}}</p>
+                            </div>
+                        </div>
+                        @endif
                     </div>
                 </div>
             </div>

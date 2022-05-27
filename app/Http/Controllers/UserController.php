@@ -43,6 +43,9 @@ class UserController extends Controller
             return redirect()->route('home')->with('error', 'El usuario no existe');
         }
 
+        $user->visits = $user->visits+1;
+        $user->update();
+
         return view('user.profile', [
             'user' => $user
         ]);
@@ -64,10 +67,10 @@ class UserController extends Controller
             $image_name = time() .'_'. $image->getClientOriginalName();
 
             if (!is_null($user->image)) {
-                \Storage::disk('profile_images')->delete($user->image);
+                Storage::disk('profile_images')->delete($user->image);
             }
 
-            \Storage::disk('profile_images')->put($image_name, \File::get($image));
+            Storage::disk('profile_images')->put($image_name, \File::get($image));
 
             $user->image = $image_name;
         }
@@ -108,7 +111,7 @@ class UserController extends Controller
     }
 
     public function getImage($filename) {
-        $file = Storage::disk('profile_images')->get($filename);
+        $file = \Storage::disk('profile_images')->get($filename);
 
         return new Response($file, 200);
     }

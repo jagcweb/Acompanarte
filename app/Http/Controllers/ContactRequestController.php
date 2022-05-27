@@ -8,6 +8,7 @@ use App\Models\ContactRequest;
 use Illuminate\Support\Facades\Crypt;
 use App\Models\Price;
 use Carbon\Carbon;
+use App\Http\Controllers\NotificationController;
 
 class ContactRequestController extends Controller
 {
@@ -80,11 +81,10 @@ class ContactRequestController extends Controller
             ]);
         }
 
-        var_dump($current_price);
-        die();
+        $pianista_id = \Crypt::decryptString($request->get('pianista_id'));
 
         $contact_request = new ContactRequest();
-        $contact_request->user_id = \Crypt::decryptString($request->get('pianista_id'));
+        $contact_request->user_id = $pianista_id;
         $contact_request->client_id = Auth::user()->id;
         $contact_request->name = $request->get('nombre');
         $contact_request->location = $request->get('ciudad');
@@ -109,6 +109,15 @@ class ContactRequestController extends Controller
         }
 
         $contact_request->save();
+
+        $user = User::find($pianista_id);
+        $data = ['user' => $user, 'contact_request' => $contact_request];
+        \Mail::send('mail.send_contact_request', $data, function ($message) use($user) {
+            $message->from('encuentrapianista@gmail.com', 'EncuentraPianista');
+            $message->to($user->email)->subject('Nueva solicitud de contacto');
+        });
+
+        app(NotificationController::class)->save($user->id, 'contact', $contact_request->id, 'Solicitud de contacto');
 
         return redirect()->route('home')->with('exito', 'Solicitud de contacto enviada!');
         

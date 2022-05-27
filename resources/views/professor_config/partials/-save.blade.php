@@ -115,6 +115,45 @@
 
                         @include('partials.accompaniment')
 
+                        <div class="row mb-3 mt-4 font-22">
+                            <p class="text-center w-100">{{ __("Lugar de ensayo") }}</p>
+                                <div class="col-lg-2 col-md-3 col-sm-4 d-flex justify-content-start">
+                                    <input
+                                        type="checkbox"
+                                        value="1"
+                                        class="form-control lugar"
+                                        name="lugar"
+                                    />
+                                    <label for="check-1" class="specialty-label ml-2 col-form-label">{{
+                                        __("¿Dispone de lugar de ensayo?")
+                                    }}</label>
+                                </div>
+                        
+                            @error('lugar')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
+
+                            <div class="col-lg-2 col-md-3 col-sm-4 d-flex justify-content-start">
+                                <input
+                                    type="checkbox"
+                                    value="1"
+                                    class="form-control lugar_piano"
+                                    name="lugar_piano"
+                                />
+                                <label for="check-1" class="specialty-label ml-2 col-form-label">{{
+                                    __("¿Dispone de lugar de ensayo con piano de cola?")
+                                }}</label>
+                            </div>
+                    
+                            @error('lugar_piano')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
+                        </div>        
+
                         <div class="row mb-3 mt-4 ">
                             <label for="precio" class="col-md-4 col-form-label text-md-end">{{ __('Precio €/h')
                                 }}</label>
@@ -130,27 +169,22 @@
                             </div>
                         </div>
 
-                        <p class=" mb-3 mt-4 w-100 text-center font-22">Otra formación y experiencia</p>
+                        <p class=" mb-3 mt-4 w-100 text-center font-22">Biografía</p>
                         <div class="row mb-3">
-                            <label for="otros" class="col-md-4 col-form-label text-md-end">{{ __('Otros títulos')
+                            <label for="biography" class="col-md-4 col-form-label text-md-end">{{ __('Otros títulos')
                                 }}</label>
 
                             <div class="col-md-12">
-                                <input type="text" id="otros" class="form-control @error('otros') is-invalid @enderror"
-                                    name="otros[]" />
+                                <textarea id="biography" class="form-control @error('biography') is-invalid @enderror"
+                                    name="biography" placeholder="Otros títulos, certificados, experiencia..." maxlength="255"></textarea>
 
-                                @error('otros')
+                                @error('biography')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
                                 @enderror
                             </div>
                         </div>
-
-                        
-                        <div class="otros_titulos_append"></div>
-
-                        <button type="button" class='btn btn-dark waves-effect waves-dark w-100 otros_titulos_add'>Añadir más</button>
 
                         <div class="row mb-3">
                             <label for="idiomas" class="col-md-12 col-form-label text-md-end">{{ __('Idiomas') }}</label>
@@ -186,22 +220,6 @@
                         <div class="idiomas_append"></div>
 
                         <button type="button" class='btn btn-dark waves-effect waves-dark w-100 idiomas_add'>Añadir más</button>
-
-                        <div class="row mb-3">
-                            <label for="exp" class="col-md-4 col-form-label text-md-end">{{ __('Experiencia
-                                profesional') }}</label>
-
-                            <div class="col-md-12">
-                                <input type="text" id="exp" class="form-control @error('exp') is-invalid @enderror"
-                                    name="exp" />
-
-                                @error('exp')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
-                            </div>
-                        </div>
 
                     </div>
 

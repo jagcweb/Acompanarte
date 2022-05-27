@@ -9,6 +9,7 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use Illuminate\Http\Request;
 
 
 class RegisterController extends Controller
@@ -57,32 +58,28 @@ class RegisterController extends Controller
         ]);
     }
 
-    protected function validator(array $data)
-    {
-        $role = explode("-", url()->previous())[1];
-
-        $phone_field = $role != 'cliente' ? 'required' : 'nullable';
-        
-       return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
-            'surname' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'phone' => [$phone_field, 'alpha_num', 'min:9', 'max:9']
-       ]);
-    }
-
     /**
      * Create a new user instance after a valid registration.
      *
      * @param  array  $data
      * @return \App\Models\User
      */
-    protected function create(array $request)
+    protected function create(Request $request)
     {
         //Ejemplo previous url: registrar-cliente.
         //Explodeamos por "-" y sacamos el rol de la posicion 1 (cliente)
         $role = explode("-", url()->previous())[1];
+
+        $phone_field = $role != 'cliente' ? 'required' : 'nullable';
+
+        $validate = $this->validate($request, [
+            'name' => ['required', 'string', 'max:255'],
+            'surname' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'email', 'max:255', 'unique:users'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'phone' => [$phone_field, 'alpha_num', 'min:9', 'max:9'],
+            'g-recaptcha-response' => ['required', 'captcha'],
+        ]);
 
         do {
             $codigo = \Str::random(12);
@@ -96,7 +93,8 @@ class RegisterController extends Controller
             'phone' => isset($request['phone']) ? $request['phone'] : NULL,
             'email' => $request['email'],
             'password' => Hash::make($request['password']),
-            'username' => $username
+            'username' => $username,
+            'visits' => 0,
         ]);
 
         $created_user->assignRole($role);

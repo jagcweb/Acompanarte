@@ -134,6 +134,51 @@
 
                         @include('partials.accompaniment2')
 
+                        <div class="row mb-3 mt-4 font-22">
+                            <p class="text-center w-100">{{ __("Lugar de ensayo") }}</p>
+                                <div class="col-lg-2 col-md-3 col-sm-4 d-flex justify-content-start">
+                                    <input
+                                        type="checkbox"
+                                        value="1"
+                                        class="form-control lugar"
+                                        name="lugar"
+                                        @if(!is_null(\Auth::user()->config_professor->essay_place))
+                                        checked
+                                        @endif
+                                    />
+                                    <label for="check-1" class="specialty-label ml-2 col-form-label">{{
+                                        __("¿Dispone de lugar de ensayo?")
+                                    }}</label>
+                                </div>
+                        
+                            @error('lugar')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
+
+                            <div class="col-lg-2 col-md-3 col-sm-4 d-flex justify-content-start">
+                                <input
+                                    type="checkbox"
+                                    value="1"
+                                    class="form-control lugar_piano"
+                                    name="lugar_piano"
+                                    @if(!is_null(\Auth::user()->config_professor->essay_place_with_piano))
+                                    checked
+                                    @endif
+                                />
+                                <label for="check-1" class="specialty-label ml-2 col-form-label">{{
+                                    __("¿Dispone de lugar de ensayo con piano de cola?")
+                                }}</label>
+                            </div>
+                    
+                            @error('lugar_piano')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
+                        </div>   
+
                         <div class="row mb-3 mt-4 ">
                             <label for="precio" class="col-md-4 col-form-label text-md-end">{{ __('Precio €/h')
                                 }}</label>
@@ -149,42 +194,29 @@
                             </div>
                         </div>
 
-                        <p class=" mb-3 mt-4 w-100 text-center font-22">Otra formación y experiencia</p>
+                        <p class=" mb-3 mt-4 w-100 text-center font-22">Biografía</p>
+                        <div class="row mb-3">
+                            <label for="biography" class="col-md-4 col-form-label text-md-end">{{ __('Biografía')
+                                }}</label>
 
-                        @foreach (json_decode(Auth::user()->config_professor->other_degrees ,true) as $i=>$other_degree)
-                            <div class="row mb-3 otros_titulos_row" data="{{$i}}">
-                                <label for="otros" class="col-md-4 col-form-label text-md-end">
-                                    {{ __('Otros títulos')}}
-                                    @if($i >= 1)
-                                        <span data="{{$i}}" class="otros_titulos_delete text-danger ml-2" style="cursor: pointer;"><i class="fa-solid fa-circle-xmark"></i></span>
-                                    @endif
-                                </label>
+                            <div class="col-md-12">
+                                <textarea id="biography" class="form-control @error('biography') is-invalid @enderror"
+                                    name="biography" placeholder="Otros títulos, certificados, experiencia..." maxlength="255">{{Auth::user()->config_professor->biography}}</textarea>
 
-                                <div class="col-md-12">
-                                    <input type="text" id="otros" class="form-control @error('otros') is-invalid @enderror"
-                                        name="otros[]" value="{{$other_degree}}"/>
-
-                                    @error('otros')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
-                                </div>
+                                @error('biography')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
                             </div>
-                        @endforeach
-
-                        <span class="otros_titulos_total d-none">{{count(json_decode(Auth::user()->config_professor->other_degrees ,true))}}</span>
-
-                        <div class="otros_titulos_append"></div>
-
-                        <button type="button" class='btn btn-dark waves-effect waves-dark w-100 otros_titulos_add'>Añadir más</button>
+                        </div>
 
                         @foreach (Auth::user()->professor_languages as $j=>$language)
                             <div class="row mb-3 idiomas_row" data="{{$j}}">
                                 <label for="idiomas" class="col-md-12 col-form-label text-md-end">
                                     {{ __('Idiomas y nivel') }}
                                     @if($j >= 1)
-                                        <span data="{{$i}}" class="idiomas_delete text-danger ml-2" style="cursor: pointer;"><i class="fa-solid fa-circle-xmark"></i></span>
+                                        <span data="{{$j}}" class="idiomas_delete text-danger ml-2" style="cursor: pointer;"><i class="fa-solid fa-circle-xmark"></i></span>
                                     @endif
                                 </label>
 
@@ -222,22 +254,6 @@
                         <span class="idiomas_total d-none">{{count(Auth::user()->professor_languages)}}</span>
 
                         <button type="button" class='btn btn-dark waves-effect waves-dark w-100 idiomas_add'>Añadir más</button>
-
-                        <div class="row mb-3">
-                            <label for="exp" class="col-md-4 col-form-label text-md-end">{{ __('Experiencia
-                                profesional') }}</label>
-
-                            <div class="col-md-12">
-                                <input type="text" id="exp" class="form-control @error('exp') is-invalid @enderror"
-                                    name="exp" value="{{Auth::user()->config_professor->experience}}" />
-
-                                @error('exp')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
-                            </div>
-                        </div>
 
                     </div>
 
