@@ -138,11 +138,11 @@
                             <p class="text-center w-100">{{ __("Lugar de ensayo") }}</p>
                                 <div class="col-lg-2 col-md-3 col-sm-4 d-flex justify-content-start">
                                     <input
-                                        type="checkbox"
-                                        value="1"
+                                        type="radio"
+                                        value="0"
                                         class="form-control lugar"
                                         name="lugar"
-                                        @if(!is_null(\Auth::user()->config_professor->essay_place))
+                                        @if(!is_null(\Auth::user()->config_professor->essay_place) && \Auth::user()->config_professor->essay_place != 1)
                                         checked
                                         @endif
                                     />
@@ -150,20 +150,14 @@
                                         __("¿Dispone de lugar de ensayo?")
                                     }}</label>
                                 </div>
-                        
-                            @error('lugar')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                            @enderror
 
                             <div class="col-lg-2 col-md-3 col-sm-4 d-flex justify-content-start">
                                 <input
-                                    type="checkbox"
+                                    type="radio"
                                     value="1"
-                                    class="form-control lugar_piano"
-                                    name="lugar_piano"
-                                    @if(!is_null(\Auth::user()->config_professor->essay_place_with_piano))
+                                    class="form-control lugar"
+                                    name="lugar"
+                                    @if(!is_null(\Auth::user()->config_professor->essay_place) && \Auth::user()->config_professor->essay_place == 1)
                                     checked
                                     @endif
                                 />
@@ -172,7 +166,7 @@
                                 }}</label>
                             </div>
                     
-                            @error('lugar_piano')
+                            @error('lugar')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>

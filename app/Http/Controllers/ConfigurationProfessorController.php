@@ -49,7 +49,6 @@ class ConfigurationProfessorController extends Controller
             'acompañamiento' => ['required', 'array', 'max:255'],
             'nivel' => ['nullable', 'array', 'max:255'],
             'lugar' => ['nullable', 'alpha_num', 'max:1'],
-            'lugar_piano' => ['nullable', 'alpha_num', 'max:1'],
         ]);
 
         if(count($request->get('idiomas')) != count($request->get('nivel'))){
@@ -90,7 +89,6 @@ class ConfigurationProfessorController extends Controller
         $config->biography = $request->get('biography');
         $config->price = $request->get('precio');
         $config->essay_place = $request->get('lugar');
-        $config->essay_place_with_piano = $request->get('lugar_piano');
         $config->save();
 
         foreach ($request->get('especialidad') as $especialidad){
@@ -132,7 +130,6 @@ class ConfigurationProfessorController extends Controller
             'idiomas' => ['nullable', 'array', 'max:255'],
             'nivel' => ['nullable', 'array', 'max:255'],
             'lugar' => ['nullable', 'alpha_num', 'max:1'],
-            'lugar_piano' => ['nullable', 'alpha_num', 'max:1'],
         ]);
 
         if(count($request->get('idiomas')) != count($request->get('nivel'))){
@@ -173,7 +170,6 @@ class ConfigurationProfessorController extends Controller
         $config->biography = $request->get('biography');
         $config->price = $request->get('precio');
         $config->essay_place = $request->get('lugar');
-        $config->essay_place_with_piano = $request->get('lugar_piano');
         $config->update();
 
         $especialties = ProfessorSpecialty::where('user_id', Auth::user()->id)->delete();

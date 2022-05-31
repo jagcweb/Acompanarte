@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\ContactRequest;
 use Illuminate\Support\Facades\Crypt;
 use App\Models\Price;
+use App\Models\User;
 use Carbon\Carbon;
 use App\Http\Controllers\NotificationController;
 
@@ -83,6 +84,10 @@ class ContactRequestController extends Controller
 
         $pianista_id = \Crypt::decryptString($request->get('pianista_id'));
 
+        do {
+            $codigo = \Str::random(12);
+        } while (ContactRequest::where('reference', $codigo)->exists());
+
         $contact_request = new ContactRequest();
         $contact_request->user_id = $pianista_id;
         $contact_request->client_id = Auth::user()->id;
@@ -96,6 +101,7 @@ class ContactRequestController extends Controller
         $contact_request->date_event = $request->get('fecha');
         $contact_request->rehearsals = $request->get('ensayo');
         $contact_request->num_rehearsals = $request->get('num_ensayo');
+        $contact_request->reference = $codigo;
         $contact_request->unblocked = 0;
 
         $pdf = $request->file('pdf');
@@ -103,7 +109,7 @@ class ContactRequestController extends Controller
         if($pdf){
             $pdf_name = time() .'_'. $pdf->getClientOriginalName().'.pdf';
 
-            \Storage::disk('pdfs')->put($image_name, \File::get($pdf));
+            \Storage::disk('pdfs')->put($pdf_name, \File::get($pdf));
 
             $contact_request->pdf = $pdf_name;
         }
@@ -145,6 +151,52 @@ class ContactRequestController extends Controller
 
         return route('home');
         
+    }
+
+    public function accept($id) {
+        $id = \Crypt::decryptString($id);
+
+        $contact_request = ContactRequest::find($id);
+
+        if($contact_request){
+            $contact_request->accepted = 1;
+            $contact_request->updated_at = Carbon::now();
+            $contact_request->update();
+
+            $user = $contact_request->client;
+            $data = ['contact_request' => $contact_request];
+            \Mail::send('mail.accept_contact_request', $data, function ($message) use($user) {
+                $message->from('encuentrapianista@gmail.com', 'EncuentraPianista');
+                $message->to($user->email)->subject('El pianista ha aceptado su solicitud');
+            });
+
+            return back()->with('exito', 'Propuesta aceptada!');
+        }
+
+        return back()->with('error', 'Esta propuesta no existe.');
+    }
+
+    public function decline($id) {
+        $id = \Crypt::decryptString($id);
+
+        $contact_request = ContactRequest::find($id);
+
+        if($contact_request){
+            $contact_request->accepted = 0;
+            $contact_request->updated_at = Carbon::now();
+            $contact_request->update();
+
+            $user = $contact_request->client;
+            $data = ['contact_request' => $contact_request];
+            \Mail::send('mail.decline_contact_request', $data, function ($message) use($user) {
+                $message->from('encuentrapianista@gmail.com', 'EncuentraPianista');
+                $message->to($user->email)->subject('El pianista ha rechazado su solicitud');
+            });
+
+            return back()->with('exito', 'Propuesta rechazada!');
+        }
+
+        return back()->with('error', 'Esta propuesta no existe.');
     }
 
     public function getPdf($filename) {

@@ -4,6 +4,7 @@
 @if(Auth::user()->getRoleNames()[0] == 'cliente')
 <div class="card">
     <div class="card-body">
+        <p class="text-center w-100">Referencia: <b>{{$contact_request->reference}}</b></p>
         @if(isset($contact_request->user))
             @if($contact_request->user->getRoleNames()[0] == 'pianista')
             <p class="text-center w-100">Nombre: <b>{{mb_substr($contact_request->user->name, 0, 1)}}*****</b></p>
@@ -36,6 +37,7 @@
 @else
 <div class="card">
     <div class="card-body">
+        <p class="text-center w-100">Referencia: <b>{{$contact_request->reference}}</b></p>
         @if(isset($contact_request->client))
             @if(Auth::user()->getRoleNames()[0] == 'pianista' && $contact_request->unblocked != 1)
             <p class="text-center w-100">Nombre: <b>{{mb_substr($contact_request->name, 0, 1)}}*****</b></p>
@@ -88,6 +90,23 @@
             @else
             <p class="text-center w-100 mt-5">Pagada ({{\Carbon\Carbon::parse($contact_request->updated_at)->format('d/m/Y H:i')}}) - {{number_format($contact_request->price)}}€</p>
             @endif
+            @endif
+
+            @if(Auth::user()->getRoleNames()[0] == 'pianista-premium' || Auth::user()->getRoleNames()[0] == 'pianista' && $contact_request->unblocked == 1)
+                @if(is_null($contact_request->accepted))
+                    <div class="w-100">
+                        <a href="{{route('contact_request.accept', ['id' => $contact_request->id])}}" style="color:#fff;" class="btn text-success">Aceptar</a>
+                        <a href="{{route('contact_request.decline', ['id' => $contact_request->id])}}" style="color:#fff;" class="btn text-danger">Rechazar</a>
+                    </div>
+                @endif
+
+                @if($contact_request->accepted != 1)
+                    <p class="text-danger">Rechazada</p>
+                @endif
+
+                @if($contact_request->accepted == 1)
+                    <p class="text-success">Aceptada</p>
+                @endif
             @endif
         @else
         <p>Este usuario ya no existe.</p>

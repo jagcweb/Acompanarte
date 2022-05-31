@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 
 class LoginController extends Controller
 {
@@ -42,8 +43,13 @@ class LoginController extends Controller
     {
         if ( $user->getRoleNames()[0] == 'administrador') {
             return redirect()->route('dashboard');
-    }
+        }
 
+        if(!is_null(\Cookie::get('back_to_url'))){
+            $back_url = \Cookie::get('back_to_url');
+            \Cookie::queue(\Cookie::forget('back_to_url'));
+            return Redirect::to($back_url);
+        }
         return redirect()->route('home');
     }
 

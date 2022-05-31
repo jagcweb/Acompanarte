@@ -6,7 +6,7 @@
 
 @section('content')
 <div class="s004">
-    <form method="POST" action="{{route('search_professor.index')}}">
+    <form method="GET" action="{{route('search_professor.index')}}">
         @csrf
         <fieldset>
         <legend>Encuentra a tu pianista</legend>

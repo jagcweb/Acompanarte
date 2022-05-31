@@ -24,7 +24,7 @@
                     @if(Auth::user()->verified != 1)
                         <p>¿Quieres ser un pianista verificado?</p>
 
-                        <p>Envíanos un email a <a href="mailto:test@test.com">test@test.com</a> incluyendo tu email de registro y un PDF con las titulaciones. Responderemos a su email en 24-48h (laborables) y si cumple los requisitos, pasará a ser un pianista verificado.</p>
+                        <p>Envíanos un email a <a href="mailto:admin@encuentrapianista.com">admin@encuentrapianista.com</a> incluyendo tu email de registro y un PDF con las titulaciones. Responderemos a su email en 24-48h (laborables) y si cumple los requisitos, pasará a ser un pianista verificado.</p>
 
                     @else
                         <p>¡Enhorabuena! Ya eres un pianista verificado.</p>

@@ -119,8 +119,8 @@
                             <p class="text-center w-100">{{ __("Lugar de ensayo") }}</p>
                                 <div class="col-lg-2 col-md-3 col-sm-4 d-flex justify-content-start">
                                     <input
-                                        type="checkbox"
-                                        value="1"
+                                        type="radio"
+                                        value="0"
                                         class="form-control lugar"
                                         name="lugar"
                                     />
@@ -128,26 +128,20 @@
                                         __("¿Dispone de lugar de ensayo?")
                                     }}</label>
                                 </div>
-                        
-                            @error('lugar')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                            @enderror
 
                             <div class="col-lg-2 col-md-3 col-sm-4 d-flex justify-content-start">
                                 <input
-                                    type="checkbox"
+                                    type="radio"
                                     value="1"
-                                    class="form-control lugar_piano"
-                                    name="lugar_piano"
+                                    class="form-control lugar"
+                                    name="lugar"
                                 />
                                 <label for="check-1" class="specialty-label ml-2 col-form-label">{{
                                     __("¿Dispone de lugar de ensayo con piano de cola?")
                                 }}</label>
                             </div>
                     
-                            @error('lugar_piano')
+                            @error('lugar')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>

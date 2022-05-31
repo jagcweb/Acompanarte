@@ -10,6 +10,7 @@ class ContactRequest extends Model
     protected $fillable = [
         'user_id',
         'client_id',
+        'reference',
         'name',
         'location',
         'specialty',
@@ -22,6 +23,7 @@ class ContactRequest extends Model
         'price',
         'unblocked',
         'pdf',
+        'accepted',
     ];
 
     public function unblock(){

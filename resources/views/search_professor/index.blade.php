@@ -6,6 +6,12 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-12">
+          @if(!Auth::user())
+            @if(!is_null(\Cookie::get('back_to_url')))
+              {{\Cookie::queue(\Cookie::forget('back_to_url'))}}
+            @endif
+            {{\Cookie::queue('back_to_url', url()->full(), 15*24*60)}}
+          @endif
           @if(count($professors)>0)
             <h2 class="text-center d-block mb-2">Pianistas disponibles en <b>{{$location}}</b>:</h2>
             <p class="text-center text-dark w-100">Especialidad: <b>{{$especialidad}}</b></p>
@@ -54,12 +60,14 @@
                   @endif
 
                   @if(!is_null($prof->config_professor->essay_place))
-                    <p>Dispone de lugar de ensayo</p>
-                  @endif
+                    @if($prof->config_professor->essay_place != 1)
+                      <p>Dispone de lugar de ensayo</p>
+                    @endif
 
-                  @if(!is_null($prof->config_professor->essay_place_with_piano))
-                  <p>Dispone de lugar de ensayo con piano</p>
-                @endif
+                    @if($prof->config_professor->essay_place == 1)
+                      <p>Dispone de lugar de ensayo con piano</p>
+                    @endif
+                  @endif
 
                   <span>Valoraciones: {{$prof->ratings->count()}}</span>
 

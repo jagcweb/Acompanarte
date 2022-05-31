@@ -43,13 +43,15 @@ Route::get('/configuracion-premium/premium/{type}/{auto_renew?}', [App\Http\Cont
 Route::get('/configuracion-premium/free', [App\Http\Controllers\ConfigurationPremiumController::class, 'free'])->name('configuration_premium.free');
 Route::get('/configuracion-premium/get-invoice/{pdf}', [App\Http\Controllers\ConfigurationPremiumController::class, 'getInvoice'])->name('configuration_premium.get_invoice');
 
-Route::post('/buscar-pianista', [App\Http\Controllers\SearchProfessorController::class, 'index'])->name('search_professor.index');
+Route::get('/buscar-pianista', [App\Http\Controllers\SearchProfessorController::class, 'index'])->name('search_professor.index');
 Route::get('/buscar-pianista/autocomplete-location/{value}', [App\Http\Controllers\SearchProfessorController::class, 'getLocation'])->name('search_professor.get_location');
 
 Route::get('/ver-solicitudes', [App\Http\Controllers\ContactRequestController::class, 'index'])->name('contact_request.index');
 Route::get('/ver-solicitud/{id}', [App\Http\Controllers\ContactRequestController::class, 'detail'])->name('contact_request.detail');
 Route::post('/enviar-solicitud', [App\Http\Controllers\ContactRequestController::class, 'save'])->name('contact_request.save');
 Route::get('/actualizar-solicitud/{type}', [App\Http\Controllers\ContactRequestController::class, 'update'])->name('contact_request.update');
+Route::get('/aceptar-solicitud/{id}', [App\Http\Controllers\ContactRequestController::class, 'accept'])->name('contact_request.accept');
+Route::get('/rechazar-solicitud/{id}', [App\Http\Controllers\ContactRequestController::class, 'decline'])->name('contact_request.decline');
 Route::get('/solicitudes/get-pdf/{pdf}', [App\Http\Controllers\ContactRequestController::class, 'getPdf'])->name('contact_request.get_pdf');
 
 

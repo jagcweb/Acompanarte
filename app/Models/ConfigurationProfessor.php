@@ -15,7 +15,6 @@ class ConfigurationProfessor extends Model
         'biography',
         'languages',
         'essay_place',
-        'essay_place_with_piano',
     ];
 
     public function user(){
