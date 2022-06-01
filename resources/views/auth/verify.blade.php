@@ -20,9 +20,19 @@
                         @csrf
                         <button type="submit" class="btn btn-link p-0 m-0 align-baseline">{{ __('click here to request another') }}</button>.
                     </form>
+                    <p class="w-100 text-center verificado" style="cursor: pointer; text-decoration: underline;">Ya he verificado mi correo</p>
                 </div>
             </div>
         </div>
     </div>
 </div>
 @endsection
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
+<script>
+    $( document ).ready(function() {
+        $('.verificado').click(function() {
+        window.location.reload();
+    });
+});
+
+</script>

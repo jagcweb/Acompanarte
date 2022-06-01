@@ -10,10 +10,10 @@
                 <div class="block-heading">
                     @if(str_contains(url()->current(), '/payment2'))
                     <p>Pago de suscripción pianista premium {{$type}} por {{$cantidad}}€</p>
-                    <p>Acompañarte usa Stripe como plataforma de pago y no almacena ningún tipo de información.</p>
+                    <p>Encuentra Pianista usa Stripe como plataforma de pago y no almacena ningún tipo de información.</p>
                     @else
                     <p>Pago de {{$cantidad}}€ de solicitud de contacto</p>
-                    <p>Acompañarte usa Stripe como plataforma de pago y no almacena ningún tipo de información.</p>
+                    <p>Encuentra Pianista usa Stripe como plataforma de pago y no almacena ningún tipo de información.</p>
                     @endif
                 </div>
                 @if (Session::has('success'))
@@ -114,7 +114,7 @@
         const paycheck = false;
         form.addEventListener('submit', function(ev) {
             ev.preventDefault();
-            $(".paynow").html('Acompañarte esta conectando con su banco, espere...');
+            $(".paynow").html('Encuentra Pianista esta conectando con su banco, espere...');
             //cardnumber,exp-date,cvc
             stripe.confirmCardPayment('{{ $client_secret }}', {
                 payment_method: {
@@ -135,7 +135,7 @@
                     // The payment has been processed!
                     if (result.paymentIntent.status === 'succeeded') {
                         $('#card-success').text("Pago realizado con éxito");
-                        $(".paynow").html('Gracias por confiar en Acompañarte');
+                        $(".paynow").html('Gracias por confiar en Encuentra Pianista');
                         $('#submit').prop('disabled', true);
 
                         setTimeout(function(){

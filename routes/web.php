@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Auth;
 
 Auth::routes(['verify' => true, 'register' => false]);
 
-Route::get('/registrar-{rol}', [App\Http\Controllers\Auth\RegisterController::class, 'index'])->name('register.index');
+Route::get('/registrar/{rol}', [App\Http\Controllers\Auth\RegisterController::class, 'index'])->name('register.index');
 Route::post('/registrar', [App\Http\Controllers\Auth\RegisterController::class, 'create'])->name('register.create');
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
@@ -32,6 +32,8 @@ Route::get('/configuracion', [App\Http\Controllers\ConfigurationController::clas
 Route::get('/configuracion-pianista', [App\Http\Controllers\ConfigurationProfessorController::class, 'index'])->name('configuration_professor.index');
 Route::post('/configuracion-pianista/guardar', [App\Http\Controllers\ConfigurationProfessorController::class, 'save'])->name('configuration_professor.save');
 Route::post('/configuracion-pianista/actualizar', [App\Http\Controllers\ConfigurationProfessorController::class, 'update'])->name('configuration_professor.update');
+Route::get('/configuracion-pianista/borrar-localizacion/{id}', [App\Http\Controllers\ConfigurationProfessorController::class, 'deleteLocation'])->name('configuration_professor.delete_location');
+Route::get('/configuracion-pianista/get-community', [App\Http\Controllers\ConfigurationProfessorController::class, 'getCommunities'])->name('configuration.get_community');
 Route::get('/configuracion-pianista/get-province/{community}', [App\Http\Controllers\ConfigurationProfessorController::class, 'getProvinces'])->name('configuration.get_province');
 Route::get('/configuracion-pianista/get-city/{province}', [App\Http\Controllers\ConfigurationProfessorController::class, 'getCity'])->name('configuration.get_city');
 
@@ -69,6 +71,7 @@ Route::get('/test', [App\Http\Controllers\TestController::class, 'index'])->name
 //ADMIN
 Route::get('/dashboard', [App\Http\Controllers\Admin\AdminController::class, 'index'])->name('dashboard');
 Route::get('/dashboard/usuarios', [App\Http\Controllers\Admin\AdminController::class, 'users'])->name('dashboard.user');
+Route::get('/dashboard/solicitudes', [App\Http\Controllers\Admin\AdminController::class, 'contact_requests'])->name('dashboard.contact_request');
 Route::get('/dashboard/historial-suscripciones', [App\Http\Controllers\Admin\AdminController::class, 'history'])->name('dashboard.history');
 Route::get('/dashboard/historial-busquedas', [App\Http\Controllers\Admin\AdminController::class, 'search_history'])->name('dashboard.search_history');
 Route::get('/dashboard/precios', [App\Http\Controllers\Admin\AdminController::class, 'price'])->name('dashboard.price');

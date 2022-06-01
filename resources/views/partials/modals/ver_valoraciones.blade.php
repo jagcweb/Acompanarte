@@ -12,13 +12,13 @@
                             <div style="display: flex; flex-direction: row;">
                                 @if(isset($rate->client))
                                     @if($rate->client->image)
-                                    <img src="{{url('mi-perfil/get-image/'.$rate->client->image)}}" alt="Acompañarte avatar"  class="rounded-circle" style="width:50px; height:50px!important;"/>
+                                    <img src="{{url('mi-perfil/get-image/'.$rate->client->image)}}" alt="Encuentra Pianista avatar"  class="rounded-circle" style="width:50px; height:50px!important;"/>
                                     @else
-                                    <img src="{{url('assets')}}/images/user.png" alt="Acompañarte avatar" class="rounded-circle" style="width:50px; height:50px!important;" />
+                                    <img src="{{url('assets')}}/images/user.png" alt="Encuentra Pianista avatar" class="rounded-circle" style="width:50px; height:50px!important;" />
                                     @endif
                                     <p style="margin-left: -40px;" class="mt-3 w-100 mr-2 text-center">{{ucfirst(mb_substr($rate->client->name, 0, 1))}}***** - Valoración: {{$rate->rate}}</p>
                                 @else
-                                <img src="{{url('assets')}}/images/user.png" alt="Acompañarte avatar" class="rounded-circle" style="width:50px; height:50px!important;" />
+                                <img src="{{url('assets')}}/images/user.png" alt="Encuentra Pianista avatar" class="rounded-circle" style="width:50px; height:50px!important;" />
                                 <p style="margin-left: -40px;" class="mt-3 w-100 mr-2 text-center">El usuario ya no existe. - Valoración: {{$rate->rate}}</p>
                                 @endif
                             </div>

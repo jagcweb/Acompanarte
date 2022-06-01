@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\VerifiesEmails;
+use Illuminate\Support\Facades\Redirect;
 
 class VerificationController extends Controller
 {
@@ -39,8 +40,16 @@ class VerificationController extends Controller
         $this->middleware('throttle:6,1')->only('verify', 'resend');
     }
 
+    
+
     protected function redirectTo()
     {
+        if(!is_null(\Cookie::get('back_to_url'))){
+            $back_url = \Cookie::get('back_to_url');
+            $back_url = explode("/", $back_url)[3];
+            \Cookie::queue(\Cookie::forget('back_to_url'));
+            return '/'.$back_url;
+        }
         return '/';
     }
 }

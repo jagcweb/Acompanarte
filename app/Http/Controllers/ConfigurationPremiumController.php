@@ -177,7 +177,7 @@ class ConfigurationPremiumController extends Controller
 
         $last_invoice = ProfessorSuscriptionHistory::orderBy('id', 'desc')->first();
 
-        $code = is_object($last_invoice) ? "AcompañARTE.".explode(".", $last_invoice->code)[1]+1 : "AcompañARTE.1";
+        $code = is_object($last_invoice) ? "Encuentra-Pianista.".explode(".", $last_invoice->code)[1]+1 : "Encuentra-Pianista.1";
 
         $buyer = new Party([
             'name' => 'gweg',
@@ -195,7 +195,7 @@ class ConfigurationPremiumController extends Controller
             ],
         ]);
 
-        $description = 'Suscripción a AcompañARTE desde: '.Carbon::now()->format('d/m/Y'). 'hasta: '.$ended_at->format('d/m/Y');
+        $description = 'Suscripción a Encuentra Pianista desde: '.Carbon::now()->format('d/m/Y'). 'hasta: '.$ended_at->format('d/m/Y');
 
         $items = [
             (new InvoiceItem())

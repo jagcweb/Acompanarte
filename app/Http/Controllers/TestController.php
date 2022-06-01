@@ -25,6 +25,12 @@ class TestController extends Controller
      */
     public function index()
     {
-        //CheckSuscription::dispatch();
+        /* $user = \Auth::user();
+        $data = ['user' => $user, 'code' => 'holwdwfpdf'];
+
+        \Mail::send('mail.send_invoice', $data, function ($message) use($user) {
+            $message->from('admin@encuentrapianista.com', 'EncuentraPianista');
+            $message->to('jagc.webdev@gmail.com')->subject('¡Gracias por su compra!');
+        }); */
     }
 }

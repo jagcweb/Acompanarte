@@ -10,6 +10,10 @@ use App\Models\Price;
 use App\Models\User;
 use Carbon\Carbon;
 use App\Http\Controllers\NotificationController;
+use LaravelDaily\Invoices\Classes\Party;
+use LaravelDaily\Invoices\Classes\InvoiceItem;
+use LaravelDaily\Invoices\Classes\Buyer;
+use LaravelDaily\Invoices\Invoice;
 
 class ContactRequestController extends Controller
 {
@@ -107,7 +111,7 @@ class ContactRequestController extends Controller
         $pdf = $request->file('pdf');
 
         if($pdf){
-            $pdf_name = time() .'_'. $pdf->getClientOriginalName().'.pdf';
+            $pdf_name = time() .'_'. $pdf->getClientOriginalName();
 
             \Storage::disk('pdfs')->put($pdf_name, \File::get($pdf));
 
@@ -123,7 +127,7 @@ class ContactRequestController extends Controller
             $message->to($user->email)->subject('Nueva solicitud de contacto');
         });
 
-        app(NotificationController::class)->save($user->id, 'contact', $contact_request->id, 'Solicitud de contacto');
+        app(NotificationController::class)->save($user->id, 'contact', $contact_request->id, 'Solicitud de contacto '.$contact_request->reference);
 
         return redirect()->route('home')->with('exito', 'Solicitud de contacto enviada!');
         
@@ -137,10 +141,71 @@ class ContactRequestController extends Controller
 
             $price = Price::where('type', 'contacto')->first();
 
+            $current_price = !is_null($price->discount) ? $price->price - ($price->price * $price->discount / 100) : $price->price;
+
             if($contact_request){
+
+                $last_invoice = ContactRequest::whereNotNull('code')->orderBy('id', 'desc')->first();
+
+                $code = is_object($last_invoice) ? "Encuentra-Pianista.Solicitud-Contacto.".explode(".", $last_invoice->code)[2]+1 : "Encuentra-Pianista.Solicitud-Contacto.1";
+        
+                $buyer = new Party([
+                    'name' => 'gweg',
+                    'address' => 'ewegew',
+                    'custom_fields' => [
+                        'email' => Auth::user()->email
+                    ],
+                ]);
+        
+                $customer = new Party([
+                    'name'          => Auth::user()->fullname,
+                    'address' => 'ewegew2',
+                    'custom_fields' => [
+                        'email' => ''
+                    ],
+                ]);
+        
+                $description = 'Pago único por desbloqueo de solicitud de contacto con referencia: '.$contact_request->reference;
+        
+                $items = [
+                    (new InvoiceItem())
+                        ->title('Pago por desbloqueo de solicitud '.$contact_request->reference)
+                        ->description($description)
+                        ->pricePerUnit($price->price)
+                        ->quantity(1)
+                        ->discount($price->discount),
+                ];
+        
+                $notes = [
+                    "Compra de su solicitud de contacto por valor de ".$current_price. "€",
+                ];
+        
+                $notes = implode($notes);
+        
+                $invoice = Invoice::make('FACTURA')
+                ->series('#'.$code)
+                ->seller($customer)
+                ->buyer($buyer)
+                ->currencyCode('EUR')
+                ->addItems($items)
+                ->notes($notes)
+                ->filename($code)
+                ->totalAmount($current_price)
+                ->save('invoices');
+        
+                $user = Auth::user();
+                $data = ['user' => $user, 'code' => $code.'.pdf'];
+        
+                \Mail::send('mail.send_invoice', $data, function ($message) use($user) {
+                    $message->from('encuentrapianista@gmail.com', 'EncuentraPianista');
+                    $message->to($user->email)->subject('¡Gracias por su compra!');
+                });
+
                 $contact_request->unblocked = 1;
-                $contact_request->price = !is_null($price->discount) ? $price->price - ($price->price * $price->discount / 100) : $price->price;
+                $contact_request->price = $current_price;
                 $contact_request->updated_at = Carbon::now();
+                $contact_request->code = $code;
+                $contact_request->pdf_invoice = $code.'.pdf';
                 $contact_request->update();
 
                 return redirect()->route('contact_request.detail', ['id' => Crypt::encryptString($contact_request->id)])->with('exito', 'Solicitud de contacto pagada');

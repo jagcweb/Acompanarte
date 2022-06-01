@@ -1,0 +1,14 @@
+TRUNCATE configuration_professors;
+TRUNCATE professor_specialties;
+TRUNCATE professor_languages;
+TRUNCATE professor_locations;
+TRUNCATE professor_accompaniments;
+TRUNCATE professor_suscriptions;
+TRUNCATE professor_suscriptions_history;
+
+TRUNCATE contact_requests;
+TRUNCATE notifications;
+TRUNCATE model_has_roles;
+TRUNCATE ratings;
+TRUNCATE search_history;
+TRUNCATE users;

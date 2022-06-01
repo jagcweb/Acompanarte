@@ -68,7 +68,7 @@ class RegisterController extends Controller
     {
         //Ejemplo previous url: registrar-cliente.
         //Explodeamos por "-" y sacamos el rol de la posicion 1 (cliente)
-        $role = explode("-", url()->previous())[1];
+        $role = explode("/", url()->previous())[4];
 
         $phone_field = $role != 'cliente' ? 'required' : 'nullable';
 

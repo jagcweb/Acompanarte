@@ -12,83 +12,58 @@
                                 geográfica') }}*</label>
 
                             <div class="col-md-12">
-                                <select id="disponibilidad"
-                                    class="form-control @error('disponibilidad') is-invalid @enderror"
-                                    name="disponibilidad" required>
+                                <select id=""
+                                    class="form-control disponibilidad"
+                                    name="disponibilidad[]" required data="0">
                                     <option selected hidden disabled>Selecciona un tipo de disponibilidad...</option>
                                     <option value="Nacional">Nacional</option>
                                     <option value="Comunidad Autónoma">Comunidad Autónoma</option>
                                     <option value="Provincial">Provincial</option>
                                     <option value="Población">Población</option>
                                 </select>
-
-                                @error('disponibilidad')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
                             </div>
                         </div>
 
-                        <div class="row mb-3 comunidad_div d-none">
+                        <div class="row mb-3 comunidad_div d-none"data="0">
                             <label for="comunidad" class="col-md-4 col-form-label text-md-end">{{ __('Comunidad
                                 Autónoma') }}*</label>
 
 
                             <div class="col-md-12">
-                                <select id="comunidad" class="form-control @error('comunidad') is-invalid @enderror"
-                                    name="comunidad">
+                                <select id="" class="comunidad form-control "
+                                    name="comunidad_0" data="0">
                                     <option selected hidden disabled>Selecciona una comunidad...</option>
-                                    @foreach($comunidades as $comunidad)
-                                    <option value="{{$comunidad->comunidad_autonoma}}">
-                                        {{$comunidad->comunidad_autonoma}}</option>
-                                    @endforeach
                                 </select>
-
-                                @error('comunidad')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
                             </div>
                         </div>
 
-                        <div class="row mb-3 provincia_div d-none">
+                        <div class="row mb-3 provincia_div d-none"data="0">
                             <label for="provincia" class="col-md-4 col-form-label text-md-end">{{ __('Provincia')
                                 }}*</label>
 
                             <div class="col-md-12">
-                                <select id="provincia" class="form-control @error('provincia') is-invalid @enderror"
-                                    name="provincia">
+                                <select id="" class="provincia form-control"
+                                    name="provincia_0" data="0">
                                     <option selected hidden disabled>Selecciona una provincia...</option>
                                 </select>
-
-                                @error('provincia')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
                             </div>
                         </div>
 
-                        <div class="row mb-3 poblacion_div d-none">
+                        <div class="row mb-3 poblacion_div d-none"data="0">
                             <label for="poblacion" class="col-md-4 col-form-label text-md-end">{{ __('Población')
                                 }}*</label>
 
                             <div class="col-md-12">
-                                <select id="poblacion" class="form-control @error('poblacion') is-invalid @enderror"
-                                    name="poblacion">
+                                <select id="" class="poblacion form-control"
+                                    name="poblacion_0" data="0">
                                     <option selected hidden disabled>Selecciona una poblacion...</option>
                                 </select>
-
-                                @error('provincia')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
                             </div>
                         </div>
 
+                        <div class="location_append"></div>
+
+                        <button type="button" class='btn btn-dark waves-effect waves-dark w-100 location_add'>Añadir más</button>
 
                         <div class="row mb-3 mt-4 ">
                             <label for="formacion" class="col-md-4 col-form-label text-md-end">{{ __('Formación')
@@ -165,7 +140,7 @@
 
                         <p class=" mb-3 mt-4 w-100 text-center font-22">Biografía</p>
                         <div class="row mb-3">
-                            <label for="biography" class="col-md-4 col-form-label text-md-end">{{ __('Otros títulos')
+                            <label for="biography" class="col-md-4 col-form-label text-md-end">{{ __('Biografía')
                                 }}</label>
 
                             <div class="col-md-12">

@@ -59,7 +59,7 @@
                 @if(!is_null($contact_request->pdf))
                     <p class="text-center w-100">
                         Partitura: 
-                        <a style="color:#000; cursor: pointer;" href="{{url('configuracion-premium/get-invoice/'.$contact_request->pdf)}}" title="Ver Partitura">
+                        <a style="color:#000; cursor: pointer;" target="_blank" href="{{url('configuracion-premium/get-invoice/'.$contact_request->pdf)}}" title="Ver Partitura">
                             <i style="font-size: 18px;" class="fa-solid fa-file-pdf"></i>
                         </a>
                     </p>
@@ -88,24 +88,31 @@
                 @endif
             </a>
             @else
-            <p class="text-center w-100 mt-5">Pagada ({{\Carbon\Carbon::parse($contact_request->updated_at)->format('d/m/Y H:i')}}) - {{number_format($contact_request->price)}}€</p>
+            <p class="text-center w-100 mt-5">
+                Pagada ({{\Carbon\Carbon::parse($contact_request->updated_at)->format('d/m/Y H:i')}}) - {{number_format($contact_request->price)}}€ - 
+                <a style="color:#000; cursor: pointer;" target="_blank" title="Ver Factura" href="{{url('configuracion-premium/get-invoice/'.$contact_request->code.'.pdf')}}"><i style="font-size: 18px;" class="fa-solid fa-file-pdf"></i></a>
+            </p>
             @endif
             @endif
 
             @if(Auth::user()->getRoleNames()[0] == 'pianista-premium' || Auth::user()->getRoleNames()[0] == 'pianista' && $contact_request->unblocked == 1)
                 @if(is_null($contact_request->accepted))
-                    <div class="w-100">
-                        <a href="{{route('contact_request.accept', ['id' => $contact_request->id])}}" style="color:#fff;" class="btn text-success">Aceptar</a>
-                        <a href="{{route('contact_request.decline', ['id' => $contact_request->id])}}" style="color:#fff;" class="btn text-danger">Rechazar</a>
+                    <div class="w-100 d-flex justify-content-center flex-row">
+                        <a href="{{route('contact_request.accept', ['id' => $contact_request->id])}}" style="color:#fff; background: green; max-width:200px;" class="btn">Aceptar</a>
+                        <a href="{{route('contact_request.decline', ['id' => $contact_request->id])}}" style="color:#fff; background: red; max-width:200px; margin-left:15px;" class="btn">Rechazar</a>
                     </div>
                 @endif
 
-                @if($contact_request->accepted != 1)
-                    <p class="text-danger">Rechazada</p>
+                @if(is_null($contact_request->accepted))
+                    <p class="w-100 text-center text-muted">Pendiente</p>
+                @endif
+
+                @if($contact_request->accepted == '0')
+                    <p class="w-100 text-center text-danger">Rechazada</p>
                 @endif
 
                 @if($contact_request->accepted == 1)
-                    <p class="text-success">Aceptada</p>
+                    <p class="w-100 text-center text-success">Aceptada</p>
                 @endif
             @endif
         @else

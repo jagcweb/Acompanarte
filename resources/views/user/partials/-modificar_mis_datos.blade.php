@@ -58,7 +58,7 @@
 
                                 @if(\Auth::user()->image)
                                 <span>Avatar Actual:</span>
-                                    <img src="{{url('mi-perfil/get-image/'.Auth::user()->image)}}" alt="Acompañarte avatar"  class="rounded-circle" width="100"/>
+                                    <img src="{{url('mi-perfil/get-image/'.Auth::user()->image)}}" alt="Encuentra Pianista avatar"  class="rounded-circle" width="100"/>
                                 @endif
 
                                 @error('image')

@@ -37,7 +37,7 @@ class SearchProfessorController extends Controller
         }
 
         $professors = User::
-        whereHas('config_professor', function($q) use($location, $location_data) {
+        whereHas('professor_locations', function($q) use($location, $location_data) {
             $q->where('availability', 'nacional');
             $q->orWhere('community', $location_data->comunidad_autonoma);
             $q->orWhere('province', $location_data->provincia);

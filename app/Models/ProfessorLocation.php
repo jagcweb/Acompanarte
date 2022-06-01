@@ -4,18 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ConfigurationProfessor extends Model
+class ProfessorLocation extends Model
 {
-    protected $table = 'configuration_professors';
+    protected $table = 'professor_locations';
     protected $fillable = [
         'user_id',
         'availability',
         'community',
         'province',
         'city',
-        'biography',
-        'languages',
-        'essay_place',
     ];
 
     public function user(){

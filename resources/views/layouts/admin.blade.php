@@ -10,7 +10,7 @@
   <!-- CSRF Token -->
   <meta name="csrf-token" content="{{ csrf_token() }}">
 
-  <title>@yield('title') | Acompañarte</title>
+  <title>@yield('title') | Encuentra Pianista</title>
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -53,17 +53,17 @@
   <header style="background: transparent;">
     <nav>
       <a href="{{route('home')}}">
-        <h1>Acompañarte</h1>
+        <h1>Encuentra Pianista</h1>
       </a>
       <ul class="nav navbar-nav ms-auto">
         <li class="nav-item" style="margin-top:-4px; color:#e8b210;">ADMINISTRADOR </li>
         <li class="nav-item dropdown dropdown-user">
           <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
             @if(Auth::user()->image)
-            <img src="{{url('mi-perfil/get-image/'.Auth::user()->image)}}" alt="Acompañarte avatar"
-              class="rounded-circle" width="40" />
+            <img src="{{url('mi-perfil/get-image/'.Auth::user()->image)}}" alt="Encuentra Pianista avatar"
+              class="rounded-circle" width="45" height="45" />
             @else
-            <img src="{{url('assets')}}/images/user.png" alt="Acompañarte avatar" class="rounded-circle" width="40" />
+            <img src="{{url('assets')}}/images/user.png" alt="Encuentra Pianista avatar" class="rounded-circle" width="45" height="45" />
             @endif
           </a>
           <div class="dropdown-menu dropdown-menu-end">
@@ -72,6 +72,7 @@
             <a href="{{route('dashboard')}}" class="dropdown-item">Inicio</a>
             <div class="dropdown-divider"></div>
             <a href="{{route('dashboard.user')}}" class="dropdown-item">Todos los usuarios</a>
+            <a href="{{route('dashboard.contact_request')}}" class="dropdown-item">Todos los usuarios</a>
             <a href="{{route('dashboard.history')}}" class="dropdown-item">Historial de suscripciones</a>
             <a href="{{route('dashboard.search_history')}}" class="dropdown-item">Historial de búsqueda de pianista</a>
             <div class="dropdown-divider"></div>

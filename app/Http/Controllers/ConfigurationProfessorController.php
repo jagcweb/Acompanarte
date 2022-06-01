@@ -9,6 +9,8 @@ use App\Models\ConfigurationProfessor;
 use App\Models\ProfessorSpecialty;
 use App\Models\ProfessorAccompaniment;
 use App\Models\ProfessorLanguage;
+use App\Models\ProfessorLocation;
+
 
 class ConfigurationProfessorController extends Controller
 {
@@ -40,7 +42,8 @@ class ConfigurationProfessorController extends Controller
     public function save(Request $request)
     {
         $validate = $this->validate($request, [
-            'disponibilidad' => ['required', 'string', 'max:255'],
+            'disponibilidad' => ['required'],
+            'disponibilidad.*' => ['required','string'],
             'especialidad' => ['required', 'array', 'max:255'],
             'formacion' => ['required', 'string', 'max:255'],
             'precio' => ['nullable', 'numeric', 'regex:/^\d+(\.\d{1,1})?$/'],
@@ -51,40 +54,50 @@ class ConfigurationProfessorController extends Controller
             'lugar' => ['nullable', 'alpha_num', 'max:1'],
         ]);
 
-        if(count($request->get('idiomas')) != count($request->get('nivel'))){
-            return back()->with('error', 'Debes introducir los mismos idiomas que niveles.');
+
+        foreach ($request->get('disponibilidad') as $i=>$dispo){
+    
+            switch($dispo){
+                case('Comunidad Autónoma'):
+                    $validate = $this->validate($request, [
+                        'comunidad_'.$i => ['required','string'],
+                    ]);
+                break;
+    
+                case('Provincial'):
+                    $validate = $this->validate($request, [
+                        'comunidad_'.$i => ['required','string'],
+                        'provincia_'.$i => ['required','string'],
+                    ]);
+                break;
+    
+                case('Población'):
+                    $validate = $this->validate($request, [
+                        'comunidad_'.$i => ['required','string'],
+                        'provincia_'.$i => ['required', 'string'],
+                        'poblacion_'.$i => ['required','string'],
+                    ]);
+                break;
+            }
         }
 
+        if(!is_null($request->get('idiomas')) && !is_null($request->get('nivel'))){
+            if(count($request->get('idiomas')) != count($request->get('nivel'))){
+                return back()->with('error', 'Debes introducir los mismos idiomas que niveles.');
+            }
 
-        switch($request->get('disponibilidad')){
-            case('comunidad'):
-                $validate = $this->validate($request, [
-                    'comunidad' => ['required', 'string', 'max:255'],
-                ]);
-            break;
-
-            case('provincia'):
-                $validate = $this->validate($request, [
-                    'comunidad' => ['required', 'string', 'max:255'],
-                    'provincia' => ['required', 'string', 'max:255'],
-                ]);
-            break;
-
-            case('poblacion'):
-                $validate = $this->validate($request, [
-                    'comunidad' => ['required', 'string', 'max:255'],
-                    'provincia' => ['required', 'string', 'max:255'],
-                    'poblacion' => ['required', 'string', 'max:255'],
-                ]);
-            break;
+            for($i=0; $i < sizeof($request->get('idiomas')); $i++){
+                $language = new ProfessorLanguage();
+                $language->user_id = Auth::user()->id;
+                $language->language = $request->get('idiomas')[$i];
+                $language->level = $request->get('nivel')[$i];
+                $language->save();
+            }
         }
+
 
         $config = new ConfigurationProfessor();
         $config->user_id = Auth::user()->id;
-        $config->availability = $request->get('disponibilidad');
-        $config->community = $request->get('comunidad');
-        $config->province = $request->get('provincia');
-        $config->city = $request->get('poblacion');
         $config->education = $request->get('formacion');
         $config->biography = $request->get('biography');
         $config->price = $request->get('precio');
@@ -105,12 +118,36 @@ class ConfigurationProfessorController extends Controller
             $accompaniment->save();
         }
 
-        for($i=0; $i < sizeof($request->get('idiomas')); $i++){
-            $language = new ProfessorLanguage();
-            $language->user_id = Auth::user()->id;
-            $language->language = $request->get('idiomas')[$i];
-            $language->level = $request->get('nivel')[$i];
-            $language->save();
+       foreach ($request->get('disponibilidad') as $i=>$dispo){
+            $location = new ProfessorLocation();
+            $location->user_id = Auth::user()->id;
+            $location->availability = $dispo;
+            switch($dispo){
+                case('Nacional'):
+                    $exist_location = ProfessorLocation::where('user_id', Auth::user()->id)->where('availability', 'Nacional')->first();
+                break;
+                case('Comunidad Autónoma'):
+                    $exist_location = ProfessorLocation::where('user_id', Auth::user()->id)->where('community', $request->get('comunidad_'.$i))->first();
+                    $location->community = $request->get('comunidad_'.$i);
+                break;
+    
+                case('Provincial'):
+                    $exist_location = ProfessorLocation::where('user_id', Auth::user()->id)->where('province', $request->get('provincia_'.$i))->first();
+                    $location->community = $request->get('comunidad_'.$i);
+                    $location->province = $request->get('provincia_'.$i);
+                break;
+    
+                case('Población'):
+                    $exist_location = ProfessorLocation::where('user_id', Auth::user()->id)->where('city', $request->get('poblacion_'.$i))->first();
+                    $location->community = $request->get('comunidad_'.$i);
+                    $location->province = $request->get('provincia_'.$i);
+                    $location->city = $request->get('poblacion_'.$i);
+                break;
+            }
+
+            if(!is_object($exist_location)){
+                $location->save();
+            }
         }
 
         return back()->with('exito', 'Configuración guardada');
@@ -121,7 +158,8 @@ class ConfigurationProfessorController extends Controller
     public function update(Request $request)
     {
         $validate = $this->validate($request, [
-            'disponibilidad' => ['required', 'string', 'max:255'],
+            'disponibilidad' => ['required'],
+            'disponibilidad.*' => ['required','string'],
             'especialidad' => ['required', 'array', 'max:255'],
             'formacion' => ['required', 'string', 'max:255'],
             'precio' => ['nullable', 'numeric', 'regex:/^\d+(\.\d{1,1})?$/'],
@@ -132,40 +170,51 @@ class ConfigurationProfessorController extends Controller
             'lugar' => ['nullable', 'alpha_num', 'max:1'],
         ]);
 
-        if(count($request->get('idiomas')) != count($request->get('nivel'))){
-            return back()->with('error', 'Debes introducir los mismos idiomas que niveles.');
+        foreach ($request->get('disponibilidad') as $i=>$dispo){
+    
+            switch($dispo){
+                case('Comunidad Autónoma'):
+                    $validate = $this->validate($request, [
+                        'comunidad_'.$i => ['required','string'],
+                    ]);
+                break;
+    
+                case('Provincial'):
+                    $validate = $this->validate($request, [
+                        'comunidad_'.$i => ['required','string'],
+                        'provincia_'.$i => ['required','string'],
+                    ]);
+                break;
+    
+                case('Población'):
+                    $validate = $this->validate($request, [
+                        'comunidad_'.$i => ['required','string'],
+                        'provincia_'.$i => ['required', 'string'],
+                        'poblacion_'.$i => ['required','string'],
+                    ]);
+                break;
+            }
         }
 
+        if(!is_null($request->get('idiomas')) && !is_null($request->get('nivel'))){
+            if(count($request->get('idiomas')) != count($request->get('nivel'))){
+                return back()->with('error', 'Debes introducir los mismos idiomas que niveles.');
+            }
 
-        switch($request->get('disponibilidad')){
-            case('comunidad'):
-                $validate = $this->validate($request, [
-                    'comunidad' => ['required', 'string', 'max:255'],
-                ]);
-            break;
-
-            case('provincia'):
-                $validate = $this->validate($request, [
-                    'comunidad' => ['required', 'string', 'max:255'],
-                    'provincia' => ['required', 'string', 'max:255'],
-                ]);
-            break;
-
-            case('poblacion'):
-                $validate = $this->validate($request, [
-                    'comunidad' => ['required', 'string', 'max:255'],
-                    'provincia' => ['required', 'string', 'max:255'],
-                    'poblacion' => ['required', 'string', 'max:255'],
-                ]);
-            break;
+            $languages = ProfessorLanguage::where('user_id', Auth::user()->id)->delete();
+            for($i=0; $i < sizeof($request->get('idiomas')); $i++){
+    
+                $language = new ProfessorLanguage();
+                $language->user_id = Auth::user()->id;
+                $language->language = $request->get('idiomas')[$i];
+                $language->level = $request->get('nivel')[$i];
+                $language->save();
+            }
+    
         }
 
         $config = ConfigurationProfessor::where('user_id', Auth::user()->id)->first();
         $config->user_id = Auth::user()->id;
-        $config->availability = $request->get('disponibilidad');
-        $config->community = $request->get('comunidad');
-        $config->province = $request->get('provincia');
-        $config->city = $request->get('poblacion');
         $config->education = $request->get('formacion');
         $config->biography = $request->get('biography');
         $config->price = $request->get('precio');
@@ -190,19 +239,67 @@ class ConfigurationProfessorController extends Controller
             $accompaniment->save();
         }
 
-        $languages = ProfessorLanguage::where('user_id', Auth::user()->id)->delete();
-        for($i=0; $i < sizeof($request->get('idiomas')); $i++){
+        foreach ($request->get('disponibilidad') as $i=>$dispo){
+            $location = new ProfessorLocation();
+            $location->user_id = Auth::user()->id;
+            $location->availability = $dispo;
+            switch($dispo){
+                case('Nacional'):
+                    $exist_location = ProfessorLocation::where('user_id', Auth::user()->id)->where('availability', 'Nacional')->first();
+                break;
+                case('Comunidad Autónoma'):
+                    $exist_location = ProfessorLocation::where('user_id', Auth::user()->id)->where('community', $request->get('comunidad_'.$i))->first();
+                    $location->community = $request->get('comunidad_'.$i);
+                break;
+    
+                case('Provincial'):
+                    $exist_location = ProfessorLocation::where('user_id', Auth::user()->id)->where('province', $request->get('provincia_'.$i))->first();
+                    $location->community = $request->get('comunidad_'.$i);
+                    $location->province = $request->get('provincia_'.$i);
+                break;
+    
+                case('Población'):
+                    $exist_location = ProfessorLocation::where('user_id', Auth::user()->id)->where('city', $request->get('poblacion_'.$i))->first();
+                    $location->community = $request->get('comunidad_'.$i);
+                    $location->province = $request->get('provincia_'.$i);
+                    $location->city = $request->get('poblacion_'.$i);
+                break;
+            }
 
-            $language = new ProfessorLanguage();
-            $language->user_id = Auth::user()->id;
-            $language->language = $request->get('idiomas')[$i];
-            $language->level = $request->get('nivel')[$i];
-            $language->save();
+            if(!is_object($exist_location)){
+                $location->save();
+            }
         }
 
         return back()->with('exito', 'Configuración guardada');
 
 
+    }
+
+    public function deleteLocation($id){
+        $id = \Crypt::decryptString($id);
+        $location = ProfessorLocation::find($id);
+
+        if($location){
+            $location->delete();
+
+            return back()->with('exito', 'Localización borrada');
+        }
+
+        return back()->with('error', 'La localización no existe!');
+    }
+
+    public function getCommunities()
+    {
+        $comunidades = PostalCode::select('comunidad_autonoma')->groupBy('comunidad_autonoma')->orderBy('comunidad_autonoma', 'asc')->get();
+
+        if(count($comunidades)>0){
+            $status = 200;
+            return response(json_encode($comunidades), $status)->header('Content-type', 'text/plain');
+        }
+
+        $status = 404;
+        return response(json_encode('error'),$status);
     }
 
     public function getProvinces($community)

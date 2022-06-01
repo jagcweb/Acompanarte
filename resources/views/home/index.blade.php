@@ -29,10 +29,8 @@
         </div>
     </form>
 </div>
-@if(Auth::user() && !Auth::user()->config_professor)
+@if(Auth::user() && !Auth::user()->config_professor && Auth::user()->getRoleNames()[0] != 'cliente')
 <p class="w-100 text-center">Rellena la <a href="{{route('configuration_professor.index')}}">configuración</a> de tu cuenta para aparecer a clientes!</p>
-@else
-<p class="w-100 text-center">Ya eres mostrado a clientes!</p>
 @endif
 <script src="{{url('assets')}}/js/extention/choices.js"></script>
 <script src="{{url('assets')}}/js/home.js"></script>

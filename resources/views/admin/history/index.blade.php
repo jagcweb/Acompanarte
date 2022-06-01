@@ -33,7 +33,7 @@
                 <td>{{ucfirst($hist->type)}}</td>
                 <td>{{\Carbon\Carbon::parse($hist->created_at)->format('d/m/Y')}}</td>
                 <td>{{\Carbon\Carbon::parse($hist->ended_at)->format('d/m/Y')}}</td>
-                <td><a href="#" class="text-dark" style="font-size:24px;"><i class="fa-solid fa-file-pdf"></i></a></td>
+                <td><a href="{{url('configuracion-premium/get-invoice/'.$hist->pdf)}}"  target="_blank" class="text-dark" style="font-size:24px;"><i class="fa-solid fa-file-pdf"></i></a></td>
                 <td>{{\Carbon\Carbon::parse($hist->created_at)->format('d/m/Y')}}</td>
                 <td>{{\Carbon\Carbon::parse($hist->updated_at)->format('d/m/Y')}}</td>
             <tr>

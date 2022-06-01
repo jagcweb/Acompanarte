@@ -1,21 +1,24 @@
 <div class="w-100 text-center">
-    <p>Actual disponibilidad geográfica: {{Auth::user()->config_professor->availability}}</p>
-    @switch(Auth::user()->config_professor->availability)
-    @case('Comunidad Autónoma')
-    <p>Comunidad autónoma: {{Auth::user()->config_professor->community}}</p>
-    @break
+    <p class="mb-3">Total de localizaciones: {{count(Auth::user()->professor_locations)}}</p>
+    @foreach (Auth::user()->professor_locations as $i=>$location)
+        <p>{{$i+1}}: Disponibilidad geográfica: {{$location->availability}} <a href="{{route('configuration_professor.delete_location', ['id' => \Crypt::encryptString($location->id)])}}" class="text-danger" style="cursor: pointer;"><i class="fa-solid fa-circle-xmark"></i></a></p>
+        @switch($location->availability)
+        @case('Comunidad Autónoma')
+        <p>Comunidad autónoma: {{$location->community}}</p>
+        @break
 
-    @case('Provincial')
-    <p>Comunidad autónoma: {{Auth::user()->config_professor->community}}</p>
-    <p>Provincia: {{Auth::user()->config_professor->province}}</p>
-    @break
+        @case('Provincial')
+        <p>Comunidad autónoma: {{$location->community}}</p>
+        <p>Provincia: {{$location->province}}</p>
+        @break
 
-    @case('Población')
-    <p>Comunidad autónoma: {{Auth::user()->config_professor->community}}</p>
-    <p>Provincia: {{Auth::user()->config_professor->province}}</p>
-    <p>Población: {{Auth::user()->config_professor->city}}</p>
-    @break
-    @endswitch
+        @case('Población')
+        <p>Comunidad autónoma: {{$location->community}}</p>
+        <p>Provincia: {{$location->province}}</p>
+        <p>Población: {{$location->city}}</p>
+        @break
+        @endswitch
+    @endforeach
 </div>
 <div class="card">
 
@@ -31,82 +34,58 @@
                                 geográfica') }}*</label>
 
                             <div class="col-md-12">
-                                <select id="disponibilidad"
-                                    class="form-control @error('disponibilidad') is-invalid @enderror"
-                                    name="disponibilidad" required>
-                                    <option selected hidden value="{{Auth::user()->config_professor->availability}}">{{Auth::user()->config_professor->availability}}</option>
+                                <select id=""
+                                    class="form-control disponibilidad"
+                                    name="disponibilidad[]" required data="0">
+                                    <option selected hidden disabled>Selecciona un tipo de disponibilidad...</option>
                                     <option value="Nacional">Nacional</option>
                                     <option value="Comunidad Autónoma">Comunidad Autónoma</option>
                                     <option value="Provincial">Provincial</option>
                                     <option value="Población">Población</option>
                                 </select>
-
-                                @error('disponibilidad')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
                             </div>
                         </div>
 
-                        <div class="row mb-3 comunidad_div d-none">
+                        <div class="row mb-3 comunidad_div d-none"data="0">
                             <label for="comunidad" class="col-md-4 col-form-label text-md-end">{{ __('Comunidad
                                 Autónoma') }}*</label>
 
 
                             <div class="col-md-12">
-                                <select id="comunidad" class="form-control @error('comunidad') is-invalid @enderror"
-                                    name="comunidad">
+                                <select id="" class="comunidad form-control "
+                                    name="comunidad_0" data="0">
                                     <option selected hidden disabled>Selecciona una comunidad...</option>
-                                    @foreach($comunidades as $comunidad)
-                                    <option value="{{$comunidad->comunidad_autonoma}}">
-                                        {{$comunidad->comunidad_autonoma}}</option>
-                                    @endforeach
                                 </select>
-
-                                @error('comunidad')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
                             </div>
                         </div>
 
-                        <div class="row mb-3 provincia_div d-none">
+                        <div class="row mb-3 provincia_div d-none"data="0">
                             <label for="provincia" class="col-md-4 col-form-label text-md-end">{{ __('Provincia')
                                 }}*</label>
 
                             <div class="col-md-12">
-                                <select id="provincia" class="form-control @error('provincia') is-invalid @enderror"
-                                    name="provincia">
+                                <select id="" class="provincia form-control"
+                                    name="provincia_0" data="0">
                                     <option selected hidden disabled>Selecciona una provincia...</option>
                                 </select>
-
-                                @error('provincia')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
                             </div>
                         </div>
 
-                        <div class="row mb-3 poblacion_div d-none">
+                        <div class="row mb-3 poblacion_div d-none"data="0">
                             <label for="poblacion" class="col-md-4 col-form-label text-md-end">{{ __('Población')
                                 }}*</label>
 
                             <div class="col-md-12">
-                                <select id="poblacion" class="form-control @error('poblacion') is-invalid @enderror"
-                                    name="poblacion">
+                                <select id="" class="poblacion form-control"
+                                    name="poblacion_0" data="0">
                                     <option selected hidden disabled>Selecciona una poblacion...</option>
                                 </select>
-
-                                @error('provincia')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
                             </div>
                         </div>
+
+                        <div class="location_append"></div>
+
+                        <button type="button" class='btn btn-dark waves-effect waves-dark w-100 location_add'>Añadir más</button>
 
 
                         <div class="row mb-3 mt-4 ">
@@ -205,18 +184,51 @@
                             </div>
                         </div>
 
-                        @foreach (Auth::user()->professor_languages as $j=>$language)
-                            <div class="row mb-3 idiomas_row" data="{{$j}}">
-                                <label for="idiomas" class="col-md-12 col-form-label text-md-end">
-                                    {{ __('Idiomas y nivel') }}
-                                    @if($j >= 1)
-                                        <span data="{{$j}}" class="idiomas_delete text-danger ml-2" style="cursor: pointer;"><i class="fa-solid fa-circle-xmark"></i></span>
-                                    @endif
-                                </label>
+                        @if(count(Auth::user()->professor_languages)>0)
+                            @foreach (Auth::user()->professor_languages as $j=>$language)
+                                <div class="row mb-3 idiomas_row" data="{{$j}}">
+                                    <label for="idiomas" class="col-md-12 col-form-label text-md-end">
+                                        {{ __('Idiomas y nivel') }}
+                                        @if($j >= 1)
+                                            <span data="{{$j}}" class="idiomas_delete text-danger ml-2" style="cursor: pointer;"><i class="fa-solid fa-circle-xmark"></i></span>
+                                        @endif
+                                    </label>
+
+                                    <div class="col-md-6">
+                                        <input type="text" id="idiomas"
+                                            class="form-control @error('idiomas') is-invalid @enderror" name="idiomas[]" value="{{$language->language}}"/>
+
+                                        @error('idiomas')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <select class="form-control" id="nivel" name="nivel[]">
+                                            <option selected hidden value="{{$language->level}}">{{$language->level}}</option>
+                                            <option value="Básico">Básico</option>
+                                            <option value="Intermedio">Intermedio</option>
+                                            <option value="Avanzado">Avanzado</option>
+                                            <option value="Nativo">Nativo</option>
+                                        </select>
+
+                                        @error('nivel')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                            @endforeach
+                        @else
+                            <div class="row mb-3">
+                                <label for="idiomas" class="col-md-12 col-form-label text-md-end">{{ __('Idiomas') }}</label>
 
                                 <div class="col-md-6">
                                     <input type="text" id="idiomas"
-                                        class="form-control @error('idiomas') is-invalid @enderror" name="idiomas[]" value="{{$language->language}}"/>
+                                        class="form-control @error('idiomas') is-invalid @enderror" name="idiomas[]" />
 
                                     @error('idiomas')
                                     <span class="invalid-feedback" role="alert">
@@ -227,7 +239,7 @@
 
                                 <div class="col-md-6">
                                     <select class="form-control" id="nivel" name="nivel[]">
-                                        <option selected hidden value="{{$language->level}}">{{$language->level}}</option>
+                                        <option selected hidden disabled>Selecciona un nivel...</option>
                                         <option value="Básico">Básico</option>
                                         <option value="Intermedio">Intermedio</option>
                                         <option value="Avanzado">Avanzado</option>
@@ -241,7 +253,7 @@
                                     @enderror
                                 </div>
                             </div>
-                    @endforeach
+                        @endif
 
                         <div class="idiomas_append"></div>
 

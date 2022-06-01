@@ -24,6 +24,8 @@ class ContactRequest extends Model
         'unblocked',
         'pdf',
         'accepted',
+        'code',
+        'pdf_invoice'
     ];
 
     public function unblock(){

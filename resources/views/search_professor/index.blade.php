@@ -6,7 +6,7 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-12">
-          @if(!Auth::user())
+          @if(!Auth::user() || is_null(Auth::user()->email_verified_at) && Auth::user()->getRoleNames()[0] == 'cliente')
             @if(!is_null(\Cookie::get('back_to_url')))
               {{\Cookie::queue(\Cookie::forget('back_to_url'))}}
             @endif
@@ -21,7 +21,7 @@
               <div class="card-body" style="display:flex; justify-content:space-between; border:none;">
                 <div style="display:flex; justify-content: center; align-items: center;">
                   @if($prof->image)
-                    <img src="{{url('mi-perfil/get-image/'.$prof->image)}}" alt="Acompañarte avatar"  class="rounded-circle" width="85"/>
+                    <img src="{{url('mi-perfil/get-image/'.$prof->image)}}" alt="Encuentra Pianista avatar"  class="rounded-circle" width="85"/>
                   @else
                     <img src="{{url('assets')}}/images/user.png" alt="user-image" class="rounded-circle" width="85" />
                   @endif
@@ -45,7 +45,7 @@
                   
                   @if(!is_null($prof->config_professor->biography))
                     <span>Biografía:</span>
-                        <span>{{$prof->config_professor->price}}</span>
+                        <span>{{$prof->config_professor->biography}}</span>
                   @endif
 
                   @if(!is_null($prof->config_professor->languages))
@@ -73,12 +73,16 @@
 
                   <div style="display: flex; flex-direction: row; justify-content: space-between; align-items: center; width: 100%;">
                     @if(Auth::check())
-                      @if(Auth::user()->getRoleNames()[0] == 'cliente')
-                        <button class="btn btn-dark" data-toggle="modal" data-target="#enviar-solicitud-{{$prof->id}}">Enviar solicitud de contacto</button>
-                        @include('partials.modals.enviar_solicitud_contacto')
-                      @endif
+                        @if(Auth::user()->getRoleNames()[0] == 'cliente')
+                          @if(is_null(Auth::user()->email_verified_at))
+                            <p class="text-center text-dark">Para enviar una solicitud de contacto <a style="color:#000; text-decoration: underline;" href="{{route('verification.notice')}}">verifica tu email</a></p>
+                          @else
+                          <button class="btn btn-dark" data-toggle="modal" data-target="#enviar-solicitud-{{$prof->id}}">Enviar solicitud de contacto</button>
+                          @include('partials.modals.enviar_solicitud_contacto')
+                          @endif
+                        @endif
                     @else
-                    <p class="text-center text-dark">Para enviar una solicitud de contacto <a style="color:#000; text-decoration: underline;" href="{{route('register.index', ['rol' => 'cliente'])}}" target="_blank">regístrate</a> o <a style="color:#000; text-decoration: underline;" href="{{route('login')}}" target="_blank">inicia sesión</a></p>
+                    <p class="text-center text-dark">Para enviar una solicitud de contacto <a style="color:#000; text-decoration: underline;" href="{{route('register.index', ['rol' => 'cliente'])}}">regístrate</a> o <a style="color:#000; text-decoration: underline;" href="{{route('login')}}">inicia sesión</a></p>
                     @endif
                     <a href="{{route('user.profile', ['username' => $prof->username])}}" target="_blank" style="color:#fff;" class="btn btn-dark ml-4">Ver perfil</a>
                   </div>

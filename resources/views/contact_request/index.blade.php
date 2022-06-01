@@ -14,7 +14,7 @@
                 <span class="text-muted">Pendiente</span>
             @endif
 
-            @if($cont->accepted != 1)
+            @if($cont->accepted == '0')
                 <span class="text-danger">Rechazada</span>
             @endif
 

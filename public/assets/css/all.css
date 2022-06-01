@@ -111,6 +111,12 @@ input[type=number] {
     -moz-appearance: textfield;
 }
 
+input[type=radio] {
+    width: 23px;
+    height: 23px;
+    margin-top: 15px;
+}
+
 
 /* Cambia los efectos del glow de focus input por default */
 

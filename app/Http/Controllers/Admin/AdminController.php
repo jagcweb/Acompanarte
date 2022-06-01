@@ -92,6 +92,16 @@ class AdminController extends Controller
         ]);
     }
 
+    public function contact_requests(){
+
+        $contact_requests = ContactRequests::orderBy('id', 'asc')->get();
+        
+        return view('admin.contact_request.index', [
+            'contact_requests' => $contact_requests
+        ]);
+    }
+
+
     public function price(){
 
         $prices = Price::orderBy('id', 'asc')->get();

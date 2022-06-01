@@ -16,9 +16,9 @@
             <div class="col-md-4">
                 <div class="profile-img">
                     @if($user->image)
-                    <img src="{{url('mi-perfil/get-image/'.$user->image)}}" alt="Acompañarte avatar"  class="rounded-circle" width="40"/>
+                    <img src="{{url('mi-perfil/get-image/'.$user->image)}}" alt="Encuentra Pianista avatar"  class="rounded-circle" width="45" height="45"/>
                     @else
-                    <img src="{{url('assets')}}/images/user.png" alt="Acompañarte avatar" class="rounded-circle" width="40" />
+                    <img src="{{url('assets')}}/images/user.png" alt="Encuentra Pianista avatar" class="rounded-circle" width="45" height="45" />
                     @endif
                 </div>
             </div>
@@ -114,39 +114,17 @@
                         </div>
                         <div class="row">
                             <div class="col-md-6">
-                                <label>Usuario</label>
+                                <label>Localización/es</label>
                             </div>
                             <div class="col-md-6">
-                                <p>{{$user->username}}</p>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <label>Localización</label>
-                            </div>
-                            <div class="col-md-6">
-                                @if(is_object($user->config_professor))
-                                    <p>
-                                        @switch($user->config_professor->availability)
-                                            @case('Nacional')
-                                                Nacional
-                                            @break
-                                            @case('Comunidad Autónoma')
-                                                {{$user->config_professor->community}}
-                                            @break
-
-                                            @case('Provincial')
-                                                {{$user->config_professor->province}} ({{$user->config_professor->community}})
-                                            @break
-
-                                            @case('Población')
-                                            {   {$user->config_professor->city}}, {{$user->config_professor->province}} ({{$user->config_professor->community}})
-                                            @break
-                                        @endswitch
-                                    </p>
-                                @else
-                                <p>Sin configurar</p>
-                                @endif
+                                <div class="col-md-6">
+                                    @if(count($user->professor_locations)>0)
+                                    <p style="cursor: pointer"  data-toggle="modal" data-target="#ver-localizaciones">Ver</p>
+                                    @include('partials.modals.ver_localizaciones')
+                                    @else
+                                    <p>Sin configurar</p>
+                                    @endif
+                                </div>
                             </div>
                         </div>
                         <div class="row">
@@ -156,18 +134,6 @@
                             <div class="col-md-6">
                                 @if(isset($user->config_professor->education))
                                     <p>{{$user->config_professor->education}}</p>
-                                @else
-                                    <p>Sin configurar</p>
-                                @endif
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <label>Experiencia</label>
-                            </div>
-                            <div class="col-md-6">
-                                @if(isset($user->config_professor->experience))
-                                    <p>{{$user->config_professor->experience}}</p>
                                 @else
                                     <p>Sin configurar</p>
                                 @endif
@@ -225,7 +191,7 @@
                                 <p>{{$user->visits}}</p>
                             </div>
                         </div>
-                        @if(!is_null($user->config_professor->biography))
+                        @if(isset($user->config_professor->biography))
                         <div class="row">
                             <div class="col-md-12">
                                 <label>Biografía</label><br/>
