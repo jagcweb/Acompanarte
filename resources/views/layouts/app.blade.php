@@ -76,7 +76,7 @@
   <header style="background: transparent;">
     <nav>
       <a href="{{route('home')}}">
-        <img src="{{url('assets')}}/images/logo.png" class="main-logo"/>
+        <img src="{{url('assets')}}/images/Logo.png" class="main-logo"/>
       </a>
       @if(Auth::user())
       <ul class="nav navbar-nav ms-auto">
