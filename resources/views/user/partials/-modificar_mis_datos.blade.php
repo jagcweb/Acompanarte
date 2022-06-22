@@ -12,7 +12,7 @@
                             <label for="name" class="col-md-4 col-form-label text-md-end">{{ __('Nombre') }}</label>
 
                             <div class="col-md-12">
-                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ \Auth::user()->name }}" required>
+                                <input id="name" type="text"   class="@error('name') is-invalid @enderror" name="name" value="{{ \Auth::user()->name }}" required>
 
                                 @error('name')
                                     <span class="invalid-feedback" role="alert">
@@ -26,7 +26,7 @@
                             <label for="surname" class="col-md-4 col-form-label text-md-end">{{ __('Apellido') }}</label>
 
                             <div class="col-md-12">
-                                <input id="surname" type="text" class="form-control @error('surname') is-invalid @enderror" name="surname" value="{{ \Auth::user()->surname }}" required>
+                                <input id="surname" type="text"   class="@error('surname') is-invalid @enderror" name="surname" value="{{ \Auth::user()->surname }}" required>
 
                                 @error('surname')
                                     <span class="invalid-feedback" role="alert">
@@ -40,7 +40,7 @@
                             <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email') }}</label>
 
                             <div class="col-md-12">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ \Auth::user()->email }}" required autocomplete="email">
+                                <input id="email" type="email"   class="@error('email') is-invalid @enderror" name="email" value="{{ \Auth::user()->email }}" required autocomplete="email">
 
                                 @error('email')
                                     <span class="invalid-feedback" role="alert">
@@ -54,7 +54,12 @@
                             <label for="image" class="col-md-4 col-form-label text-md-end">{{ __('Avatar') }}</label>
 
                             <div class="col-md-12">
-                                <input id="image" type="file" class="form-control @error('image') is-invalid @enderror" name="image">
+                                <label for="image" style="border: 1px solid #6b7280; border-radius:9999px; height:40px; width:100%;  display: inline-block;padding: 6px 12px;cursor: pointer;">
+                                    <i class="fa-solid fa-cloud-arrow-up mr-2"></i>{{ __('Escoger imagen') }}
+                                </label>
+                                <input id="image" type="file" class="d-none @error('image') is-invalid @enderror" name="image" accept=".gif,.jpg,.jpeg,.png,.webp">
+                                <br>
+                                <span class="selected-img"></span>
 
                                 @if(\Auth::user()->image)
                                 <span>Avatar Actual:</span>
@@ -70,11 +75,11 @@
                         </div>
 
                         <div class="row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn">
+                            
+                                <button type="submit" style="height:40px;" class="w-100">
                                     {{ __('Modificar') }}
                                 </button>
-                            </div>
+                            
                         </div>
                     </form>
                 </div>
@@ -82,3 +87,13 @@
         </div>
     </div>
 </div>
+
+<script>
+    $( document ).ready(function() {
+        $("#image").on("change", function(e) {
+            const img = $(this).val().split("\\");
+            $('.selected-img').text(`Imagen seleccionada: ${img[2]}`);
+        });
+    });
+
+</script>

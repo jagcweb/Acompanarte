@@ -4,7 +4,7 @@
         <input
             type="checkbox"
             value="1"
-            class="form-control todos"
+             class="todos"
             name="todos"
             @if(count(Auth::user()->professor_specialties) == 32) checked @endif
         />
@@ -18,7 +18,7 @@
             <input
                 type="checkbox"
                 value="Acordeón"
-                class="form-control especialidad"
+                 class="especialidad"
                 name="especialidad[]" @if(is_object(\GetSpecialties::getSpecialties('Acordeón'))) checked @endif
             />
             <label for="check-1" class="specialty-label ml-2 col-form-label">{{
@@ -30,7 +30,7 @@
             <input
                 type="checkbox"
                 value="Arpa"
-                class="form-control especialidad"
+                 class="especialidad"
                 name="especialidad[]" @if(is_object(\GetSpecialties::getSpecialties('Arpa'))) checked @endif
             />
             <label for="check-1" class="specialty-label ml-2 col-form-label">{{
@@ -42,7 +42,7 @@
             <input
                 type="checkbox"
                 value="Cante Flamenco"
-                class="form-control especialidad"
+                 class="especialidad"
                 name="especialidad[]" @if(is_object(\GetSpecialties::getSpecialties('Cante Flamenco'))) checked @endif
             />
             <label for="check-1" class="specialty-label ml-2 col-form-label">{{
@@ -54,7 +54,7 @@
             <input
                 type="checkbox"
                 value="Canto"
-                class="form-control especialidad"
+                 class="especialidad"
                 name="especialidad[]" @if(is_object(\GetSpecialties::getSpecialties('Canto'))) checked @endif
             />
             <label for="check-1" class="specialty-label ml-2 col-form-label">{{
@@ -66,7 +66,7 @@
             <input
                 type="checkbox"
                 value="Clarinete"
-                class="form-control especialidad"
+                 class="especialidad"
                 name="especialidad[]" @if(is_object(\GetSpecialties::getSpecialties('Clarinete'))) checked @endif
             />
             <label for="check-1" class="specialty-label ml-2 col-form-label">{{
@@ -78,7 +78,7 @@
             <input
                 type="checkbox"
                 value="Contrabajo"
-                class="form-control especialidad"
+                 class="especialidad"
                 name="especialidad[]" @if(is_object(\GetSpecialties::getSpecialties('Contrabajo'))) checked @endif
             />
             <label for="check-1" class="specialty-label ml-2 col-form-label">{{
@@ -90,7 +90,7 @@
             <input
                 type="checkbox"
                 value="Coro"
-                class="form-control especialidad"
+                 class="especialidad"
                 name="especialidad[]" @if(is_object(\GetSpecialties::getSpecialties('Coro'))) checked @endif
             />
             <label for="check-1" class="specialty-label ml-2 col-form-label">{{
@@ -102,7 +102,7 @@
             <input
                 type="checkbox"
                 value="Fagot"
-                class="form-control especialidad"
+                 class="especialidad"
                 name="especialidad[]" @if(is_object(\GetSpecialties::getSpecialties('Fagot'))) checked @endif
             />
             <label for="check-1" class="specialty-label ml-2 col-form-label">{{
@@ -114,7 +114,7 @@
             <input
                 type="checkbox"
                 value="Flauta"
-                class="form-control especialidad"
+                 class="especialidad"
                 name="especialidad[]" @if(is_object(\GetSpecialties::getSpecialties('Flauta'))) checked @endif
             />
             <label for="check-1" class="specialty-label ml-2 col-form-label">{{
@@ -126,7 +126,7 @@
             <input
                 type="checkbox"
                 value="Guitarra"
-                class="form-control especialidad"
+                 class="especialidad"
                 name="especialidad[]" @if(is_object(\GetSpecialties::getSpecialties('Guitarra'))) checked @endif
             />
             <label for="check-1" class="specialty-label ml-2 col-form-label">{{
@@ -138,7 +138,7 @@
             <input
                 type="checkbox"
                 value="Música Antigua (Clavecinista)"
-                class="form-control especialidad"
+                 class="especialidad"
                 name="especialidad[]" @if(is_object(\GetSpecialties::getSpecialties('Música Antigua (Clavecinista)'))) checked @endif
             />
             <label for="check-1" class="specialty-label ml-2 col-form-label">{{
@@ -150,7 +150,7 @@
             <input
                 type="checkbox"
                 value="Música Antigua (Organista)"
-                class="form-control especialidad"
+                 class="especialidad"
                 name="especialidad[]" @if(is_object(\GetSpecialties::getSpecialties('Música Antigua (Organista)'))) checked @endif
             />
             <label for="check-1" class="specialty-label ml-2 col-form-label">{{
@@ -162,7 +162,7 @@
             <input
                 type="checkbox"
                 value="Instrumentos de Púa"
-                class="form-control especialidad"
+                 class="especialidad"
                 name="especialidad[]" @if(is_object(\GetSpecialties::getSpecialties('Instrumentos de Púa'))) checked @endif
             />
             <label for="check-1" class="specialty-label ml-2 col-form-label">{{
@@ -174,7 +174,7 @@
             <input
                 type="checkbox"
                 value="Oboe"
-                class="form-control especialidad"
+                 class="especialidad"
                 name="especialidad[]" @if(is_object(\GetSpecialties::getSpecialties('Oboe'))) checked @endif
             />
             <label for="check-1" class="specialty-label ml-2 col-form-label">{{
@@ -186,7 +186,7 @@
             <input
                 type="checkbox"
                 value="Orquesta"
-                class="form-control especialidad"
+                 class="especialidad"
                 name="especialidad[]" @if(is_object(\GetSpecialties::getSpecialties('Orquesta'))) checked @endif
             />
             <label for="check-1" class="specialty-label ml-2 col-form-label">{{
@@ -198,7 +198,7 @@
             <input
                 type="checkbox"
                 value="Percusión"
-                class="form-control especialidad"
+                 class="especialidad"
                 name="especialidad[]" @if(is_object(\GetSpecialties::getSpecialties('Percusión'))) checked @endif
             />
             <label for="check-1" class="specialty-label ml-2 col-form-label">{{
@@ -210,7 +210,7 @@
             <input
                 type="checkbox"
                 value="Saxofón"
-                class="form-control especialidad"
+                 class="especialidad"
                 name="especialidad[]" @if(is_object(\GetSpecialties::getSpecialties('Saxofón'))) checked @endif
             />
             <label for="check-1" class="specialty-label ml-2 col-form-label">{{
@@ -222,7 +222,7 @@
             <input
                 type="checkbox"
                 value="Trombón"
-                class="form-control especialidad"
+                 class="especialidad"
                 name="especialidad[]" @if(is_object(\GetSpecialties::getSpecialties('Trombón'))) checked @endif
             />
             <label for="check-1" class="specialty-label ml-2 col-form-label">{{
@@ -234,7 +234,7 @@
             <input
                 type="checkbox"
                 value="Trompa"
-                class="form-control especialidad"
+                 class="especialidad"
                 name="especialidad[]" @if(is_object(\GetSpecialties::getSpecialties('Trompa'))) checked @endif
             />
             <label for="check-1" class="specialty-label ml-2 col-form-label">{{
@@ -246,7 +246,7 @@
             <input
                 type="checkbox"
                 value="Tuba"
-                class="form-control especialidad"
+                 class="especialidad"
                 name="especialidad[]" @if(is_object(\GetSpecialties::getSpecialties('Tuba'))) checked @endif
             />
             <label for="check-1" class="specialty-label ml-2 col-form-label">{{
@@ -258,7 +258,7 @@
             <input
                 type="checkbox"
                 value="Viola"
-                class="form-control especialidad"
+                 class="especialidad"
                 name="especialidad[]" @if(is_object(\GetSpecialties::getSpecialties('Viola'))) checked @endif
             />
             <label for="check-1" class="specialty-label ml-2 col-form-label">{{
@@ -270,7 +270,7 @@
             <input
                 type="checkbox"
                 value="Violín"
-                class="form-control especialidad"
+                 class="especialidad"
                 name="especialidad[]" @if(is_object(\GetSpecialties::getSpecialties('Violín'))) checked @endif
             />
             <label for="check-1" class="specialty-label ml-2 col-form-label">{{
@@ -282,7 +282,7 @@
             <input
                 type="checkbox"
                 value="Violonchelo"
-                class="form-control especialidad"
+                 class="especialidad"
                 name="especialidad[]" @if(is_object(\GetSpecialties::getSpecialties('Violonchelo'))) checked @endif
             />
             <label for="check-1" class="specialty-label ml-2 col-form-label">{{
@@ -294,7 +294,7 @@
             <input
                 type="checkbox"
                 value="Danza Clásica"
-                class="form-control especialidad"
+                 class="especialidad"
                 name="especialidad[]" @if(is_object(\GetSpecialties::getSpecialties('Danza Clásica'))) checked @endif
             />
             <label for="check-1" class="specialty-label ml-2 col-form-label">{{
@@ -306,7 +306,7 @@
             <input
                 type="checkbox"
                 value="Danza Contemporánea"
-                class="form-control especialidad"
+                 class="especialidad"
                 name="especialidad[]" @if(is_object(\GetSpecialties::getSpecialties('Danza Contemporánea'))) checked @endif
             />
             <label for="check-1" class="specialty-label ml-2 col-form-label">{{
@@ -318,7 +318,7 @@
             <input
                 type="checkbox"
                 value="Danza Española"
-                class="form-control especialidad"
+                 class="especialidad"
                 name="especialidad[]" @if(is_object(\GetSpecialties::getSpecialties('Danza Española'))) checked @endif
             />
             <label for="check-1" class="specialty-label ml-2 col-form-label">{{
@@ -330,7 +330,7 @@
             <input
                 type="checkbox"
                 value="Flamenco"
-                class="form-control especialidad"
+                 class="especialidad"
                 name="especialidad[]" @if(is_object(\GetSpecialties::getSpecialties('Flamenco'))) checked @endif
             />
             <label for="check-1" class="specialty-label ml-2 col-form-label">{{
@@ -342,7 +342,7 @@
             <input
                 type="checkbox"
                 value="Arte Dramático"
-                class="form-control especialidad"
+                 class="especialidad"
                 name="especialidad[]" @if(is_object(\GetSpecialties::getSpecialties('Arte Dramático'))) checked @endif
             />
             <label for="check-1" class="specialty-label ml-2 col-form-label">{{
@@ -354,7 +354,7 @@
             <input
                 type="checkbox"
                 value="Música de Cámara"
-                class="form-control especialidad"
+                 class="especialidad"
                 name="especialidad[]" @if(is_object(\GetSpecialties::getSpecialties('Música de Cámara'))) checked @endif
             />
             <label for="check-1" class="specialty-label ml-2 col-form-label">{{
@@ -366,7 +366,7 @@
             <input
                 type="checkbox"
                 value="Ópera y Oratorio"
-                class="form-control especialidad"
+                 class="especialidad"
                 name="especialidad[]" @if(is_object(\GetSpecialties::getSpecialties('Ópera y Oratorio'))) checked @endif
             />
             <label for="check-1" class="specialty-label ml-2 col-form-label">{{
@@ -378,7 +378,7 @@
             <input
                 type="checkbox"
                 value="Musicales"
-                class="form-control especialidad"
+                 class="especialidad"
                 name="especialidad[]" @if(is_object(\GetSpecialties::getSpecialties('Musicales'))) checked @endif
             />
             <label for="check-1" class="specialty-label ml-2 col-form-label">{{
@@ -390,7 +390,7 @@
             <input
                 type="checkbox"
                 value="Eventos varios"
-                class="form-control especialidad"
+                 class="especialidad"
                 name="especialidad[]" @if(is_object(\GetSpecialties::getSpecialties('Eventos varios'))) checked @endif
             />
             <label for="check-1" class="specialty-label ml-2 col-form-label">{{

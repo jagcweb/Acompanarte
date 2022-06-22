@@ -1,5 +1,10 @@
 @extends('layouts.app') 
 
+@if(\Auth::user() && \Auth::user()->id == $user->id)
+@section('title') Mi perfil @endsection
+@else
+@section('title') Perfil de {{$user->name}} @endsection
+@endif
 @section('css')
 <link href="{{url('assets')}}/css/profile.css" rel="stylesheet" /> 
 @endsection 
@@ -37,7 +42,7 @@
                         <h6 style="color:#e8b210!important;">{{str_replace('-', ' ', ucfirst($user->getRoleNames()[0]))}}</h6>
                     @endif
                     
-                    <p class="proile-rating">
+                    {{--<p class="proile-rating">
                         <span>
                             @if(count($user->ratings)>0)
                             Total valoraciones: {{count($user->ratings)}}
@@ -50,7 +55,7 @@
                             Sin valoraciones
                             @endif
                         </span>
-                    </p>
+                    </p>--}}
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
                         <li class="nav-item">
                             <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Información</a>

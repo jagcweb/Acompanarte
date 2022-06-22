@@ -236,7 +236,7 @@ class ConfigurationPremiumController extends Controller
         $data = ['user' => $user, 'code' => $code.'.pdf'];
 
         \Mail::send('mail.send_invoice', $data, function ($message) use($user) {
-            $message->from('encuentrapianista@gmail.com', 'EncuentraPianista');
+            $message->from('admin@encuentrapianista.com', 'EncuentraPianista');
             $message->to($user->email)->subject('¡Gracias por su compra!');
         });
 

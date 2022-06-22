@@ -123,7 +123,7 @@ class ContactRequestController extends Controller
         $user = User::find($pianista_id);
         $data = ['user' => $user, 'contact_request' => $contact_request];
         \Mail::send('mail.send_contact_request', $data, function ($message) use($user) {
-            $message->from('encuentrapianista@gmail.com', 'EncuentraPianista');
+            $message->from('admin@encuentrapianista.com', 'EncuentraPianista');
             $message->to($user->email)->subject('Nueva solicitud de contacto');
         });
 
@@ -197,7 +197,7 @@ class ContactRequestController extends Controller
                 $data = ['user' => $user, 'code' => $code.'.pdf'];
         
                 \Mail::send('mail.send_invoice', $data, function ($message) use($user) {
-                    $message->from('encuentrapianista@gmail.com', 'EncuentraPianista');
+                    $message->from('admin@encuentrapianista.com', 'EncuentraPianista');
                     $message->to($user->email)->subject('¡Gracias por su compra!');
                 });
 
@@ -231,7 +231,7 @@ class ContactRequestController extends Controller
             $user = $contact_request->client;
             $data = ['contact_request' => $contact_request];
             \Mail::send('mail.accept_contact_request', $data, function ($message) use($user) {
-                $message->from('encuentrapianista@gmail.com', 'EncuentraPianista');
+                $message->from('admin@encuentrapianista.com', 'EncuentraPianista');
                 $message->to($user->email)->subject('El pianista ha aceptado su solicitud');
             });
 
@@ -254,7 +254,7 @@ class ContactRequestController extends Controller
             $user = $contact_request->client;
             $data = ['contact_request' => $contact_request];
             \Mail::send('mail.decline_contact_request', $data, function ($message) use($user) {
-                $message->from('encuentrapianista@gmail.com', 'EncuentraPianista');
+                $message->from('admin@encuentrapianista.com', 'EncuentraPianista');
                 $message->to($user->email)->subject('El pianista ha rechazado su solicitud');
             });
 

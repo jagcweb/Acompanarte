@@ -1,5 +1,6 @@
 @extends('layouts.app')
 
+@section('title') Suscripción Premium @endsection
 @section('content')
 @if(\Auth::user()->getRoleNames()[0] == 'pianista')
     @include('professor_premium.partials.-convertirse')

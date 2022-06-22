@@ -26,5 +26,11 @@ class ResetPasswordController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::HOME;
+    protected function redirectTo()
+    {
+        if ( $user->getRoleNames()[0] == 'administrador') {
+            return '/dashboard';
+        }
+        return '/';
+    }
 }

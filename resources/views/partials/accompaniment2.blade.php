@@ -4,7 +4,7 @@
         <input
             type="checkbox"
             value="1"
-            class="form-control todos_acompañamiento"
+            class="todos_acompañamiento"
             name="todos"
             @if(count(Auth::user()->professor_accompaniments) == 5) checked @endif
         />
@@ -17,7 +17,7 @@
             <input
                 type="checkbox"
                 value="Pruebas de acceso a Conservatorio Profesional"
-                class="form-control acompañamiento"
+                 class="acompañamiento"
                 name="acompañamiento[]" @if(is_object(\GetAccompaniments::getAccompaniments('Pruebas de acceso a Conservatorio Profesional'))) checked @endif
             />
             <label for="check-1" class="specialty-label ml-2 col-form-label">{{
@@ -29,7 +29,7 @@
             <input
                 type="checkbox"
                 value="Pruebas de acceso a Conservatorio Superior"
-                class="form-control acompañamiento"
+                 class="acompañamiento"
                 name="acompañamiento[]" @if(is_object(\GetAccompaniments::getAccompaniments('Pruebas de acceso a Conservatorio Superior'))) checked @endif
             />
             <label for="check-1" class="specialty-label ml-2 col-form-label">{{
@@ -41,7 +41,7 @@
             <input
                 type="checkbox"
                 value="Oposiciones"
-                class="form-control acompañamiento"
+                 class="acompañamiento"
                 name="acompañamiento[]" @if(is_object(\GetAccompaniments::getAccompaniments('Oposiciones'))) checked @endif
             />
             <label for="check-1" class="specialty-label ml-2 col-form-label">{{
@@ -53,7 +53,7 @@
             <input
                 type="checkbox"
                 value="Conciertos"
-                class="form-control acompañamiento"
+                 class="acompañamiento"
                 name="acompañamiento[]" @if(is_object(\GetAccompaniments::getAccompaniments('Conciertos'))) checked @endif
             />
             <label for="check-1" class="specialty-label ml-2 col-form-label">{{
@@ -65,7 +65,7 @@
             <input
                 type="checkbox"
                 value="Otros"
-                class="form-control acompañamiento"
+                 class="acompañamiento"
                 name="acompañamiento[]" @if(is_object(\GetAccompaniments::getAccompaniments('Otros'))) checked @endif
             />
             <label for="check-1" class="specialty-label ml-2 col-form-label">{{

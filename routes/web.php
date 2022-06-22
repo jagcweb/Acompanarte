@@ -17,7 +17,8 @@ use Illuminate\Support\Facades\Auth;
 Auth::routes(['verify' => true, 'register' => false]);
 
 Route::get('/registrar/{rol}', [App\Http\Controllers\Auth\RegisterController::class, 'index'])->name('register.index');
-Route::post('/registrar', [App\Http\Controllers\Auth\RegisterController::class, 'create'])->name('register.create');
+Route::get('/registrarse', [App\Http\Controllers\Auth\RegisterController::class, 'registerTemplate'])->name('register.layout');
+Route::post('/guardar-usuario', [App\Http\Controllers\Auth\RegisterController::class, 'create'])->name('register.create');
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 

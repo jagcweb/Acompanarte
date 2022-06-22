@@ -13,7 +13,7 @@
                     <label for="tipo" class="col-md-4 col-form-label text-md-end">{{ __('Tipo') }}</label>
 
                     <div class="col-md-12">
-                        <input type="text" value="{{$price->type}}" id="tipo" class="form-control @error('precio') is-invalid @enderror" name="tipo" disabled/>
+                        <input type="text" value="{{$price->type}}" id="tipo"  class="@error('precio') is-invalid @enderror" name="tipo" disabled/>
 
                         @error('tipo')
                             <span class="invalid-feedback" role="alert">
@@ -27,7 +27,7 @@
                     <label for="precio" class="col-md-4 col-form-label text-md-end">{{ __('Precio') }}</label>
 
                     <div class="col-md-12">
-                        <input type="number" value="{{$price->price}}" id="precio" class="form-control @error('precio') is-invalid @enderror" name="precio" required step="0.01"/>
+                        <input type="number" value="{{$price->price}}" id="precio"  class="@error('precio') is-invalid @enderror" name="precio" required step="0.01"/>
 
                         @error('precio')
                             <span class="invalid-feedback" role="alert">
@@ -41,7 +41,7 @@
                     <label for="descuento" class="col-md-4 col-form-label text-md-end">{{ __('Descuento (%)') }}</label>
 
                     <div class="col-md-12">
-                        <input type="number" value="{{$price->discount}}" id="descuento" class="form-control @error('descuento') is-invalid @enderror" name="descuento" step="1"/>
+                        <input type="number" value="{{$price->discount}}" id="descuento"  class="@error('descuento') is-invalid @enderror" name="descuento" step="1"/>
 
                         @error('descuento')
                             <span class="invalid-feedback" role="alert">
@@ -51,7 +51,7 @@
                     </div>
                 </div>
 
-                <input type="text" class="form-control" name="price_id" value="{{$price->id}}" required hidden/>
+                <input type="text"  name="price_id" value="{{$price->id}}" required hidden/>
 
                 <input type="submit" class='btn btn-dark waves-effect waves-dark w-100' value="Enviar solicitud">
             </form>

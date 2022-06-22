@@ -13,7 +13,7 @@
 
                             <div class="col-md-12">
                                 <select id=""
-                                    class="form-control disponibilidad"
+                                     class="disponibilidad"
                                     name="disponibilidad[]" required data="0">
                                     <option selected hidden disabled>Selecciona un tipo de disponibilidad...</option>
                                     <option value="Nacional">Nacional</option>
@@ -70,7 +70,7 @@
                                 }}*</label>
 
                             <div class="col-md-12">
-                                <select id="formacion" class="form-control @error('formacion') is-invalid @enderror"
+                                <select id="formacion"   class="@error('formacion') is-invalid @enderror"
                                     name="formacion"required>
                                     <option selected hidden disabled>Selecciona una formación...</option>
                                     <option value="Título Profesional">Título Profesional</option>
@@ -96,7 +96,7 @@
                                     <input
                                         type="radio"
                                         value="0"
-                                        class="form-control lugar"
+                                         class="lugar"
                                         name="lugar"
                                     />
                                     <label for="check-1" class="specialty-label ml-2 col-form-label">{{
@@ -108,7 +108,7 @@
                                 <input
                                     type="radio"
                                     value="1"
-                                    class="form-control lugar"
+                                    class="lugar"
                                     name="lugar"
                                 />
                                 <label for="check-1" class="specialty-label ml-2 col-form-label">{{
@@ -128,7 +128,7 @@
                                 }}</label>
 
                             <div class="col-md-12">
-                                <input id="precio" type="number" class="form-control precio" name="precio" step="0.1" min="1" />
+                                <input id="precio" type="number"  class="precio" name="precio" step="0.1" min="1" />
 
                                 @error('precio')
                                 <span class="invalid-feedback" role="alert">
@@ -144,7 +144,7 @@
                                 }}</label>
 
                             <div class="col-md-12">
-                                <textarea id="biography" class="form-control @error('biography') is-invalid @enderror"
+                                <textarea id="biography"  class="@error('biography') is-invalid @enderror"
                                     name="biography" placeholder="Otros títulos, certificados, experiencia..." maxlength="255"></textarea>
 
                                 @error('biography')
@@ -160,7 +160,7 @@
 
                             <div class="col-md-6">
                                 <input type="text" id="idiomas"
-                                    class="form-control @error('idiomas') is-invalid @enderror" name="idiomas[]" />
+                                class="@error('idiomas') is-invalid @enderror" name="idiomas[]" />
 
                                 @error('idiomas')
                                 <span class="invalid-feedback" role="alert">
@@ -170,7 +170,7 @@
                             </div>
 
                             <div class="col-md-6">
-                                <select class="form-control" id="nivel" name="nivel[]">
+                                <select  id="nivel" name="nivel[]">
                                     <option selected hidden disabled>Selecciona un nivel...</option>
                                     <option value="Básico">Básico</option>
                                     <option value="Intermedio">Intermedio</option>

@@ -58,6 +58,11 @@ class RegisterController extends Controller
         ]);
     }
 
+    public function registerTemplate()
+    {
+        return view('layouts.register');
+    }
+
     /**
      * Create a new user instance after a valid registration.
      *
@@ -78,7 +83,7 @@ class RegisterController extends Controller
             'email' => ['required', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'phone' => [$phone_field, 'alpha_num', 'min:9', 'max:9'],
-            'g-recaptcha-response' => ['required', 'captcha'],
+            //'g-recaptcha-response' => ['required', 'captcha'],
         ]);
 
         do {

@@ -17,7 +17,7 @@
     <br>
     <p>Pianistas por comunidad autónoma:</p>
     @foreach ($comunidades as $com)
-        @php $pianistas = \App\Models\ConfigurationProfessor::where('availability', 'Nacional')->orWhere('community', $com->comunidad_autonoma)->count(); @endphp
+        @php $pianistas = \App\Models\ProfessorLocation::where('availability', 'Nacional')->orWhere('community', $com->comunidad_autonoma)->count(); @endphp
         <p>{{$com->comunidad_autonoma}}: {{$pianistas}}</p>
     @endforeach
 @endsection

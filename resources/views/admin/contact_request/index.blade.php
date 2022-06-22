@@ -1,7 +1,8 @@
 @extends('layouts.admin')
 
+
 @section('content')
-@if(count($histories)>0)
+@if(count($contact_requests)>0)
 <p class="w-100 text-center">Solicitudes de contacto</p>
 <table style="font-size: 15px" data-toggle="table" data-locale="es-ES" data-filter-control="true" data-search="true"
     data-page-list="[10, 20, 30]" data-page-size="10" data-buttons-class="xs btn-light" data-pagination="true" class="table-borderless">
@@ -121,8 +122,8 @@
                         -
                     @endif
                 </td>
-                <td>{{\Carbon\Carbon::parse($hist->created_at)->format('d/m/Y')}}</td>
-                <td>{{\Carbon\Carbon::parse($hist->updated_at)->format('d/m/Y')}}</td>
+                <td>{{\Carbon\Carbon::parse($cont->created_at)->format('d/m/Y')}}</td>
+                <td>{{\Carbon\Carbon::parse($cont->updated_at)->format('d/m/Y')}}</td>
             <tr>
 
         @endforeach
