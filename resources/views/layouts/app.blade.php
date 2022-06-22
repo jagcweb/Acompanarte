@@ -228,9 +228,9 @@
     </div>
 
     <div class="social mt-3 mb-3">
-      <a href="https://blog.encuentrapianista.com/politica-de-cookies/" class="tw" target="_blank">d</a>
-      <a href="https://blog.encuentrapianista.com/politica-de-cookies/" class="fb" target="_blank">c</a>
-      <a href="https://blog.encuentrapianista.com/politica-de-cookies/" class="insta" target="_blank">f</a>
+      <a href="https://twitter.com/encuentrapianis" class="tw" target="_blank">d</a>
+      <a href="https://www.facebook.com/encuentrapianista/" class="fb" target="_blank">c</a>
+      <a href="https://www.instagram.com/encuentrapianista/ " class="insta" target="_blank">f</a>
     </div>
   </footer>
   @yield('js')
