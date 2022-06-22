@@ -1041,6 +1041,8 @@ body {
     justify-content: space-around;
     border-radius: 20px!important;
     margin-top: -70px!important;
+    width: 50%;
+    margin: 0px auto;
 }
 
 .posts {
@@ -1224,6 +1226,12 @@ body {
     .texto img {
         margin: 0px auto;
         margin-bottom: 20px;
+    }
+}
+
+@media (max-width:500px) {
+    #posts {
+        width: 100%!important;
     }
 }
 
