@@ -19,9 +19,9 @@ $(".searcher-input").on("keyup", function(e) {
 });
 
 
-if (!window.location.href.includes('buscar-pianista')) {
+if (!window.location.href.indexOf('buscar-pianista') > -1) {
     /*const posts = $('#posts');
-    const imageUrl = `${window.location.href}assetsassets/images/Pentagrama-blanco.png" style="height:450px;"/>`
+    const imageUrl = `${newLocation}assetsassets/images/Pentagrama-blanco.png" style="height:450px;"/>`
     const height = window.innerWidth >= 500 ? '380px' : '500px';
     $.ajax({
         url: 'https://blog.encuentrapianista.com/wp-json/wp/v2/posts?categories=11',
@@ -59,7 +59,7 @@ if (!window.location.href.includes('buscar-pianista')) {
                     }
                     text = '<p>Si eres pianista acompañante y deseas publicitar tus servicios en esta maravillosa web… </p><p>¡Estás de suerte! Podrás crear tu perfil registrándote a continuación.</p>'
 
-                    enlace = `${window.location.href}registrar/pianista-premium`;
+                    enlace = `${newLocation}registrar/pianista-premium`;
                 }
                 if (data == 1) {
 
@@ -117,32 +117,33 @@ if (!window.location.href.includes('buscar-pianista')) {
         }
     }
 
-    console.log(window.location.href);
+    const location = window.location.href;
+    const newLocation = location.indexOf('#') ? location.split('#')[0] : location;
 
     $(".tecla1").hover(
         function() {
-            $(this).find('img').attr('src', `${window.location.href}assets/images/TECLAACTIVA_comofunciona.png`);
+            $(this).find('img').attr('src', `${newLocation}assets/images/TECLAACTIVA_comofunciona.png`);
         },
         function() {
-            $(this).find('img').attr('src', `${window.location.href}assets/images/TECLASINACTIVAR_comofunciona.png`);
+            $(this).find('img').attr('src', `${newLocation}assets/images/TECLASINACTIVAR_comofunciona.png`);
         }
     );
 
     $(".tecla2").hover(
         function() {
-            $(this).find('img').attr('src', `${window.location.href}assets/images/TECLAACTIVA_soypianista.png`);
+            $(this).find('img').attr('src', `${newLocation}assets/images/TECLAACTIVA_soypianista.png`);
         },
         function() {
-            $(this).find('img').attr('src', `${window.location.href}assets/images/TECLASINACTIVAR_soypianista.png`);
+            $(this).find('img').attr('src', `${newLocation}assets/images/TECLASINACTIVAR_soypianista.png`);
         }
     );
 
     $(".tecla3").hover(
         function() {
-            $(this).find('img').attr('src', `${window.location.href}assets/images/TECLAACTIVA_verificado.png`);
+            $(this).find('img').attr('src', `${newLocation}assets/images/TECLAACTIVA_verificado.png`);
         },
         function() {
-            $(this).find('img').attr('src', `${window.location.href}assets/images/TECLASINACTIVAR_verificado.png`);
+            $(this).find('img').attr('src', `${newLocation}assets/images/TECLASINACTIVAR_verificado.png`);
         }
     );
 
@@ -173,7 +174,7 @@ if (!window.location.href.includes('buscar-pianista')) {
                 }
                 text = '<p>Si eres pianista acompañante y deseas publicitar tus servicios en esta maravillosa web… </p><p>¡Estás de suerte! Podrás crear tu perfil registrándote a continuación.</p>'
 
-                enlace = `${window.location.href}registrar/pianista-premium`;
+                enlace = `${newLocation}registrar/pianista-premium`;
             }
             if (data == 1) {
 
