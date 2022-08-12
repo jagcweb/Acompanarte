@@ -2,7 +2,9 @@
 
 @section('title') Configuración @endsection
 @section('content')
+@include('partials.msg')
 <div class="container">
+    @include('partials.msg')
     <div class="row justify-content-center">
         <div class="col-md-12">
             <h2 class="text-center d-block">Configura tu perfil</h2>

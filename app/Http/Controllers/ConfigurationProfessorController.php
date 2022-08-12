@@ -158,8 +158,8 @@ class ConfigurationProfessorController extends Controller
     public function update(Request $request)
     {
         $validate = $this->validate($request, [
-            'disponibilidad' => ['required'],
-            'disponibilidad.*' => ['required','string'],
+            'disponibilidad' => ['nullable'],
+            'disponibilidad.*' => ['nullable','string'],
             'especialidad' => ['required', 'array', 'max:255'],
             'formacion' => ['required', 'string', 'max:255'],
             'precio' => ['nullable', 'numeric', 'regex:/^\d+(\.\d{1,1})?$/'],
@@ -170,29 +170,32 @@ class ConfigurationProfessorController extends Controller
             'lugar' => ['nullable', 'alpha_num', 'max:1'],
         ]);
 
-        foreach ($request->get('disponibilidad') as $i=>$dispo){
-    
-            switch($dispo){
-                case('Comunidad Autónoma'):
-                    $validate = $this->validate($request, [
-                        'comunidad_'.$i => ['required','string'],
-                    ]);
-                break;
-    
-                case('Provincial'):
-                    $validate = $this->validate($request, [
-                        'comunidad_'.$i => ['required','string'],
-                        'provincia_'.$i => ['required','string'],
-                    ]);
-                break;
-    
-                case('Población'):
-                    $validate = $this->validate($request, [
-                        'comunidad_'.$i => ['required','string'],
-                        'provincia_'.$i => ['required', 'string'],
-                        'poblacion_'.$i => ['required','string'],
-                    ]);
-                break;
+        if(!is_null($request->get('disponibilidad'))){
+
+            foreach ($request->get('disponibilidad') as $i=>$dispo){
+        
+                switch($dispo){
+                    case('Comunidad Autónoma'):
+                        $validate = $this->validate($request, [
+                            'comunidad_'.$i => ['required','string'],
+                        ]);
+                    break;
+        
+                    case('Provincial'):
+                        $validate = $this->validate($request, [
+                            'comunidad_'.$i => ['required','string'],
+                            'provincia_'.$i => ['required','string'],
+                        ]);
+                    break;
+        
+                    case('Población'):
+                        $validate = $this->validate($request, [
+                            'comunidad_'.$i => ['required','string'],
+                            'provincia_'.$i => ['required', 'string'],
+                            'poblacion_'.$i => ['required','string'],
+                        ]);
+                    break;
+                }
             }
         }
 
@@ -239,35 +242,37 @@ class ConfigurationProfessorController extends Controller
             $accompaniment->save();
         }
 
-        foreach ($request->get('disponibilidad') as $i=>$dispo){
-            $location = new ProfessorLocation();
-            $location->user_id = Auth::user()->id;
-            $location->availability = $dispo;
-            switch($dispo){
-                case('Nacional'):
-                    $exist_location = ProfessorLocation::where('user_id', Auth::user()->id)->where('availability', 'Nacional')->first();
-                break;
-                case('Comunidad Autónoma'):
-                    $exist_location = ProfessorLocation::where('user_id', Auth::user()->id)->where('community', $request->get('comunidad_'.$i))->first();
-                    $location->community = $request->get('comunidad_'.$i);
-                break;
-    
-                case('Provincial'):
-                    $exist_location = ProfessorLocation::where('user_id', Auth::user()->id)->where('province', $request->get('provincia_'.$i))->first();
-                    $location->community = $request->get('comunidad_'.$i);
-                    $location->province = $request->get('provincia_'.$i);
-                break;
-    
-                case('Población'):
-                    $exist_location = ProfessorLocation::where('user_id', Auth::user()->id)->where('city', $request->get('poblacion_'.$i))->first();
-                    $location->community = $request->get('comunidad_'.$i);
-                    $location->province = $request->get('provincia_'.$i);
-                    $location->city = $request->get('poblacion_'.$i);
-                break;
-            }
+        if(!is_null($request->get('disponibilidad'))){
+            foreach ($request->get('disponibilidad') as $i=>$dispo){
+                $location = new ProfessorLocation();
+                $location->user_id = Auth::user()->id;
+                $location->availability = $dispo;
+                switch($dispo){
+                    case('Nacional'):
+                        $exist_location = ProfessorLocation::where('user_id', Auth::user()->id)->where('availability', 'Nacional')->first();
+                    break;
+                    case('Comunidad Autónoma'):
+                        $exist_location = ProfessorLocation::where('user_id', Auth::user()->id)->where('community', $request->get('comunidad_'.$i))->first();
+                        $location->community = $request->get('comunidad_'.$i);
+                    break;
+        
+                    case('Provincial'):
+                        $exist_location = ProfessorLocation::where('user_id', Auth::user()->id)->where('province', $request->get('provincia_'.$i))->first();
+                        $location->community = $request->get('comunidad_'.$i);
+                        $location->province = $request->get('provincia_'.$i);
+                    break;
+        
+                    case('Población'):
+                        $exist_location = ProfessorLocation::where('user_id', Auth::user()->id)->where('city', $request->get('poblacion_'.$i))->first();
+                        $location->community = $request->get('comunidad_'.$i);
+                        $location->province = $request->get('provincia_'.$i);
+                        $location->city = $request->get('poblacion_'.$i);
+                    break;
+                }
 
-            if(!is_object($exist_location)){
-                $location->save();
+                if(!is_object($exist_location)){
+                    $location->save();
+                }
             }
         }
 
