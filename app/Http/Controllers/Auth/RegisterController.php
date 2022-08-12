@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 
 class RegisterController extends Controller
@@ -105,6 +106,8 @@ class RegisterController extends Controller
         $created_user->assignRole($role);
 
         $created_user->sendEmailVerificationNotification();
+
+        Auth::login($created_user);
 
         return redirect()->route('home')->with('exito', 'Se ha registrado correctamente. Antes de hacer login debe confirmar el email.');
     }

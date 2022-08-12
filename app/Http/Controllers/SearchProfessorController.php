@@ -8,6 +8,7 @@ use App\Models\PostalCode;
 use App\Models\ConfigurationProfessor;
 use App\Models\User;
 use App\Models\SearchHistory;
+use App\Models\Work;
 use Spatie\Permission\Models\Role;
 
 class SearchProfessorController extends Controller
@@ -58,6 +59,9 @@ class SearchProfessorController extends Controller
         )
         ->get();
 
+        //IMSLP database
+        $composers = Work::select('composer')->groupBy('composer')->orderBy('composer', 'asc')->get();
+
         $search_history = new SearchHistory();
         $search_history->user_id = Auth::check() ? Auth::user()->id : null;
         $search_history->location = $location;
@@ -69,8 +73,33 @@ class SearchProfessorController extends Controller
             'professors' => $professors,
             'location' => $location,
             'especialidad' => $especialidad,
-            'acompañamiento' => $acompañamiento
+            'acompañamiento' => $acompañamiento,
+            'composers' => $composers,
         ]);
+    }
+
+    public function getComposers(){
+        $composers = Work::select('composer')->groupBy('composer')->orderBy('composer', 'asc')->get();
+
+        if(count($composers)>0){
+            $status = 200;
+            return response(json_encode($composers), $status)->header('Content-type', 'text/plain');
+        }
+
+        $status = 404;
+        return response(json_encode('error'),$status);
+    }
+
+    public function getPieces($composer){
+        $pieces = Work::select('title')->where('composer', $composer)->groupBy('title')->orderBy('title', 'asc')->get();
+
+        if(count($pieces)>0){
+            $status = 200;
+            return response(json_encode($pieces), $status)->header('Content-type', 'text/plain');
+        }
+
+        $status = 404;
+        return response(json_encode('error'),$status);
     }
 
     public function getLocation($value){

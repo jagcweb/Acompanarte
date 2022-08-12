@@ -7,7 +7,25 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="form-group">
+
+                        <p class=" mb-3 w-100 text-center font-22">Biografía</p>
                         <div class="row mb-3">
+                            <label for="biography" class="col-md-4 col-form-label text-md-end">{{ __('Biografía')
+                                }}</label>
+
+                            <div class="col-md-12">
+                                <textarea id="biography"  class="@error('biography') is-invalid @enderror"
+                                    name="biography" placeholder="Cuéntanos más sobre ti..."></textarea>
+
+                                @error('biography')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="row mb-3 mt-4">
                             <label for="geografica" class="col-md-4 col-form-label text-md-end">{{ __('Disponibilidad
                                 geográfica') }}*</label>
 
@@ -65,12 +83,16 @@
 
                         <button type="button" class='btn btn-dark waves-effect waves-dark w-100 location_add'>Añadir más</button>
 
+                        @include('partials.specialty')  
+
+                        @include('partials.accompaniment')
+
                         <div class="row mb-3 mt-4 ">
                             <label for="formacion" class="col-md-4 col-form-label text-md-end">{{ __('Formación')
                                 }}*</label>
 
                             <div class="col-md-12">
-                                <select id="formacion"   class="@error('formacion') is-invalid @enderror"
+                                <select id="formacion" class="@error('formacion') is-invalid @enderror"
                                     name="formacion"required>
                                     <option selected hidden disabled>Selecciona una formación...</option>
                                     <option value="Título Profesional">Título Profesional</option>
@@ -86,9 +108,6 @@
                             </div>
                         </div>
 
-                        @include('partials.specialty')
-
-                        @include('partials.accompaniment')
 
                         <div class="row mb-3 mt-4 font-22">
                             <p class="text-center w-100">{{ __("Lugar de ensayo") }}</p>
@@ -131,23 +150,6 @@
                                 <input id="precio" type="number"  class="precio" name="precio" step="0.1" min="1" />
 
                                 @error('precio')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <p class=" mb-3 mt-4 w-100 text-center font-22">Biografía</p>
-                        <div class="row mb-3">
-                            <label for="biography" class="col-md-4 col-form-label text-md-end">{{ __('Biografía')
-                                }}</label>
-
-                            <div class="col-md-12">
-                                <textarea id="biography"  class="@error('biography') is-invalid @enderror"
-                                    name="biography" placeholder="Otros títulos, certificados, experiencia..." maxlength="255"></textarea>
-
-                                @error('biography')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>

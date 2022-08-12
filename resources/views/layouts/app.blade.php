@@ -6,6 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="description" content="Encuentra a tu pianista de confianza ;)">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="{{url('assets')}}/images/favicon.ico" type="image/x-icon">
   <meta charset="utf-8">
   <!-- CSRF Token -->
   <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -164,6 +165,17 @@
               @endif
             </small>
             <div class="dropdown-divider"></div>
+            <a href="{{route('contact_request.index')}}" class="dropdown-item">Solicitudes de contacto</a>
+            <div class="dropdown-divider"></div>
+            @if(\Auth::user()->getRoleNames()[0] != "cliente")
+            <a href="{{route('user.profile', ['username' => Auth::user()->username])}}" class="dropdown-item">Ver mi
+              perfil</a>
+            @endif
+            <a href="{{route('user.index')}}" class="dropdown-item">Modificar mi perfil</a>
+            @if(\Auth::user()->getRoleNames()[0] != "cliente")
+            <a href="{{route('configuration_professor.index')}}" class="dropdown-item">Configurar cuenta</a>
+            <div class="dropdown-divider"></div>
+            @endif
             @if(\Auth::user()->getRoleNames()[0] == "pianista-premium")
             <a href="{{route('configuration_premium.index')}}" class="dropdown-item">Datos de tu cuenta premium</a>
             <div class="dropdown-divider"></div>
@@ -172,17 +184,9 @@
             <a href="{{route('configuration_premium.index')}}" class="dropdown-item">Hazte Premium</a>
             <div class="dropdown-divider"></div>
             @endif
-            @if(\Auth::user()->getRoleNames()[0] != "cliente")
-            <a href="{{route('configuration_professor.index')}}" class="dropdown-item">Cuenta de pianista</a>
-            <div class="dropdown-divider"></div>
+            @if(\Auth::user()->getRoleNames()[0] == "pianista-premium")
+            <a href="https://blog.encuentrapianista.com/verifica-tu-perfil/" target="_blank" class="dropdown-item">Verifica tu perfil</a>
             @endif
-            <a href="{{route('contact_request.index')}}" class="dropdown-item">Solicitudes de contacto</a>
-            <div class="dropdown-divider"></div>
-            @if(\Auth::user()->getRoleNames()[0] != "cliente")
-            <a href="{{route('user.profile', ['username' => Auth::user()->username])}}" class="dropdown-item">Ver mi
-              perfil</a>
-            @endif
-            <a href="{{route('user.index')}}" class="dropdown-item">Mi cuenta</a>
             {{--<a href="{{route('configuration.index')}}" class="dropdown-item">Configuración</a>--}}
             <div class="dropdown-divider"></div>
             <a href="#" class="dropdown-item"
@@ -196,7 +200,7 @@
       @else
       <ul>
         <li class="nav-item">
-          <a href="https://google.es" class="nav-link blog-link">
+          <a href="https://blog.encuentrapianista.com/" class="nav-link blog-link">
             Blog <i class="fa-solid fa-arrow-up-right-from-square"></i>
           </a>
         </li>
@@ -223,7 +227,6 @@
       <a href="https://blog.encuentrapianista.com/condiciones-generales-de-uso/" target="_blank">Condiciones generales
         de uso</a>
       <a href="https://blog.encuentrapianista.com/faqs/" target="_blank">FAQs</a>
-      <a href="https://blog.encuentrapianista.com/verifica-tu-perfil/" target="_blank">Proceso de Verificación</a>
       <a href="https://blog.encuentrapianista.com/contacta/" target="_blank">Atención al Cliente</a>
     </div>
 

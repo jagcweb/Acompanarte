@@ -1,10 +1,11 @@
 @extends('layouts.app')
+@section('title') Búsqueda de pianistas @endsection
 @section('css')
-<link href="{{ url('assets') }}/css/search_professor.css" rel="stylesheet" />
+<link href="{{url('assets')}}/css/home.css" rel="stylesheet" />
 @endsection
 @section('content')
-<link href="{{url('assets')}}/css/home.css" rel="stylesheet" />
 <style>
+
   .s004{
     height: 27vh !important; min-height:0px;
   }
@@ -70,7 +71,7 @@
     }
   }
 </style>
-<div class="s004" style="">
+<div class="s004">
   <form method="GET" action="{{route('search_professor.index')}}">
       @csrf
       <fieldset>
@@ -96,7 +97,7 @@
             {{\Cookie::queue('back_to_url', url()->full(), 15*24*60)}}
           @endif
           @if(count($professors)>0)
-            <h2 class="text-center d-block mb-2">Pianistas disponibles en <b>{{$location}}</b></h2>
+            <h3 class="text-center d-block mb-2">Pianistas en <b>{{$location}}</b></h3>
             <p class="text-center text-dark w-100">Especialidad: <b>{{$especialidad}}</b></p>
             <p class="text-center text-dark w-100">Evento a acompañar: <b>{{$acompañamiento}}</b></p>
             @foreach ($professors as  $prof)
@@ -138,8 +139,10 @@
                     <h3>{{$prof->name}} </h3>
                     
                     @if(!is_null($prof->config_professor->biography))
-                      <span style="word-break: break-all; max-width: 70%;">{{$prof->config_professor->biography}}</span>
+                      <span style="word-break: break-all; max-width: 70%;">{{$prof->config_professor->biography}}...</span>
                     @endif
+
+                    <br>
   
                     @if(!is_null($prof->config_professor->languages))
                       <span>Idiomas:</span>
@@ -169,6 +172,7 @@
                           <p class="text-center text-dark">Para enviar una solicitud de contacto <a style="color:#000; text-decoration: underline;" href="{{route('verification.notice')}}">verifica tu email</a></p>
                         @else
                         <button class="btn btn-dark" data-toggle="modal" data-target="#enviar-solicitud-{{$prof->id}}">Enviar solicitud de contacto</button>
+                        <br>
                         @include('partials.modals.enviar_solicitud_contacto')
                         @endif
                       @endif
@@ -176,7 +180,7 @@
                   <p class="text-center text-dark">Para enviar una solicitud de contacto <a style="color:#000; text-decoration: underline;" href="{{route('register.index', ['rol' => 'cliente'])}}">regístrate</a> o <a style="color:#000; text-decoration: underline;" href="{{route('login')}}">inicia sesión</a></p>
                   @endif
 
-                  <a href="{{route('user.profile', ['username' => $prof->username])}}" target="_blank" 
+                  <a class="mt-2" href="{{route('user.profile', ['username' => $prof->username])}}" target="_blank" 
                   style="
                     width: 100%!important;
                     border: none!important;
@@ -200,4 +204,5 @@
         </div>
     </div>
 </div>
+<script src="{{url('assets')}}/js/home.js"></script>
 @endsection

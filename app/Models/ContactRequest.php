@@ -32,6 +32,10 @@ class ContactRequest extends Model
     	return $this->hasOne(ContactRequestUnblock::class);
     }
 
+    public function repertoire(){
+    	return $this->hasMany(ContactRequestsRepertoire::class);
+    }
+
     public function user(){
     	return $this->belongsTo(User::class);
     }

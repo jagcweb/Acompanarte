@@ -46,7 +46,10 @@ Route::get('/configuracion-premium/premium/{type}/{auto_renew?}', [App\Http\Cont
 Route::get('/configuracion-premium/free', [App\Http\Controllers\ConfigurationPremiumController::class, 'free'])->name('configuration_premium.free');
 Route::get('/configuracion-premium/get-invoice/{pdf}', [App\Http\Controllers\ConfigurationPremiumController::class, 'getInvoice'])->name('configuration_premium.get_invoice');
 
+
 Route::get('/buscar-pianista', [App\Http\Controllers\SearchProfessorController::class, 'index'])->name('search_professor.index');
+Route::get('/buscar-pianista/autocomplete-composers', [App\Http\Controllers\SearchProfessorController::class, 'getComposers'])->name('search_professor.get_composers');
+Route::get('/buscar-pianista/autocomplete-pieces/{composer}', [App\Http\Controllers\SearchProfessorController::class, 'getPieces'])->name('search_professor.get_pieces');
 Route::get('/buscar-pianista/autocomplete-location/{value}', [App\Http\Controllers\SearchProfessorController::class, 'getLocation'])->name('search_professor.get_location');
 
 Route::get('/ver-solicitudes', [App\Http\Controllers\ContactRequestController::class, 'index'])->name('contact_request.index');

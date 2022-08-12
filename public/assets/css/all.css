@@ -175,6 +175,14 @@
         color: #fff!important;
     }
     
+    .modal button {
+        width: 25px!important;
+        border: none!important;
+        border-radius: 0px!important;
+        background: transparent!important;
+        color: transparent!important;
+    }
+    
     .card {
         border: none;
         border-radius: 20px;
@@ -194,7 +202,7 @@
         justify-content: space-around;
         flex-direction: row;
         align-items: center;
-        background: #f7ca6d;
+        background: #FCA03E;
         position: fixed;
         z-index: 999;
         color: #fff;
@@ -229,7 +237,7 @@
     nav a {
         color: #fff;
         text-decoration: none!important;
-        border-bottom: 4px solid #f7ca6d;
+        border-bottom: 4px solid #FCA03E;
         border-radius: 2px;
         transition: all 0.3s ease;
     }
@@ -257,7 +265,7 @@
     }
     
     .dropdown-item:hover {
-        background: #f7ca6d;
+        background: #FCA03E;
         color: #fff;
     }
     /* Oculta la los controles del input number */
@@ -287,12 +295,34 @@
         border-radius: 99999px!important;
         width: 100%;
         color: #000;
-        outline-color: #f7ca6d!important;
+        outline-color: #FCA03E!important;
+        height: 45px;
+    }
+    
+    select.especialidad,
+    select.acompañamiento,
+    input.searcher-input {
+        border: none;
+    }
+    
+    .type-file {
+        border: 1px solid #6b7280;
+        border-radius: 9999px;
+        height: 45px;
+        line-height: 35px;
+        width: 100%;
+        display: inline-block;
+        padding: 6px 12px;
+        cursor: pointer;
+    }
+    
+    input[type="phone"] {
+        padding-left: 10px;
     }
     
     input[type="checkbox"],
     input[type="radio"] {
-        color: #f7ca6d;
+        color: #FCA03E;
         border-radius: 99999px;
     }
     /* Cambia los efectos del glow de focus input por default */
@@ -304,7 +334,7 @@
     }
     
     main {
-        background: #f7ca6d;
+        background: #FCA03E;
         border-bottom: 1px solid #eee;
     }
     
@@ -313,7 +343,7 @@
         display: flex!important;
         flex-direction: column;
         width: 100%;
-        background: #f7ca6d;
+        background: #FCA03E;
     }
     
     .policy {

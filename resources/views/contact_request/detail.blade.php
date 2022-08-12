@@ -20,6 +20,7 @@
                 <p class="text-center w-100">Email: <b>{{$contact_request->email}}</b></p>
                 <p class="text-center w-100">Teléfono: <b>{{$contact_request->phone}}</b></p>
                 @endif
+                <p class="text-center w-100">Especialidad: <b>{{$contact_request->specialty}}</b></p>
                 <p class="text-center w-100">Evento a acompañar escogido: <b>{{$contact_request->accompaniment}}</b></p>
 
                 @if($contact_request->rehearsals == 1)
@@ -28,7 +29,6 @@
                 <p class="text-center w-100"><b>Sin ensayos</b></p>
                 @endif
 
-                <p class="text-center w-100">Tu mensaje: <b>{{$contact_request->message}}</b></p>
 
                 @if($contact_request->user->getRoleNames()[0] == 'pianista')
                 <p class="text-center w-100 mt-5">Los datos del pianista están ocultos hasta que este desbloquee su
@@ -76,7 +76,6 @@
                 </p>
                 @endif
                 @endif
-                <p class="text-center w-100">Evento a acompañar: <b>{{$contact_request->accompaniment}}</b></p>
 
                 @if($contact_request->rehearsals == 1)
                 <p class="text-center w-100">Número de ensayos: <b>{{$contact_request->num_rehearsals}}</b></p>
@@ -133,6 +132,7 @@
 
                 @if($contact_request->accepted == 1)
                 <p class="w-100 text-center text-success">Aceptada</p>
+                <p class="w-100 text-center text-dark">¡Ya puedes contactar a través del teléfono o email faciltiados!</p>
                 @endif
                 @endif
                 @else

@@ -14,6 +14,7 @@ use LaravelDaily\Invoices\Classes\Party;
 use LaravelDaily\Invoices\Classes\InvoiceItem;
 use LaravelDaily\Invoices\Classes\Buyer;
 use LaravelDaily\Invoices\Invoice;
+use Illuminate\Http\Response;
 
 class ContactRequestController extends Controller
 {
@@ -77,7 +78,6 @@ class ContactRequestController extends Controller
             'ensayo' => ['required', 'boolean'],
             'acompañamiento' => ['required', 'string', 'max:255'],
             'pdf' => ['nullable', 'mimes:pdf'],
-            
         ]);
 
         if($request->get('ensayo') == 1){
@@ -98,7 +98,6 @@ class ContactRequestController extends Controller
         $contact_request->name = $request->get('nombre');
         $contact_request->location = $request->get('ciudad');
         $contact_request->specialty = $request->get('especialidad');
-        $contact_request->accompaniment = $request->get('acompañamiento');
         $contact_request->email = $request->get('email');
         $contact_request->phone = $request->get('telefono');
         $contact_request->accompaniment = $request->get('acompañamiento');

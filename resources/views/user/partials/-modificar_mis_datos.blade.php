@@ -51,10 +51,10 @@
                         </div>
 
                         <div class="row mb-3">
-                            <label for="image" class="col-md-4 col-form-label text-md-end">{{ __('Avatar') }}</label>
+                            <label for="image" class="col-md-4 col-form-label text-md-end">{{ __('Imagen de perfil') }}</label>
 
                             <div class="col-md-12">
-                                <label for="image" style="border: 1px solid #6b7280; border-radius:9999px; height:40px; width:100%;  display: inline-block;padding: 6px 12px;cursor: pointer;">
+                                <label for="image" class="type-file">
                                     <i class="fa-solid fa-cloud-arrow-up mr-2"></i>{{ __('Escoger imagen') }}
                                 </label>
                                 <input id="image" type="file" class="d-none @error('image') is-invalid @enderror" name="image" accept=".gif,.jpg,.jpeg,.png,.webp">

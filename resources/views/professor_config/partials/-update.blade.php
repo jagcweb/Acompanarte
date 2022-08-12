@@ -29,7 +29,26 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="form-group">
+
+                        <p class=" mb-3 mt-4 w-100 text-center font-22">Biografía</p>
                         <div class="row mb-3">
+                            <label for="biography" class="col-md-4 col-form-label text-md-end">{{ __('Biografía')
+                                }}</label>
+
+                            <div class="col-md-12">
+                                <textarea id="biography"   class="@error('biography') is-invalid @enderror"
+                                    name="biography" placeholder="Cuéntanos más sobre ti...">{{Auth::user()->config_professor->biography}}</textarea>
+
+                                @error('biography')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
+                            </div>
+                        </div>
+
+
+                        <div class="row mb-3 mt-4">
                             <label for="geografica" class="col-md-4 col-form-label text-md-end">{{ __('Disponibilidad
                                 geográfica') }}*</label>
 
@@ -87,6 +106,10 @@
 
                         <button type="button" class='btn btn-dark waves-effect waves-dark w-100 location_add'>Añadir más</button>
 
+                        @include('partials.specialty2')
+
+                        @include('partials.accompaniment2')
+
 
                         <div class="row mb-3 mt-4 ">
                             <label for="formacion" class="col-md-4 col-form-label text-md-end">{{ __('Formación')
@@ -109,17 +132,13 @@
                             </div>
                         </div>
 
-                        @include('partials.specialty2')
-
-                        @include('partials.accompaniment2')
-
                         <div class="row mb-3 mt-4 font-22">
                             <p class="text-center w-100">{{ __("Lugar de ensayo") }}</p>
                                 <div class="col-lg-2 col-md-3 col-sm-4 d-flex justify-content-start">
                                     <input
                                         type="radio"
                                         value="0"
-                                         lugar"
+                                         class="lugar"
                                         name="lugar"
                                         @if(!is_null(\Auth::user()->config_professor->essay_place) && \Auth::user()->config_professor->essay_place != 1)
                                         checked
@@ -134,7 +153,7 @@
                                 <input
                                     type="radio"
                                     value="1"
-                                     lugar"
+                                     class="lugar"
                                     name="lugar"
                                     @if(!is_null(\Auth::user()->config_professor->essay_place) && \Auth::user()->config_professor->essay_place == 1)
                                     checked
@@ -160,23 +179,6 @@
                                 <input id="precio" type="number"   class="precio" name="precio" step="0.1" min="1" @if(Auth::user()->config_professor->price) value="{{Auth::user()->config_professor->price}}" @endif />
 
                                 @error('precio')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <p class=" mb-3 mt-4 w-100 text-center font-22">Biografía</p>
-                        <div class="row mb-3">
-                            <label for="biography" class="col-md-4 col-form-label text-md-end">{{ __('Biografía')
-                                }}</label>
-
-                            <div class="col-md-12">
-                                <textarea id="biography"   class="@error('biography') is-invalid @enderror"
-                                    name="biography" placeholder="Otros títulos, certificados, experiencia..." maxlength="255">{{Auth::user()->config_professor->biography}}</textarea>
-
-                                @error('biography')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>

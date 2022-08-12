@@ -5,7 +5,7 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-12">
-            <h2 class="text-center d-block">Disponibilidad geográfica</h2>
+            <h2 class="text-center d-block">Configura tu perfil</h2>
 
             @if(Auth::user()->config_professor)
                 @include('professor_config.partials.-update')
@@ -16,7 +16,7 @@
     </div>
 </div>
 
-@if(Auth::user()->getRoleNames()[0] == 'pianista-premium')
+{{-- @if(Auth::user()->getRoleNames()[0] == 'pianista-premium')
 <div class="container">
     <div class="mt-4 row justify-content-center">
         <div class="col-md-12">
@@ -35,7 +35,7 @@
         </div>
     </div>
 </div>
-@endif
+@endif --}}
 <script src="{{url('assets')}}/js/specialty.js"></script>
 <script src="{{url('assets')}}/js/config_professor.js"></script>
 @endsection

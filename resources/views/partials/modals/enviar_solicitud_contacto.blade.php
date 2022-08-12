@@ -1,4 +1,4 @@
-<div class="modal fade" id="enviar-solicitud-{{$prof->id}}" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal fade" id="enviar-solicitud-{{$prof->id}}" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header bg-light">
@@ -41,7 +41,7 @@
                     <label for="acompañamiento" class="col-md-4 col-form-label text-md-end">{{ __('Evento a acompañar') }}</label>
 
                     <div class="col-md-12">
-                        <input type="text" value="{{$especialidad}}" id="acompañamiento"  class="@error('acompañamiento') is-invalid @enderror" name="acompañamiento" required readonly/>
+                        <input type="text" value="{{$acompañamiento}}" id="acompañamiento"  class="@error('acompañamiento') is-invalid @enderror" name="acompañamiento" required readonly/>
 
                         @error('acompañamiento')
                             <span class="invalid-feedback" role="alert">
@@ -125,7 +125,7 @@
                     <label for="ensayo" class="col-md-4 col-form-label text-md-end">{{ __('¿Requiere ensayos? *') }}</label>
 
                     <div class="col-md-12">
-                        <select  ensayo @error('ensayo') is-invalid @enderror" name="ensayo" id="ensayo" required>
+                        <select  class="ensayo @error('ensayo') is-invalid @enderror" name="ensayo" id="ensayo" required>
                             <option hidden selected disabled></option>
                             <option value="1">Sí</option>
                             <option value="0">No</option>
@@ -154,12 +154,16 @@
                 </div>
 
                 <div class="row mb-3">
-                    <label for="pdf" class="col-md-4 col-form-label text-md-end">{{ __('PDF Partituras (Opcional)') }}</label>
-
+                    <label for="image" class="col-md-4 col-form-label text-md-end">{{ __('Partitura PDF') }}</label>
                     <div class="col-md-12">
-                        <input type="file" id="pdf"  class="@error('pdf') is-invalid @enderror" name="pdf"/>
+                        <label for="image"class="type-file">
+                            <i class="fa-solid fa-cloud-arrow-up mr-2"></i>{{ __('Escoger PDF') }}
+                        </label>
+                        <input type="file" id="image" style="display: none;" class="@error('pdf') is-invalid @enderror" name="pdf" accept=".pdf"/>
+                        <br>
+                        <span class="selected-img"></span>
 
-                        @error('pdf')
+                        @error('image')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
@@ -167,17 +171,125 @@
                     </div>
                 </div>
 
+                {{-- <p class="mt-2 w-100 text-center" style="font-size:18px;">Repertorio</p>
+                <div class="row mb-3">
+                    <label for="composer" class="col-md-4 col-form-label text-md-end">{{ __('Compositor *') }}</label>
+
+                    <div class="col-md-12">
+                        <select  class="composer" name="composer" data="0" required>
+                            <option hidden selected disabled>Selecciona un compositor...</option>
+                            @foreach ($composers as $composer)
+                                <option value="{{$composer->composer}}">{{$composer->composer}}</option>
+                            @endforeach
+                        </select>
+
+                        @error('composer')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label for="piece" class="col-md-4 col-form-label text-md-end">{{ __('Obra *') }}</label>
+
+                    <div class="col-md-12">
+                        <select class="piece" name="piece" data="0" required>
+                            <option hidden selected disabled>Selecciona una obra...</option>
+                            <option disabled>Selecciona un compositor para cargar las obras...</option>
+                        </select>
+
+                        @error('piece')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+                </div>
+
+                <span class='add_repertoire d-block btn btn-dark waves-effect waves-dark w-75' style="border-radius:9999px; margin:0px auto;">+ obras</span>
+
+                <div class="append_repertoire mt-3"></div> --}}
+
                 <input type="text"  name="pianista_id" value="{{\Crypt::encryptString($prof->id)}}" required hidden/>
 
-                <input type="submit" class='btn btn-dark waves-effect waves-dark w-100' value="Enviar solicitud">
+                <input type="submit" class='btn btn-dark waves-effect waves-dark w-100 mt-5' value="Enviar solicitud">
             </form>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-
+<style>
+    input,
+    select,
+    textarea {
+        border: none;
+        border: 1px solid #ccc;
+        border-radius: 99999px!important;
+        width: 100%;
+        color: #000;
+        outline-color: #FCA03E!important;
+    }
+</style>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script>
     $( document ).ready(function() {
+        i = 1;
+        getPieces();
+        addRepertoire();
+
+        function getPieces() {
+            $('.composer').select2({ width: '100%', dropdownParent: $('.modal .modal-content') });
+            $('.piece').select2({ width: '100%', dropdownParent: $('.modal .modal-content') });
+            $(`.composer`).change(function() {
+                const url = `buscar-pianista/autocomplete-pieces/${$(this).val()}`;
+                const pieceSelect = $(`.piece[data="${$(this).attr('data')}"]`);
+                pieceSelect.empty().append('<option selected="selected" disabled hidden>Cargando obras...</option>');
+                $.ajax({
+                    url: url,
+                    method: 'GET'
+                }).done(function(res) {
+                    const pieces = JSON.parse(res);
+                    pieceSelect.empty().append('<option selected="selected" disabled hidden>Selecciona una obra...</option>');
+                    pieces.forEach(function(valor, indice) {
+                        pieceSelect.append(`<option value="${valor.title}"> ${valor.title} </option>`).trigger('change');
+                    });
+                });
+            });
+        }
+
+        function addRepertoire(){
+            $( ".add_repertoire" ).click(function() {
+                $(".append_repertoire").append(`<div class="appended" data="${i}" style="box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;border-radius: 20px;position: relative;padding: 15px;"><span data="${i}" class="delete_repertoire text-danger ml-2" style="cursor: pointer; position:absolute; top: 5%; right: 2%;"><i class="fa-solid fa-circle-xmark"></i></span><div class="row mb-3"> <label for="composer" class="col-md-4 col-form-label text-md-end">{{ __('Compositor *') }}</label> <div class="col-md-12"> <select class="composer" name="composer" data="${i}" required> <option hidden selected disabled>Selecciona un compositor...</option> </select> </div> </div> <div class="row mb-3"> <label for="piece" class="col-md-4 col-form-label text-md-end">{{ __('Obra *') }}</label> <div class="col-md-12"> <select class="piece" name="piece" data="${i}" required> <option hidden selected disabled>Selecciona una obra...</option> <option disabled>Selecciona un compositor para cargar las obras...</option> </select> </div> </div></div>`);
+
+                const composersUrl = `buscar-pianista/autocomplete-composers`;
+                const composerSelect = $(`.composer[data="${i}"]`);
+                composerSelect.empty().append('<option selected="selected" disabled hidden>Cargando compositores...</option>');
+                $.ajax({
+                    url: composersUrl,
+                    method: 'GET'
+                }).done(function(res) {
+                    const composers = JSON.parse(res);
+                    composerSelect.empty().append('<option selected="selected" disabled hidden>Selecciona un compositor...</option>');
+                    composers.forEach(function(valor, indice) {
+                        composerSelect.append(`<option value="${valor.composer}"> ${valor.composer} </option>`).trigger('change');
+                    });
+
+                    getPieces();
+                });
+
+                i++;
+                deleteRepertoire();
+            });
+        }
+
+        function deleteRepertoire(){
+            $( ".delete_repertoire" ).click(function() {
+                const appendeddiv = $(`.appended[data="${$(this).attr('data')}"]`).remove();
+            });
+        }
+
         $( "#ensayo" ).change(function() {
             const value = parseInt($(this).val());
             if(value === 1){
@@ -188,7 +300,11 @@
                 $('#num_ensayo').prop('required', false);
             }
         });
+
+        $("#image").on("change", function(e) {
+            const img = $(this).val().split("\\");
+            $('.selected-img').text(`Partitura seleccionada: ${img[2]}`);
+        });
     });
 </script>
-
 

@@ -16,6 +16,7 @@ select,
 textarea {
     border: none;
     border-radius: 0px;
+    height: 45px;
 }
 
 select.especialidad {
@@ -38,6 +39,7 @@ select.acompañamiento {
 
 .searcher-input {
     font-size: 18px;
+    margin-top: 15px;
 }
 
 .btn-search {
@@ -1033,20 +1035,24 @@ body {
     justify-content: center;
     -ms-flex-align: center;
     align-items: center;
-    background: #f7ca6d;
+    background: #FCA03E;
     margin-top: -80px;
 }
 
 #posts {
     justify-content: space-around;
     border-radius: 20px!important;
-    margin-top: -70px!important;
+    margin-top: -100px!important;
     width: 50%;
     margin: 0px auto;
 }
 
 .posts {
     transition: 0.5s all ease;
+}
+
+.posts:hover {
+    cursor: pointer;
 }
 
 @media (max-width: 905px) {
