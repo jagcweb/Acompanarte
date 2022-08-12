@@ -8,7 +8,6 @@ use App\Models\PostalCode;
 use App\Models\ConfigurationProfessor;
 use App\Models\User;
 use App\Models\SearchHistory;
-use App\Models\Work;
 use Spatie\Permission\Models\Role;
 
 class SearchProfessorController extends Controller
@@ -60,7 +59,7 @@ class SearchProfessorController extends Controller
         ->get();
 
         //IMSLP database
-        $composers = Work::select('composer')->groupBy('composer')->orderBy('composer', 'asc')->get();
+        //$composers = Work::select('composer')->groupBy('composer')->orderBy('composer', 'asc')->get();
 
         $search_history = new SearchHistory();
         $search_history->user_id = Auth::check() ? Auth::user()->id : null;
@@ -74,7 +73,7 @@ class SearchProfessorController extends Controller
             'location' => $location,
             'especialidad' => $especialidad,
             'acompañamiento' => $acompañamiento,
-            'composers' => $composers,
+            //'composers' => $composers,
         ]);
     }
 

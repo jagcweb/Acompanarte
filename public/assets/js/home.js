@@ -117,30 +117,32 @@ if (!window.location.href.includes('buscar-pianista')) {
         }
     }
 
+    console.log(window.location.href);
+
     $(".tecla1").hover(
         function() {
-            $(this).find('img').attr('src', `${window.location}assets/images/TECLAACTIVA_comofunciona.png`);
+            $(this).find('img').attr('src', `${window.location.href}assets/images/TECLAACTIVA_comofunciona.png`);
         },
         function() {
-            $(this).find('img').attr('src', `${window.location}assets/images/TECLASINACTIVAR_comofunciona.png`);
+            $(this).find('img').attr('src', `${window.location.href}assets/images/TECLASINACTIVAR_comofunciona.png`);
         }
     );
 
     $(".tecla2").hover(
         function() {
-            $(this).find('img').attr('src', `${window.location}assets/images/TECLAACTIVA_soypianista.png`);
+            $(this).find('img').attr('src', `${window.location.href}assets/images/TECLAACTIVA_soypianista.png`);
         },
         function() {
-            $(this).find('img').attr('src', `${window.location}assets/images/TECLASINACTIVAR_soypianista.png`);
+            $(this).find('img').attr('src', `${window.location.href}assets/images/TECLASINACTIVAR_soypianista.png`);
         }
     );
 
     $(".tecla3").hover(
         function() {
-            $(this).find('img').attr('src', `${window.location}assets/images/TECLAACTIVA_verificado.png`);
+            $(this).find('img').attr('src', `${window.location.href}assets/images/TECLAACTIVA_verificado.png`);
         },
         function() {
-            $(this).find('img').attr('src', `${window.location}assets/images/TECLASINACTIVAR_verificado.png`);
+            $(this).find('img').attr('src', `${window.location.href}assets/images/TECLASINACTIVAR_verificado.png`);
         }
     );
 

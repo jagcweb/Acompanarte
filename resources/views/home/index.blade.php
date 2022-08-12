@@ -38,29 +38,43 @@
 
 <div id="posts" class="d-flex align-items-center flex-direction-row">
     <div class="tecla1" data="0">
-        <img src="{{url('assets')}}/images/TECLASINACTIVAR_comofunciona.png" style="height:450px; cursor: pointer;" />
+        <a href="https://blog.encuentrapianista.com/como-funciona-encuentrapianista-com/" target="_blank">
+            <img src="{{url('assets')}}/images/TECLASINACTIVAR_comofunciona.png"
+                style="height:450px; cursor: pointer;" />
+        </a>
     </div>
-    
+
     <div class="tecla2" data="1">
-        <img src="{{url('assets')}}/images/TECLASINACTIVAR_soypianista.png" style="height:450px; cursor: pointer;" />
+        <a href="{{route('register.index', ['rol' => 'pianista-premium'])}}" target="_blank">
+            <img src="{{url('assets')}}/images/TECLASINACTIVAR_soypianista.png"
+                style="height:450px; cursor: pointer;" />
+        </a>
     </div>
 
     <div class="tecla3" data="2">
-        <img src="{{url('assets')}}/images/TECLASINACTIVAR_verificado.png" style="height:450px; cursor: pointer;" />
+        <a href="https://blog.encuentrapianista.com/que-ventajas-tiene-contratar-a-un-pianista-verificado/" target="_blank">
+            <img src="{{url('assets')}}/images/TECLASINACTIVAR_verificado.png" style="height:450px; cursor: pointer;" />
+        </a>
     </div>
 </div>
 
 <div id="mobile-posts" class="d-none align-items-center" style="flex-direction: column">
     <div class="mt-3">
-        <img class="img-mobile" src="{{url('assets')}}/images/comofunciona.png" style=" cursor: pointer;" />
-    </div>
-    
-    <div class="mt-3">
-        <img class="img-mobile" src="{{url('assets')}}/images/EP5.jpg" style="cursor: pointer;" />
+        <a href="https://blog.encuentrapianista.com/como-funciona-encuentrapianista-com/" target="_blank">
+            <img class="img-mobile" src="{{url('assets')}}/images/comofunciona.png" style=" cursor: pointer;" />
+        </a>
     </div>
 
     <div class="mt-3">
-        <img class="img-mobile" src="{{url('assets')}}/images/EP4.jpg" style="cursor: pointer;" />
+        <a href="{{route('register.index', ['rol' => 'pianista-premium'])}}" target="_blank">
+            <img class="img-mobile" src="{{url('assets')}}/images/EP5.jpg" style="cursor: pointer;" />
+        </a>
+    </div>
+
+    <div class="mt-3">
+        <a href="https://blog.encuentrapianista.com/que-ventajas-tiene-contratar-a-un-pianista-verificado/" target="_blank">
+            <img class="img-mobile" src="{{url('assets')}}/images/EP4.jpg" style="cursor: pointer;" />
+        </a>
     </div>
 </div>
 
@@ -73,7 +87,7 @@
     @endif
 
     <div class="mb-2 texto">
-        <img class="img" src="{{url('assets')}}/images/EPicon1.png" style="max-width:150px; height:150px;" />
+        <img class="img" src="{{url('assets')}}/images/EPicon4.png" style="max-width:150px; height:150px;" />
         <div
             style="display:flex; flex-direction:column; justify-content:center; align-items: center; max-width:700px; text-align:center;">
             <h3>Encuentra siempre un pianista acompañante</h3>
@@ -99,7 +113,7 @@
 </div>
 
 <div style="width:100%; height: auto; margin:0px auto;">
-    <img src="{{url('assets')}}/images/EPconcierto.png" style=" margin:0px auto; object-fit: contain; width:800px;"/>
+    <img src="{{url('assets')}}/images/EPconcierto.png" style=" margin:0px auto; object-fit: contain; width:800px;" />
 </div>
 
 
